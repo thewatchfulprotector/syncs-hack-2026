@@ -24,3 +24,33 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+button,
+canvas,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS Safari's 100vh includes the area behind the collapsed toolbar, pushing
+   the bottom controls off-screen; dvh tracks the visible viewport. */
+.app-height {
+  height: 100vh;
+}
+@supports (height: 100dvh) {
+  .app-height {
+    height: 100dvh;
+  }
+}
+
+/* Orb never wider than a phone, never taller than the space left when
+   Safari's toolbars are expanded (svh = smallest viewport). */
+.orb-size {
+  width: min(52vh, 86vw, 620px);
+  height: min(52vh, 86vw, 620px);
+}
+@supports (height: 1svh) {
+  .orb-size {
+    width: min(52svh, 86vw, 620px);
+    height: min(52svh, 86vw, 620px);
+  }
+}

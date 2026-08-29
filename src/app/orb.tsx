@@ -182,7 +182,7 @@ export function Orb({
     <canvas
       ref={canvasRef}
       onClick={onClick}
-      className="block w-[min(52vh,620px)] h-[min(52vh,620px)] min-w-[170px] min-h-[170px] cursor-pointer"
+      className="orb-size block min-w-[170px] min-h-[170px] cursor-pointer touch-manipulation select-none"
     />
   );
 }

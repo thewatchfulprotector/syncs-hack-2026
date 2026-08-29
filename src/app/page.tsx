@@ -279,6 +279,27 @@ export default function Home() {
     });
   }
 
+  /** Fully end the conversation: in-flight turn, playback, and capture. */
+  function stopConversation() {
+    conversationModeRef.current = false;
+    setConversationMode(false);
+    // invalidate the in-flight turn so its cleanup can't resume the mic
+    turnEpochRef.current++;
+    askingRef.current = false;
+    abortRef.current?.abort();
+    abortRef.current = null;
+    queueRef.current?.stop();
+    queueRef.current?.dispose();
+    queueRef.current = null;
+    clearCaptionTimers();
+    stopMic();
+    setStatus("idle");
+    speakingRef.current = false;
+    setSpeaking(false);
+    setCapVisible(false);
+    activeClientTraceRef.current = null;
+  }
+
   /** Off enables capture immediately. During output, the same click is barge-in. */
   function toggleMicImpl() {
     if (conversationModeRef.current) {
@@ -300,20 +321,7 @@ export default function Home() {
         return;
       }
 
-      conversationModeRef.current = false;
-      setConversationMode(false);
-      abortRef.current?.abort();
-      queueRef.current?.stop();
-      queueRef.current?.dispose();
-      queueRef.current = null;
-      clearCaptionTimers();
-      stopMic();
-      askingRef.current = false;
-      setStatus("idle");
-      speakingRef.current = false;
-      setSpeaking(false);
-      setCapVisible(false);
-      activeClientTraceRef.current = null;
+      stopConversation();
       return;
     }
 
@@ -586,32 +594,32 @@ export default function Home() {
   const persona = personaName(personaId);
 
   return (
-    <main className="relative flex h-screen min-h-[480px] flex-col overflow-hidden bg-white text-[#0A0A0A] font-[family-name:var(--font-grotesk)]">
-      <div className={`flex items-center justify-between px-[30px] py-[26px] text-[10px] uppercase tracking-[0.16em] ${MONO}`}>
-        <div className="flex items-center gap-[9px]">
+    <main className="app-height relative flex min-h-[480px] flex-col overflow-x-hidden overflow-y-auto bg-white text-[#0A0A0A] font-[family-name:var(--font-grotesk)]">
+      <div className={`flex shrink-0 items-center justify-between gap-3 px-5 py-4 text-[10px] uppercase tracking-[0.16em] sm:px-[30px] sm:py-[26px] ${MONO}`}>
+        <div className="flex min-w-0 items-center gap-[9px]">
           <span
-            className="h-[5px] w-[5px] rounded-full transition-colors duration-300"
+            className="h-[5px] w-[5px] shrink-0 rounded-full transition-colors duration-300"
             style={{ background: dotColor, opacity: phase === "idle" && !conversationMode ? 0.6 : 1 }}
           />
-          <span>{stateLabel}</span>
+          <span className="truncate">{stateLabel}</span>
         </div>
-        <div className="flex items-center gap-[9px]">
+        <div className="flex shrink-0 items-center gap-[9px]">
           <span className="opacity-60">{persona}</span>
           <span className="mx-[6px] h-[11px] w-px bg-[#E4E4E4]" />
           <button
             onClick={() => setPanelOpen((p) => !p)}
-            className="uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
+            className="touch-manipulation uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
           >
             Transcript
           </button>
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-8">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-4 sm:px-8">
         <Orb phase={phase} sampleAmp={sampleAmp} pulse={pulseRef} onClick={toggleMic} />
         <div
           onClick={() => setPanelOpen(true)}
-          className="flex w-full max-w-[960px] cursor-pointer flex-col items-center gap-[18px] pt-5 text-center"
+          className="flex w-full max-w-[960px] cursor-pointer flex-col items-center gap-3 pt-4 text-center sm:gap-[18px] sm:pt-5"
         >
           <div
             className="min-h-[1.4em] max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(16px,1.85vw,26px)] font-light leading-[1.4] tracking-[-0.01em] transition-all duration-500"
@@ -628,14 +636,14 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-[14px] px-8 pb-[clamp(20px,4vh,38px)]">
-        <div className="flex items-center justify-center gap-4">
+      <div className="flex w-full shrink-0 flex-col items-center gap-[14px] px-5 pb-[max(clamp(20px,4vh,38px),env(safe-area-inset-bottom))] sm:px-8">
+        <div className="flex w-full max-w-[480px] items-center justify-center gap-3 sm:gap-4">
           <button
-            onClick={toggleMic}
+            onClick={() => (conversationModeRef.current ? stopConversation() : toggleMic())}
             title={conversationMode ? "conversation on — click to stop" : "start a voice conversation"}
             data-mic-state={micState}
             data-conversation={conversationMode}
-            className="flex h-[52px] w-[52px] items-center justify-center rounded-full border transition-all hover:scale-105"
+            className="flex h-[52px] w-[52px] shrink-0 touch-manipulation items-center justify-center rounded-full border transition-all hover:scale-105"
             style={{
               borderColor:
                 phase === "listening" ? "#18A15C" : conversationMode ? "#1F3BE0" : "#E4E4E4",
@@ -643,7 +651,7 @@ export default function Home() {
           >
             {phase === "listening" || conversationMode ? (
               <span
-                className={`h-[15px] w-[15px] rounded-full ${phase === "listening" ? "animate-pulse" : ""}`}
+                className={`h-[14px] w-[14px] ${phase === "listening" ? "animate-pulse rounded-full" : "rounded-[3px]"}`}
                 style={{ background: phase === "listening" ? "#18A15C" : "#1F3BE0" }}
               />
             ) : (
@@ -671,7 +679,7 @@ export default function Home() {
               ask(v);
             }}
             placeholder="or type here"
-            className="w-[min(400px,66vw)] border-b border-[#EAEAEA] bg-transparent px-0.5 py-[11px] text-left text-sm font-light outline-none placeholder:text-neutral-400"
+            className="min-w-0 max-w-[400px] flex-1 border-b border-[#EAEAEA] bg-transparent px-0.5 py-[11px] text-left text-base font-light outline-none placeholder:text-neutral-400 sm:text-sm"
           />
         </div>
         {notice && (
@@ -685,7 +693,7 @@ export default function Home() {
       </div>
 
       <div
-        className="absolute bottom-0 right-0 top-0 flex w-[min(400px,88vw)] flex-col border-l border-[#EAEAEA] bg-white transition-transform duration-500"
+        className="fixed bottom-0 right-0 top-0 z-20 flex w-[min(400px,88vw)] flex-col border-l border-[#EAEAEA] bg-white transition-transform duration-500"
         style={{
           transform: panelOpen ? "translateX(0)" : "translateX(101%)",
           transitionTimingFunction: "cubic-bezier(0.22,0.61,0.24,1)",
@@ -693,11 +701,11 @@ export default function Home() {
       >
         <div className={`flex items-center justify-between px-[26px] pb-[18px] pt-[26px] text-[10px] uppercase tracking-[0.16em] ${MONO}`}>
           <span>Transcript</span>
-          <button onClick={() => setPanelOpen(false)} className="text-xs tracking-[0.16em] hover:opacity-60">
+          <button onClick={() => setPanelOpen(false)} className="touch-manipulation text-xs tracking-[0.16em] hover:opacity-60">
             Close
           </button>
         </div>
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-[26px] pb-8">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain px-[26px] pb-[max(2rem,env(safe-area-inset-bottom))]">
           {turns.length === 0 && (
             <div className="pt-1.5 text-sm font-light leading-relaxed text-[#9A9A9A]">Nothing said yet.</div>
           )}
