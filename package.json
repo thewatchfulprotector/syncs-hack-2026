@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "ingest": "node --env-file=.env.local --import tsx scripts/ingest.ts",
-    "ask": "node --env-file=.env.local --import tsx scripts/ask.ts"
+    "ask": "node --env-file=.env.local --import tsx scripts/ask.ts",
+    "clone-voice": "node --env-file=.env.local --import tsx scripts/clone-voice.ts"
   },
   "dependencies": {
     "@pinecone-database/pinecone": "^8.2.0",

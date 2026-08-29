@@ -51,3 +51,6 @@ next-env.d.ts
 
 # browser automation artifacts
 .playwright-mcp/
+
+# local persona source media (never committed)
+/media/
