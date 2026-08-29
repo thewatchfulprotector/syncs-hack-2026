@@ -12,6 +12,11 @@ const askRequestSchema = z.object({
     message: "question must not be blank",
   }),
   history: z.unknown().optional().transform(capConversationHistory),
+  // lenient like history: only an explicit false opts out of TTS
+  voice: z
+    .unknown()
+    .optional()
+    .transform((value) => value !== false),
 });
 
 export type AskRequest = z.infer<typeof askRequestSchema>;

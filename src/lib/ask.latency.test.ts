@@ -35,7 +35,7 @@ describe("ask retrieval latency contracts", () => {
     const controller = new AbortController();
 
     await askPersona(
-      "wildfire-expert",
+      "steve-jobs",
       "What causes wildfire smoke?",
       [],
       controller.signal,
@@ -51,7 +51,7 @@ describe("ask retrieval latency contracts", () => {
     const controller = new AbortController();
 
     await askPersona(
-      "wildfire-expert",
+      "steve-jobs",
       "What causes wildfire smoke?",
       [],
       controller.signal,
@@ -59,7 +59,7 @@ describe("ask retrieval latency contracts", () => {
 
     expect(dependencies.queryChunks).toHaveBeenCalledWith(
       [0.1, 0.2],
-      "wildfire-expert",
+      "steve-jobs",
       8,
       controller.signal,
     );
@@ -68,7 +68,7 @@ describe("ask retrieval latency contracts", () => {
   it.each(["Hello!", "Thank you.", "Goodbye!"])(
     "bypasses embedding and Pinecone for unambiguous small talk: %s",
     async (question) => {
-      const result = await askPersona("wildfire-expert", question);
+      const result = await askPersona("steve-jobs", question);
 
       expect(dependencies.embedTexts).not.toHaveBeenCalled();
       expect(dependencies.queryChunks).not.toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe("ask retrieval latency contracts", () => {
   it.each(["Who was Aristotle?", "What is smoke?", "Why?"])(
     "never bypasses retrieval merely because a factual question is short: %s",
     async (question) => {
-      await askPersona("wildfire-expert", question);
+      await askPersona("steve-jobs", question);
 
       expect(dependencies.embedTexts).toHaveBeenCalledOnce();
       expect(dependencies.queryChunks).toHaveBeenCalledOnce();

@@ -7,6 +7,7 @@ const persona: Persona = {
   id: "test-person",
   name: "Testy McTestface",
   description: "a meteorologist who explains weather plainly",
+  blurb: "A meteorologist who explains weather plainly.",
   quotes: ["Well, there's a couple of things.", "It is. It is.", "That's a good question."],
 };
 

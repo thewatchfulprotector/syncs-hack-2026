@@ -12,7 +12,6 @@
 //   --voice-sample            aggregate clean selected speech into one local sample
 //
 // Transcripts are cached in out/transcripts/ so re-runs don't re-transcribe.
-import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import { parseArgs } from "node:util";
@@ -25,9 +24,9 @@ import {
 } from "../src/lib/ingestSpeakers";
 import {
   selectVoiceSampleSegmentsAcrossSources,
-  type SourceVoiceSegment,
   type VoiceSampleSource,
 } from "../src/lib/voiceSample";
+import { OUT_DIR, clipVoiceSample, ffmpeg, slug } from "./voiceClip";
 import {
   parseTranscript,
   transcribeAudio,
@@ -41,14 +40,7 @@ const VIDEO_EXT = new Set([".mp4", ".mov", ".mkv", ".webm", ".avi"]);
 const AUDIO_EXT = new Set([".mp3", ".wav", ".m4a", ".flac", ".ogg", ".aac"]);
 const DOC_EXT = new Set([".txt", ".md"]);
 
-const OUT_DIR = "out";
 const TRANSCRIPT_CACHE_DIR = join(OUT_DIR, "transcripts");
-
-function ffmpeg(args: string[]): void {
-  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", ...args], {
-    stdio: ["ignore", "inherit", "inherit"],
-  });
-}
 
 function mediaType(file: string): MediaType {
   const ext = extname(file).toLowerCase();
@@ -56,10 +48,6 @@ function mediaType(file: string): MediaType {
   if (AUDIO_EXT.has(ext)) return "audio";
   if (DOC_EXT.has(ext)) return "document";
   throw new Error(`unsupported file type: ${file}`);
-}
-
-function slug(name: string): string {
-  return name.replace(/[^a-zA-Z0-9._-]+/g, "-");
 }
 
 /** video -> mono 16kHz wav for transcription; audio passes through untouched. */
@@ -102,34 +90,6 @@ async function getTranscript(file: string, allowTranscription = true): Promise<T
   mkdirSync(TRANSCRIPT_CACHE_DIR, { recursive: true });
   writeFileSync(cachePath, JSON.stringify(transcript, null, 2));
   return transcript;
-}
-
-/** Concatenate selected segments from any number of sources into one sample. */
-function clipVoiceSample(
-  segments: SourceVoiceSegment[],
-  personaId: string,
-): string {
-  const dir = join(OUT_DIR, "voice-segments", slug(personaId));
-  mkdirSync(dir, { recursive: true });
-  const paths = segments.map((seg, i) => {
-    const path = join(dir, `seg-${String(i).padStart(4, "0")}.mp3`);
-    const durationSeconds = (seg.endMs - seg.startMs) / 1000;
-    ffmpeg([
-      "-ss", (seg.startMs / 1000).toFixed(3),
-      "-i", seg.sourceFile,
-      "-t", durationSeconds.toFixed(3),
-      "-vn", "-ac", "1", "-ar", "44100", "-b:a", "128k",
-      path,
-    ]);
-    return path;
-  });
-  const listPath = join(dir, "list.txt");
-  writeFileSync(listPath, paths.map((p) => `file '${basename(p)}'`).join("\n"));
-  const out = join(OUT_DIR, `voice-sample-${slug(personaId)}.mp3`);
-  // re-encode: stream-copying independently encoded mp3 segments yields broken timestamps
-  ffmpeg(["-f", "concat", "-safe", "0", "-i", listPath, "-ac", "1", "-ar", "44100", "-b:a", "128k", out]);
-  writeFileSync(join(dir, "segments.json"), JSON.stringify(segments, null, 2));
-  return out;
 }
 
 function formatTimestamp(ms: number): string {

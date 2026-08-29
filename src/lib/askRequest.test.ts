@@ -8,6 +8,7 @@ describe("parseAskRequest", () => {
       personaId: "steve",
       question: "Why?",
       history: [],
+      voice: true,
     });
   });
 
@@ -69,5 +70,24 @@ describe("parseAskRequest", () => {
     expect(parseAskRequest(null)).toBeNull();
     expect(parseAskRequest(undefined)).toBeNull();
     expect(parseAskRequest("personaId=steve")).toBeNull();
+  });
+
+  it("defaults voice to on when the field is absent", () => {
+    expect(parseAskRequest({ personaId: "steve", question: "Why?" })?.voice).toBe(true);
+  });
+
+  it("turns voice off only for an explicit false", () => {
+    expect(
+      parseAskRequest({ personaId: "steve", question: "Why?", voice: false })?.voice,
+    ).toBe(false);
+    expect(
+      parseAskRequest({ personaId: "steve", question: "Why?", voice: true })?.voice,
+    ).toBe(true);
+  });
+
+  it("tolerates junk voice values by keeping voice on", () => {
+    expect(
+      parseAskRequest({ personaId: "steve", question: "Why?", voice: "off" })?.voice,
+    ).toBe(true);
   });
 });

@@ -46,7 +46,7 @@ describe("ask retrieval observability", () => {
     const onTrace: AskTraceSink = (name, detail) => observed.push({ name, detail });
 
     await askPersona(
-      "wildfire-expert",
+      "steve-jobs",
       "What causes wildfire smoke?",
       [],
       signal,

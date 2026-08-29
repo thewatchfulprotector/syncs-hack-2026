@@ -30,3 +30,20 @@ export function extractSources(text: string): ExtractedAnswer {
   ];
   return { answer: text.slice(0, match.index).trimEnd(), sources, hasSourcesLine: true };
 }
+
+/**
+ * Display-trim a partially streamed answer: drop a trailing SOURCES line even
+ * while it is still arriving token by token, so it never flashes on screen.
+ */
+export function stripStreamingSourcesTail(text: string): string {
+  const extracted = extractSources(text);
+  if (extracted.hasSourcesLine) return extracted.answer;
+  // greedy prefix: the tail starts at the LAST whitespace-preceded capital S
+  const match = text.match(/^([\S\s]*)[\n\s](S[\S\s]*)$/);
+  if (!match) return text;
+  const tail = match[2];
+  if ("SOURCES:".startsWith(tail) || /^SOURCES:\s*\[?[\d\s,-]*$/.test(tail)) {
+    return match[1].trimEnd();
+  }
+  return text;
+}

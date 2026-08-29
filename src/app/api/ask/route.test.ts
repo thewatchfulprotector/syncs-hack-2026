@@ -32,13 +32,21 @@ function byteStream(...chunks: number[][]): ReadableStream<Uint8Array> {
   });
 }
 
-function askRequest(correlationId: string | null = CORRELATION_ID): Request {
+function askRequest(
+  correlationId: string | null = CORRELATION_ID,
+  body: Record<string, unknown> = {},
+): Request {
   const headers = new Headers({ "Content-Type": "application/json" });
   if (correlationId) headers.set("x-correlation-id", correlationId);
   return new Request("http://localhost/api/ask", {
     method: "POST",
     headers,
-    body: JSON.stringify({ personaId: "test-persona", question: "Why?", history: [] }),
+    body: JSON.stringify({
+      personaId: "test-persona",
+      question: "Why?",
+      history: [],
+      ...body,
+    }),
   });
 }
 
@@ -306,6 +314,28 @@ describe("POST /api/ask latency protocol", () => {
         sources: [2],
         hasSourcesLine: true,
       }),
+    );
+  });
+
+  it("skips TTS entirely when the request opts out of voice", async () => {
+    mocks.askPersona.mockResolvedValueOnce({
+      chunks: [],
+      stream: tokens("First sentence. ", "Second sentence. ", "SOURCES: 1"),
+      timings: { embedMs: 12, queryMs: 7 },
+    });
+
+    const events = await responseEvents(await POST(askRequest(CORRELATION_ID, { voice: false })));
+    const types = events.map((event) => event.type);
+
+    expect(mocks.ttsSentence).not.toHaveBeenCalled();
+    expect(types).not.toContain("audio_chunk");
+    expect(types).not.toContain("audio_sentence_complete");
+    // text clients still get the full protocol shape, in order
+    expect(types.indexOf("generation_complete")).toBeGreaterThan(types.lastIndexOf("token"));
+    expect(types.indexOf("audio_complete")).toBeGreaterThan(types.indexOf("sources"));
+    expect(types.indexOf("done")).toBe(types.indexOf("audio_complete") + 1);
+    expect(events).toContainEqual(
+      expect.objectContaining({ type: "sources", sources: [1], hasSourcesLine: true }),
     );
   });
 

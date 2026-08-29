@@ -9,6 +9,7 @@ const persona: Persona = {
   id: "test-person",
   name: "Test Person",
   description: "someone who answers plainly",
+  blurb: "Someone who answers plainly.",
   quotes: [],
 };
 

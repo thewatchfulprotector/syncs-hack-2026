@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* The design is deliberately light. Gate `dark:` behind a class we never
+   set, so the ui components' dark variants can't half-flip on OS-dark. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,21 +12,55 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-grotesk);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --color-card: #ffffff;
+  --color-border: #e4e4e4;
+  --color-muted-foreground: #9a9a9a;
+  --color-accent: #f5f5f5;
+  --color-ring: #0a0a0a;
+  /* GitHub contribution graph's empty-cell gray */
+  --color-cell: #ebedf0;
+
+  --animate-highlight: highlight 0.6s ease forwards;
+  --animate-flash: flash 0.6s ease forwards;
+
+  @keyframes highlight {
+    0% {
+      background-color: var(--color-cell);
+    }
+    100% {
+      background-color: var(--highlight);
+    }
+  }
+  @keyframes flash {
+    0% {
+      background-color: var(--color-cell);
+    }
+    50% {
+      background-color: var(--highlight);
+    }
+    100% {
+      background-color: var(--color-cell);
+    }
+  }
+}
+
+@layer base {
+  /* Bare `border` utilities pick up the hairline gray instead of v4's
+     currentColor default; explicit border-color classes still win. */
+  * {
+    border-color: var(--color-border);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-grotesk), sans-serif;
 }
 
 button,

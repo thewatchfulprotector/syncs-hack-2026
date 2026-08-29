@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { extractSources } from "./citations";
+import { extractSources, stripStreamingSourcesTail } from "./citations";
 
 describe("extractSources", () => {
   it("splits a trailing SOURCES line from the spoken answer", () => {
@@ -49,5 +49,39 @@ describe("extractSources", () => {
 
   it("handles an empty answer", () => {
     expect(extractSources("")).toEqual({ answer: "", sources: [], hasSourcesLine: false });
+  });
+});
+
+describe("stripStreamingSourcesTail", () => {
+  it("leaves text without a SOURCES tail unchanged", () => {
+    expect(stripStreamingSourcesTail("The smoke is from Canada.")).toBe(
+      "The smoke is from Canada.",
+    );
+  });
+
+  it("strips a complete trailing SOURCES line", () => {
+    expect(stripStreamingSourcesTail("The smoke is from Canada.\nSOURCES: 1,3")).toBe(
+      "The smoke is from Canada.",
+    );
+  });
+
+  it("hides a SOURCES line still being streamed, at any prefix", () => {
+    for (const tail of ["S", "SOU", "SOURCES", "SOURCES:", "SOURCES: 1,", "SOURCES: [2, "]) {
+      expect(stripStreamingSourcesTail(`Answer here.\n${tail}`)).toBe("Answer here.");
+    }
+  });
+
+  it("keeps ordinary words that start with S", () => {
+    expect(stripStreamingSourcesTail("It was built by SpaceX")).toBe("It was built by SpaceX");
+    expect(stripStreamingSourcesTail("Ask Steve")).toBe("Ask Steve");
+  });
+
+  it("keeps a SOURCES mention that is not at the end", () => {
+    const text = "I checked the SOURCES: they were clear.\nMore answer.";
+    expect(stripStreamingSourcesTail(text)).toBe(text);
+  });
+
+  it("handles empty text", () => {
+    expect(stripStreamingSourcesTail("")).toBe("");
   });
 });

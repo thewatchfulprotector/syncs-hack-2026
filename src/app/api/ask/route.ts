@@ -39,7 +39,7 @@ export async function POST(req: Request): Promise<Response> {
   if (!request) {
     return Response.json({ error: "personaId and question are required" }, { status: 400 });
   }
-  const { personaId, question, history: priorTurns } = request;
+  const { personaId, question, history: priorTurns, voice } = request;
   let persona;
   try {
     persona = getPersona(personaId);
@@ -93,6 +93,9 @@ export async function POST(req: Request): Promise<Response> {
         let firstSentenceRecorded = false;
         let ttsChain = Promise.resolve();
         const speak = (fragment: string) => {
+          // chat-only personas opt out of TTS; the rest of the protocol
+          // (tokens, sources, audio_complete, done) is unchanged
+          if (!voice) return;
           const sentence = extractSources(fragment).answer.trim();
           if (!sentence) return;
           if (/^\s*SOURCES:/.test(sentence)) return;
