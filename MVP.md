@@ -61,11 +61,11 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] Chunk metadata schema — `{persona_id, source_file, media_type, speaker, start_ms, end_ms, text}` (timestamp_range stored as numeric start/end ms for direct citation links)
 - [x] Embed chunks with `qwen/qwen3-embedding-8b`, upsert to Pinecone with metadata — verified end-to-end: interview mp3 (diarized to speaker B), synthetic mp4 (video path), .txt doc; retrieval query returned the right chunk with correct citation metadata; test vectors then deleted
 
-### Phase 3 · Retrieval + answer (terminal, hardcoded persona 1)
-- [ ] Test-first: prompt assembly (persona instructions + 3–5 verbatim quotes + retrieved chunks), Pinecone response parsing against a fixture
-- [ ] Query embedding → Pinecone top-k (k≈8) with `persona_id` filter
-- [ ] `gpt-oss-120b` via OpenRouter (Cerebras provider)
-- [ ] End-to-end answer with citations in the terminal
+### Phase 3 · Retrieval + answer (terminal, hardcoded persona 1) — `npm run ask -- --persona wildfire-expert "question"`
+- [x] Test-first: prompt assembly (persona instructions + 3–5 verbatim quotes + retrieved chunks), Pinecone response parsing against a fixture — `src/lib/prompt.ts`, `src/lib/retrieval.ts`, plus `src/lib/citations.ts` (parses the model's trailing `SOURCES: 1,3` line, tolerant of same-line output); real query fixture at `src/lib/fixtures/pinecone-query.json`
+- [x] Query embedding → Pinecone top-k (k≈8) with `persona_id` filter — embedding provider pinned to DeepInfra (unpinned it bounced to Nebius: 0.5–6s swings; pinned it's ~0.5–1s)
+- [x] `gpt-oss-120b` via OpenRouter (Cerebras provider) — streaming SSE, reasoning effort low for faster first token
+- [x] End-to-end answer with citations in the terminal — dev persona `wildfire-expert` (AssemblyAI sample interview); answers arrive in character, SOURCES map to the right chunks with timestamps. Warm timings: embed ~0.5–1s · Pinecone ~0.5s · LLM first token ~0.5s ≈ **~2s before TTS** (cold process adds ~2s Pinecone host resolution — warm the connection at app start in Phase 4/5)
 
 ### Phase 4 · Streaming pipeline (the hard part — protect this phase)
 - [ ] Test-first: sentence splitter over a token stream

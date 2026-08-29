@@ -34,6 +34,16 @@ export function personaIndex(): Index<ChunkMetadata> {
   return index;
 }
 
+/** Top-k similarity search scoped to one persona. */
+export async function queryChunks(vector: number[], personaId: string, topK = 8) {
+  return personaIndex().query({
+    vector,
+    topK,
+    filter: { persona_id: personaId },
+    includeMetadata: true,
+  });
+}
+
 export async function upsertChunks(records: ChunkRecord[]): Promise<void> {
   for (let i = 0; i < records.length; i += UPSERT_BATCH_SIZE) {
     await personaIndex().upsert({ records: records.slice(i, i + UPSERT_BATCH_SIZE) });

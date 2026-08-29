@@ -1,0 +1,50 @@
+{
+  "matches": [
+    {
+      "id": "wildfire-expert:wildfires.mp3:0",
+      "score": 0.601053298,
+      "values": [],
+      "metadata": {
+        "end_ms": 149347,
+        "media_type": "audio",
+        "persona_id": "wildfire-expert",
+        "source_file": "wildfires.mp3",
+        "speaker": "B",
+        "start_ms": 28014,
+        "text": "Good morning. Well, there's a couple of things. The, the season has been pretty dry already. And then the fact that we're getting hit in the US is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid-Atlantic and the Northeast and kind of just dropping the smoke there. It is. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic, smaller than the width of your hair, that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological, your brain. Yeah, so the concentration of particulate matter, I was looking at some of the monitors that we have, was reaching levels of what are in science speak 150 micrograms per meter cubed, which is more than 10 times what the annual average should be in about 4 times higher than what you're supposed to have on a 24-hour average. And so the concentrations of these particles in the air are just much, much, much higher than we typically see, and exposure to those high levels can lead to a host of health problems. It's the youngest, so children obviously, whose bodies are still developing. The elderly who are, you know, their bodies are more in decline and they're more susceptible to the health impacts of breathing the poor air quality."
+      }
+    },
+    {
+      "id": "wildfire-expert:wildfires.mp3:1",
+      "score": 0.566352904,
+      "values": [],
+      "metadata": {
+        "end_ms": 246129,
+        "media_type": "audio",
+        "persona_id": "wildfire-expert",
+        "source_file": "wildfires.mp3",
+        "speaker": "B",
+        "start_ms": 137555,
+        "text": "It's the youngest, so children obviously, whose bodies are still developing. The elderly who are, you know, their bodies are more in decline and they're more susceptible to the health impacts of breathing the poor air quality. And then people who have pre-existing health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution. That's a good question. I mean, I think if In some areas it's much worse than others, and it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations. Unless more fires start burning, I don't expect the concentrations to go up too much higher. Well, I think the fires are going to burn for a little bit longer, but the key for us in the U.S. is the weather system changing. And so right now it's kind of the weather systems that are pulling that air into our Mid-Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. I mean, that is one of the predictions for climate change looking into the future."
+      }
+    },
+    {
+      "id": "wildfire-expert:wildfires.mp3:2",
+      "score": 0.425384521,
+      "values": [],
+      "metadata": {
+        "end_ms": 280379,
+        "media_type": "audio",
+        "persona_id": "wildfire-expert",
+        "source_file": "wildfires.mp3",
+        "speaker": "B",
+        "start_ms": 221055,
+        "text": "And I think the next couple days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. I mean, that is one of the predictions for climate change looking into the future. The fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So yeah, this is probably something that we'll be seeing more frequently. This tends to be much more of an issue in the Western US, so the Eastern US getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that's gonna happen more frequently. Thank you for having me."
+      }
+    }
+  ],
+  "namespace": "__default__",
+  "usage": {
+    "readUnits": 1
+  }
+}
