@@ -15,6 +15,19 @@ describe("isLikelyEcho", () => {
     expect(isLikelyEcho("a revolutionary product comes along", recentSpeech)).toBe(true);
   });
 
+  it.each([
+    [
+      "a small STT substitution",
+      "Every once in a wild, a revolutionary product comes along",
+    ],
+    [
+      "a small STT omission",
+      "Every once in a while revolutionary product comes along",
+    ],
+  ])("tolerates %s in recently played speech", (_case, transcript) => {
+    expect(isLikelyEcho(transcript, recentSpeech)).toBe(true);
+  });
+
   it("lets a genuine new question through", () => {
     expect(isLikelyEcho("What did you announce in 2007?", recentSpeech)).toBe(false);
     expect(isLikelyEcho("Tell me more about Aristotle.", recentSpeech)).toBe(false);
@@ -24,6 +37,22 @@ describe("isLikelyEcho", () => {
     // one- or two-word turns ("Cool.", "Thank you.") are too common to treat as echo
     expect(isLikelyEcho("So?", "so what do you mean by that")).toBe(false);
     expect(isLikelyEcho("Thank you.", "thank you for being here today")).toBe(false);
+    expect(isLikelyEcho("Mm-hmm.", "mm hmm, I can see why you think that")).toBe(false);
+  });
+
+  it("does not treat reordered shared vocabulary as fuzzy echo", () => {
+    expect(
+      isLikelyEcho("Does every revolutionary tutor change a product?", recentSpeech),
+    ).toBe(false);
+  });
+
+  it("requires whole-token equality at the four-token fuzzy boundary", () => {
+    expect(
+      isLikelyEcho(
+        "tell me about art",
+        "tell me about artificial intelligence",
+      ),
+    ).toBe(false);
   });
 
   it("survives punctuation and casing differences", () => {

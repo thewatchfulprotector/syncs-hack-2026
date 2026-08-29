@@ -26,21 +26,39 @@ let index: Index<ChunkMetadata> | undefined;
 export function personaIndex(): Index<ChunkMetadata> {
   if (!index) {
     const apiKey = process.env.PINECONE_API_KEY;
-    const name = process.env.PINECONE_INDEX;
+    const host = process.env.PINECONE_HOST;
     if (!apiKey) throw new Error("missing env var PINECONE_API_KEY");
-    if (!name) throw new Error("missing env var PINECONE_INDEX");
-    index = new Pinecone({ apiKey }).index<ChunkMetadata>(name);
+    if (!host) throw new Error("missing env var PINECONE_HOST");
+    // Supplying the data-plane host avoids a control-plane describeIndex()
+    // lookup on a cold ask. Keep PINECONE_INDEX for administrative scripts.
+    index = new Pinecone({ apiKey }).index<ChunkMetadata>({ host });
   }
   return index;
 }
 
 /** Top-k similarity search scoped to one persona. */
-export async function queryChunks(vector: number[], personaId: string, topK = 8) {
-  return personaIndex().query({
+export async function queryChunks(
+  vector: number[],
+  personaId: string,
+  topK = 8,
+  signal?: AbortSignal,
+) {
+  if (signal?.aborted) throw signal.reason ?? new DOMException("Aborted", "AbortError");
+  const query = personaIndex().query({
     vector,
     topK,
     filter: { persona_id: personaId },
     includeMetadata: true,
+  });
+  if (!signal) return query;
+
+  // Pinecone's public SDK query does not currently expose transport
+  // cancellation. Stop awaiting it immediately so an interrupted turn cannot
+  // hold the route open; attach handlers so its eventual settlement is safe.
+  return new Promise<Awaited<typeof query>>((resolve, reject) => {
+    const onAbort = () => reject(signal.reason ?? new DOMException("Aborted", "AbortError"));
+    signal.addEventListener("abort", onAbort, { once: true });
+    query.then(resolve, reject).finally(() => signal.removeEventListener("abort", onAbort));
   });
 }
 

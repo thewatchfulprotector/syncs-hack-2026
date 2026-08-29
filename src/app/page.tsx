@@ -5,7 +5,8 @@ import { AudioQueue } from "@/lib/audioQueue";
 import { chunkSentence, tailWords } from "@/lib/captions";
 import { extractSources } from "@/lib/citations";
 import { isLikelyEcho } from "@/lib/echoGuard";
-import { startMicStream, type MicSession } from "@/lib/micStream";
+import { prefetchSttToken, startMicStream, type MicSession } from "@/lib/micStream";
+import { capConversationHistory } from "@/lib/prompt";
 import { Orb, type OrbPhase, type OrbPulse } from "./orb";
 
 type Citation = {
@@ -24,7 +25,20 @@ type Turn = {
   sources: Citation[];
 };
 
+type TraceMilestone = {
+  name: string;
+  atMs: number;
+  detail?: Record<string, unknown>;
+};
+
+type ClientTurnTrace = {
+  correlationId: string;
+  startedAt: number;
+  milestones: TraceMilestone[];
+};
+
 const DEFAULT_PERSONA_ID = "wildfire-expert";
+type MicState = "idle" | "requesting-permission" | "capturing" | "ready";
 
 function personaFromUrl(): string {
   if (typeof window === "undefined") return DEFAULT_PERSONA_ID;
@@ -43,6 +57,27 @@ function formatTimestamp(ms: number): string {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
+function decodeBase64Chunk(value: string): Uint8Array {
+  return Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+}
+
+function joinAudioChunks(chunks: Uint8Array[]): Uint8Array {
+  const joined = new Uint8Array(chunks.reduce((total, chunk) => total + chunk.byteLength, 0));
+  let offset = 0;
+  for (const chunk of chunks) {
+    joined.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return joined;
+}
+
+function newCorrelationId(): string {
+  return (
+    globalThis.crypto?.randomUUID?.() ??
+    `turn-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+  );
+}
+
 const MONO = "font-[family-name:var(--font-plex-mono)]";
 
 export default function Home() {
@@ -52,22 +87,31 @@ export default function Home() {
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState<"idle" | "asking">("idle");
   const [speaking, setSpeaking] = useState(false);
-  const [micState, setMicState] = useState<"idle" | "connecting" | "listening">("idle");
+  const [micState, setMicState] = useState<MicState>("idle");
   const [conversationMode, setConversationMode] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [timings, setTimings] = useState<string>("");
   // read after mount: the URL isn't known during server render
   const [personaId, setPersonaId] = useState(DEFAULT_PERSONA_ID);
-  const [debug, setDebug] = useState(false);
+  const debug =
+    typeof window !== "undefined" && window.location.search.includes("debug");
 
   const queueRef = useRef<AudioQueue | null>(null);
   const micRef = useRef<MicSession | null>(null);
   const askingRef = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
+  const conversationModeRef = useRef(false);
+  const turnEpochRef = useRef(0);
+  const captureReadyRef = useRef(false);
+  const transportReadyRef = useRef(false);
+  const speakingRef = useRef(false);
+  const askImplRef = useRef<(raw: string) => void>(() => {});
+  const activeClientTraceRef = useRef<ClientTurnTrace | null>(null);
   const pulseRef = useRef<OrbPulse>({ kickAt: -9999, emph: 0.8 });
-  // everything recently played aloud, for the speaker-to-mic echo guard
-  const recentSpeechRef = useRef("");
+  // Per-segment playback times prevent a new sentence from making an old
+  // phrase look recent again to the speaker-to-mic echo guard.
+  const recentSpeechRef = useRef<Array<{ text: string; echoUntil: number }>>([]);
   const captionTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,21 +119,33 @@ export default function Home() {
     ? "speaking"
     : status === "asking"
       ? "thinking"
-      : micState !== "idle"
+      : micState === "ready"
         ? "listening"
         : "idle";
 
   useEffect(() => {
-    setPersonaId(personaFromUrl());
-    setDebug(window.location.search.includes("debug"));
-    fetch("/api/warmup", { method: "POST" }).catch(() => {});
+    const turnEpoch = turnEpochRef;
+    const asking = askingRef;
+    const activeAbort = abortRef;
+    const mic = micRef;
+    const queue = queueRef;
+    const syncUrlState = setTimeout(() => {
+      setPersonaId(personaFromUrl());
+    }, 0);
+    prefetchSttToken();
     const t = setTimeout(() => {
       setCaption("Tap the orb and say something.");
       setCapVisible(true);
     }, 420);
     return () => {
       clearTimeout(t);
-      micRef.current?.stop();
+      clearTimeout(syncUrlState);
+      turnEpoch.current++;
+      asking.current = false;
+      activeAbort.current?.abort();
+      activeAbort.current = null;
+      mic.current?.stop();
+      queue.current?.dispose();
     };
   }, []);
 
@@ -107,70 +163,179 @@ export default function Home() {
     captionTimers.current = [];
   }
 
+  function speakCaptions(sentence: string, durationSec: number) {
+    const chunks = chunkSentence(sentence);
+    const per = (durationSec * 1000) / chunks.length;
+    chunks.forEach((chunk, i) => {
+      captionTimers.current.push(
+        setTimeout(() => {
+          showCaption(chunk);
+          pulseRef.current = { kickAt: performance.now(), emph: 0.55 + Math.random() * 0.45 };
+        }, i * per),
+      );
+    });
+  }
+
+  function recordClientMilestone(name: string, detail?: Record<string, unknown>) {
+    const active = activeClientTraceRef.current;
+    if (!active) return;
+    const previous = active.milestones.at(-1)?.atMs ?? 0;
+    const atMs = Math.max(previous, performance.now() - active.startedAt);
+    active.milestones.push({ name, atMs, ...(detail ? { detail } : {}) });
+  }
+
+  function recordClientMilestoneOnce(name: string, detail?: Record<string, unknown>) {
+    if (activeClientTraceRef.current?.milestones.some((event) => event.name === name)) return;
+    recordClientMilestone(name, detail);
+  }
+
+  function beginClientTrace(): ClientTurnTrace {
+    const trace = {
+      correlationId: newCorrelationId(),
+      startedAt: performance.now(),
+      milestones: [],
+    };
+    activeClientTraceRef.current = trace;
+    return trace;
+  }
+
+  function ensureQueue(): AudioQueue {
+    if (!queueRef.current) {
+      queueRef.current = new AudioQueue(
+        (value) => {
+          speakingRef.current = value;
+          setSpeaking(value);
+        },
+        (sentence, durationSec) => {
+          recentSpeechRef.current.push({
+            text: sentence,
+            echoUntil: performance.now() + durationSec * 1000 + 5000,
+          });
+          if (recentSpeechRef.current.length > 32) recentSpeechRef.current.shift();
+          speakCaptions(sentence, durationSec);
+        },
+        () => recordClientMilestone("first_pcm_source_scheduled"),
+      );
+    }
+    return queueRef.current;
+  }
+
+  function recentEchoText(): string {
+    const now = performance.now();
+    recentSpeechRef.current = recentSpeechRef.current.filter(
+      (segment) => segment.echoUntil >= now,
+    );
+    return recentSpeechRef.current.map((segment) => segment.text).join(" ").slice(-2000);
+  }
+
   function stopMic() {
     micRef.current?.stop();
     micRef.current = null;
+    captureReadyRef.current = false;
+    transportReadyRef.current = false;
     setMicState("idle");
   }
 
   function startListening() {
     if (micRef.current) return;
-    setMicState("connecting");
+    captureReadyRef.current = false;
+    transportReadyRef.current = false;
+    setMicState("requesting-permission");
     setNotice("");
+    const micTrace = activeClientTraceRef.current ?? beginClientTrace();
     micRef.current = startMicStream({
-      onReady: () => setMicState("listening"),
+      correlationId: micTrace.correlationId,
+      getCorrelationId: () => activeClientTraceRef.current?.correlationId,
+      onTrace: (event) => recordClientMilestone(event.name, event.detail),
+      onCaptureReady: () => {
+        captureReadyRef.current = true;
+        setMicState(transportReadyRef.current ? "ready" : "capturing");
+      },
+      onReady: () => {
+        transportReadyRef.current = true;
+        if (captureReadyRef.current) setMicState("ready");
+      },
       onPartial: (text) => {
         // don't caption the persona's own voice leaking back through the mic
-        if (isLikelyEcho(text, recentSpeechRef.current)) return;
+        if (isLikelyEcho(text, recentEchoText())) return;
         showCaption(tailWords(text, 10));
       },
       onTurnEnd: (text) => {
-        stopMic();
-        // his own voice coming back through the speakers is not a question —
-        // drop it and let conversation mode re-open the mic
-        if (isLikelyEcho(text, recentSpeechRef.current)) {
+        // Played speech is tracked only when its source actually starts and is
+        // bounded to the post-playback echo window.
+        if (isLikelyEcho(text, recentEchoText())) {
           setCapVisible(false);
           return;
         }
-        ask(text);
+        micRef.current?.setFrameForwarding(false);
+        askImplRef.current(text);
       },
       onError: () => {
         stopMic();
+        conversationModeRef.current = false;
         setConversationMode(false);
         setNotice("Microphone unavailable — check permissions and try again.");
       },
     });
   }
 
-  // (re)arm the mic whenever conversation mode is on and he's done talking.
-  // The short delay rides out the moment between audio sentences where
-  // `speaking` can flicker false before the next buffer is scheduled.
-  useEffect(() => {
-    if (!conversationMode || micState !== "idle" || status === "asking" || speaking) return;
-    const timer = setTimeout(startListening, 600);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conversationMode, micState, status, speaking]);
+  /** Off enables capture immediately. During output, the same click is barge-in. */
+  function toggleMicImpl() {
+    if (conversationModeRef.current) {
+      if (askingRef.current || speakingRef.current) {
+        recordClientMilestone("manual_barge_in");
+        turnEpochRef.current++;
+        askingRef.current = false;
+        abortRef.current?.abort();
+        abortRef.current = null;
+        queueRef.current?.stop();
+        micRef.current?.setFrameForwarding(true);
+        clearCaptionTimers();
+        speakingRef.current = false;
+        setStatus("idle");
+        setSpeaking(false);
+        setCapVisible(false);
+        beginClientTrace();
+        recordClientMilestone("turn_armed_after_interruption");
+        return;
+      }
 
-  /** Orb / mic click: a hard toggle. Off → arm the conversation; anything else → stop it all. */
-  const toggleMic = useCallback(() => {
-    const active =
-      conversationMode || micState !== "idle" || phase === "speaking" || phase === "thinking";
-    if (active) {
+      conversationModeRef.current = false;
       setConversationMode(false);
       abortRef.current?.abort();
       queueRef.current?.stop();
+      queueRef.current?.dispose();
+      queueRef.current = null;
       clearCaptionTimers();
       stopMic();
+      askingRef.current = false;
       setStatus("idle");
+      speakingRef.current = false;
       setSpeaking(false);
       setCapVisible(false);
+      activeClientTraceRef.current = null;
       return;
     }
+
+    conversationModeRef.current = true;
     setConversationMode(true);
-    // the re-arm effect starts the session
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, micState, conversationMode]);
+    const clickTrace = beginClientTrace();
+    recordClientMilestone("mic_click");
+    const queue = ensureQueue();
+    recordClientMilestone("playback_context_unlock_start");
+    void queue.unlock().then(
+      () => {
+        if (activeClientTraceRef.current?.correlationId === clickTrace.correlationId) {
+          recordClientMilestone("playback_context_running");
+        }
+      },
+      (err) => setNotice(err instanceof Error ? err.message : String(err)),
+    );
+    // This synchronous call is part of the user gesture—there is no timer.
+    startListening();
+  }
+
+  const toggleMic = toggleMicImpl;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -186,38 +351,27 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, [toggleMic]);
 
-  function speakCaptions(sentence: string, durationSec: number) {
-    const chunks = chunkSentence(sentence);
-    const per = (durationSec * 1000) / chunks.length;
-    chunks.forEach((chunk, i) => {
-      captionTimers.current.push(
-        setTimeout(() => {
-          showCaption(chunk);
-          pulseRef.current = { kickAt: performance.now(), emph: 0.55 + Math.random() * 0.45 };
-        }, i * per),
-      );
-    });
-  }
-
   async function ask(raw: string) {
     const q = raw.trim();
     // ref, not state: state is stale inside mic callbacks, so a double-fired
     // end-of-turn would submit twice before React re-renders
     if (!q || askingRef.current) return;
     askingRef.current = true;
-
-    if (micRef.current) stopMic();
-    queueRef.current?.stop();
+    const epoch = ++turnEpochRef.current;
+    micRef.current?.setFrameForwarding(false);
     clearCaptionTimers();
-    const queue = new AudioQueue(setSpeaking, speakCaptions);
-    queueRef.current = queue;
+    const queue = ensureQueue();
+    queue.beginAnswer();
+    const turnDrain = queue.queueDrained;
     const abort = new AbortController();
     abortRef.current = abort;
 
-    const history = turns.map((t) => ({
-      role: t.who === "You" ? ("user" as const) : ("assistant" as const),
-      content: t.text,
-    }));
+    const history = capConversationHistory(
+      turns.map((t) => ({
+        role: t.who === "You" ? ("user" as const) : ("assistant" as const),
+        content: t.text,
+      })),
+    );
     setTurns((t) => [...t, { who: "You", text: q, sources: [] }]);
     setStatus("asking");
     setNotice("");
@@ -227,63 +381,183 @@ export default function Home() {
     setTimings("");
 
     const t0 = performance.now();
+    let clientTrace = activeClientTraceRef.current;
+    if (
+      !clientTrace ||
+      clientTrace.milestones.some((milestone) => milestone.name === "ask_request_start")
+    ) {
+      clientTrace = beginClientTrace();
+    }
+    const correlationId = clientTrace.correlationId;
+    recordClientMilestone("ask_request_start");
     let full = "";
     let citations: Citation[] = [];
     let answerSources: Citation[] = [];
+    let audioComplete = false;
+    let firstAudioPacketMs: number | undefined;
+    let serverTimings: Record<string, unknown> = {};
+    let serverTrace: unknown;
+    const audioSentences = new Map<number, { text: string; chunks: Uint8Array[] }>();
+    const observeAudioTask = (task: Promise<void>) => {
+      void task.catch((error) => {
+        if (epoch === turnEpochRef.current) {
+          setNotice(`Audio playback skipped: ${error instanceof Error ? error.message : String(error)}`);
+        }
+      });
+    };
+
+    const publishTrace = () => {
+      if (epoch !== turnEpochRef.current) return;
+      const clientTrace = activeClientTraceRef.current;
+      setTimings(
+        JSON.stringify({
+          correlationId,
+          ...serverTimings,
+          clientFirstAudioPacketMs: firstAudioPacketMs,
+          serverTrace,
+          clientTrace:
+            clientTrace?.correlationId === correlationId
+              ? {
+                  correlationId,
+                  milestones: [...clientTrace.milestones],
+                }
+              : undefined,
+        }),
+      );
+    };
 
     try {
       const res = await fetch("/api/ask", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-Correlation-Id": correlationId },
         signal: abort.signal,
         body: JSON.stringify({ personaId, question: q, history }),
       });
       if (!res.ok || !res.body) throw new Error(`ask failed: ${res.status}`);
 
       const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buffered = "";
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffered += decoder.decode(value, { stream: true });
-        const lines = buffered.split("\n");
-        buffered = lines.pop()!;
-        for (const line of lines) {
-          if (!line.trim()) continue;
-          const msg = JSON.parse(line);
-          if (msg.type === "token") {
-            full += msg.text;
-          } else if (msg.type === "audio") {
-            recentSpeechRef.current = (recentSpeechRef.current + " " + msg.text).slice(-2000);
-            queue.enqueue(msg.mp3, msg.text);
-          } else if (msg.type === "citations") {
-            citations = msg.chunks;
-          } else if (msg.type === "sources") {
-            answerSources =
-              msg.hasSourcesLine === true
-                ? (msg.sources as number[]).map((n) => citations[n - 1]).filter(Boolean)
-                : citations;
-          } else if (msg.type === "done") {
-            setTimings(JSON.stringify(msg.timings));
-          } else if (msg.type === "error") {
-            throw new Error(msg.message);
+      try {
+        const decoder = new TextDecoder();
+        let buffered = "";
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffered += decoder.decode(value, { stream: true });
+          const lines = buffered.split("\n");
+          buffered = lines.pop()!;
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            const msg = JSON.parse(line);
+            if (msg.type === "token") {
+              full += msg.text;
+            } else if (msg.type === "audio_chunk") {
+              if (firstAudioPacketMs === undefined) {
+                firstAudioPacketMs = Math.round(performance.now() - t0);
+                recordClientMilestone("first_audio_packet");
+              }
+              const bytes = decodeBase64Chunk(msg.audioBase64);
+              if (
+                msg.format === "pcm_s16le" &&
+                msg.channels === 1 &&
+                Number.isFinite(Number(msg.sampleRate))
+              ) {
+                observeAudioTask(
+                  queue.enqueuePcm16(
+                    bytes,
+                    Number(msg.chunkSeq) === 0 && typeof msg.text === "string"
+                      ? msg.text
+                      : "",
+                    Number(msg.sampleRate),
+                  ),
+                );
+                continue;
+              }
+              const sentenceSeq = Number(msg.sentenceSeq);
+              const pending: { text: string; chunks: Uint8Array[] } = audioSentences.get(
+                sentenceSeq,
+              ) ?? {
+                text: typeof msg.text === "string" ? msg.text : "",
+                chunks: [],
+              };
+              pending.chunks.push(bytes);
+              audioSentences.set(sentenceSeq, pending);
+            } else if (msg.type === "audio_sentence_complete") {
+              const sentenceSeq = Number(msg.sentenceSeq);
+              const pending = audioSentences.get(sentenceSeq);
+              if (pending && pending.chunks.length > 0) {
+                observeAudioTask(
+                  queue.enqueueBytes(joinAudioChunks(pending.chunks), pending.text),
+                );
+                audioSentences.delete(sentenceSeq);
+              }
+            } else if (msg.type === "audio") {
+              // Transitional compatibility with an older deployed server.
+              observeAudioTask(queue.enqueue(msg.mp3, msg.text));
+            } else if (msg.type === "citations") {
+              citations = msg.chunks;
+            } else if (msg.type === "sources") {
+              answerSources =
+                msg.hasSourcesLine === true
+                  ? (msg.sources as number[]).map((n) => citations[n - 1]).filter(Boolean)
+                  : citations;
+            } else if (msg.type === "generation_complete") {
+              if (epoch === turnEpochRef.current) setStatus("idle");
+            } else if (msg.type === "audio_complete") {
+              if (epoch === turnEpochRef.current) {
+                audioComplete = true;
+                queue.markInputComplete();
+              }
+            } else if (msg.type === "done") {
+              serverTimings = msg.timings ?? {};
+              serverTrace = msg.trace;
+              publishTrace();
+            } else if (msg.type === "error") {
+              throw new Error(msg.message);
+            }
           }
         }
+      } finally {
+        await reader.cancel().catch(() => {});
       }
       const answer = extractSources(full).answer;
-      setTurns((t) => [...t, { who: personaName(personaId), text: answer, sources: answerSources }]);
-      setStatus("idle");
+      if (epoch === turnEpochRef.current) {
+        setTurns((t) => [
+          ...t,
+          { who: personaName(personaId), text: answer, sources: answerSources },
+        ]);
+      }
     } catch (err) {
-      setStatus("idle");
-      if (!abort.signal.aborted) {
+      const wasAborted = abort.signal.aborted;
+      if (!wasAborted) abort.abort(err);
+      if (epoch === turnEpochRef.current) setStatus("idle");
+      if (epoch === turnEpochRef.current && !wasAborted) {
         setNotice(err instanceof Error ? err.message : String(err));
         setCapVisible(false);
       }
     } finally {
-      askingRef.current = false;
+      if (epoch === turnEpochRef.current && !audioComplete) queue.markInputComplete();
+      await turnDrain;
+      if (epoch === turnEpochRef.current) {
+        recordClientMilestone("playback_drained");
+        askingRef.current = false;
+        abortRef.current = null;
+        setStatus("idle");
+        if (conversationModeRef.current) {
+          micRef.current?.setFrameForwarding(true);
+          recordClientMilestoneOnce("mic_forwarding_resumed");
+        }
+        publishTrace();
+        if (conversationModeRef.current) {
+          beginClientTrace();
+          recordClientMilestone("turn_armed");
+        }
+      }
     }
   }
+
+  useEffect(() => {
+    askImplRef.current = ask;
+  });
 
   const sampleAmp = useCallback((): number | null => {
     if (micRef.current) return micRef.current.amplitude();
@@ -292,17 +566,19 @@ export default function Home() {
   }, []);
 
   const stateLabel =
-    phase === "listening"
-      ? micState === "connecting"
-        ? "Connecting"
-        : "Listening"
-      : phase === "thinking"
-        ? "Thinking"
-        : phase === "speaking"
-          ? "Speaking"
-          : conversationMode
-            ? "Armed"
-            : "Idle";
+    micState === "requesting-permission"
+      ? "Requesting microphone"
+      : micState === "capturing"
+        ? "Preparing audio · connecting"
+        : phase === "listening"
+          ? "Listening"
+          : phase === "thinking"
+            ? "Thinking"
+            : phase === "speaking"
+              ? "Speaking"
+              : conversationMode
+                ? "Armed"
+                : "Idle";
   const dotColor =
     phase === "listening" ? "#18A15C" : phase === "idle" && !conversationMode ? "#C9C9C9" : "#1F3BE0";
   const persona = personaName(personaId);
@@ -385,6 +661,11 @@ export default function Home() {
               const v = draft.trim();
               if (!v) return;
               setDraft("");
+              // Start/resume playback inside the keyboard user activation so
+              // type-only answers are not blocked by autoplay policy later.
+              void ensureQueue()
+                .unlock()
+                .catch((err) => setNotice(err instanceof Error ? err.message : String(err)));
               ask(v);
             }}
             placeholder="or type here"

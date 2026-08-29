@@ -69,10 +69,10 @@ Ask a question whose answer exists in the source material → their voice starts
 
 ### Phase 4 · Streaming pipeline (the hard part — protect this phase)
 - [x] Test-first: sentence splitter over a token stream — `src/lib/sentences.ts` (incremental, decimal/abbreviation-safe, 11 tests)
-- [x] API route streams LLM tokens — `POST /api/ask` streams NDJSON: citations first (chips render early), then tokens, per-sentence audio, cited sources, timings. TTS runs on a decoupled promise chain so text never stalls on audio. `POST /api/warmup` absorbs cold-start; the page calls it on load
+- [x] API route streams LLM tokens and progressive TTS packets — `POST /api/ask` sends correlated NDJSON lifecycle events, citations, tokens, sentence audio chunks, cited sources, and timings. TTS stays decoupled from token generation; retrieval uses a direct Pinecone host and delayed embedding hedge instead of page-load warmup work.
 - [x] Sentence-by-sentence Eleven Flash v2.5 streaming TTS — with `previous_request_ids` stitching so prosody carries across sentences instead of resetting
 - [x] Browser audio playback queue (gapless between sentences) — `src/lib/audioQueue.ts`: Web Audio timeline scheduling, serialized decode, speaking-state callback for the photo pulse
-- [x] Measure first-audio latency; target < 3s — **measured 4.3–5.1s warm (local prod build, home wifi)**. Breakdown: embed ~1.8–2.9s + Pinecone ~1.3s + LLM first sentence ~0.6s + TTS ~0.45s. Post-retrieval is fast; retrieval is the gap. Embed already races DeepInfra vs Nebius in parallel (caps the 3–16s provider-congestion tail; single-provider spikes hit 16s). **Phase 8 levers: measure from Vercel (datacenter network, not home wifi), trim k, and re-benchmark providers — post-retrieval cost is only ~1s, so retrieval at ~1s total puts first audio at ~2s**
+- [x] Measure first-audio latency; target < 3s — **baseline measured 4.3–5.1s warm (local prod build, home wifi)**. Retrieval was the dominant gap. The serving path now targets Pinecone by host and uses a cancellable DeepInfra-first embedding request with a delayed Nebius hedge; production-region p50/p95 and browser-audible latency still need to be re-measured before claiming the target.
 
 ### Phase 5 · UI (one page)
 - [ ] Photo, text input, answer streaming as text while voice plays

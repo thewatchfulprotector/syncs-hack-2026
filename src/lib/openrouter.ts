@@ -46,6 +46,7 @@ export async function* streamChat(
       models: [CHAT_MODEL, ...FALLBACK_MODELS.filter((m) => m !== CHAT_MODEL)],
       provider: { order: ["cerebras", "groq"], allow_fallbacks: true },
       ...(REASONING_MODELS.test(CHAT_MODEL) ? { reasoning: { effort: "low" } } : {}),
+      max_completion_tokens: 256,
       stream: true,
       messages,
     }),
@@ -85,14 +86,17 @@ async function embedBatch(
   batch: string[],
   providerOrder: string[],
   timeoutMs: number,
+  signal?: AbortSignal,
 ): Promise<number[][]> {
   const res = await fetch(`${BASE}/embeddings`, {
     method: "POST",
     headers: headers(),
-    signal: AbortSignal.timeout(timeoutMs),
+    signal: withTimeout(timeoutMs, signal),
     body: JSON.stringify({
       model: EMBEDDING_MODEL,
-      provider: { order: providerOrder, allow_fallbacks: true },
+      // Each hedge leg must represent exactly one independent provider. An
+      // OpenRouter fallback inside a leg hides the winner and multiplies work.
+      provider: { order: providerOrder, allow_fallbacks: false },
       input: batch,
     }),
   });
@@ -102,23 +106,98 @@ async function embedBatch(
   return sorted.map((d: { embedding: number[] }) => d.embedding);
 }
 
+const EMBED_HEDGE_DELAY_MS = 400;
+
+function abortError(signal?: AbortSignal): unknown {
+  return signal?.reason ?? new DOMException("Aborted", "AbortError");
+}
+
+/** DeepInfra-first delayed hedge for the latency-sensitive one-query path. */
+async function embedSingle(
+  texts: string[],
+  signal?: AbortSignal,
+  onProviderSelected?: (provider: string) => void,
+): Promise<number[][]> {
+  if (signal?.aborted) throw abortError(signal);
+
+  const primaryController = new AbortController();
+  const hedgeController = new AbortController();
+  const primarySignal = signal
+    ? AbortSignal.any([signal, primaryController.signal])
+    : primaryController.signal;
+  const hedgeSignal = signal
+    ? AbortSignal.any([signal, hedgeController.signal])
+    : hedgeController.signal;
+
+  const primary = embedBatch(texts, ["deepinfra"], EMBED_TIMEOUT_MS, primarySignal).then(
+    (vectors) => ({ vectors, provider: "deepinfra" }),
+  );
+  let hedgeTimer: ReturnType<typeof setTimeout> | undefined;
+  let startHedge!: () => void;
+
+  const hedge = new Promise<{ vectors: number[][]; provider: string }>((resolve, reject) => {
+    let started = false;
+    const rejectIfAborted = () => {
+      if (started) return;
+      if (hedgeTimer) clearTimeout(hedgeTimer);
+      reject(abortError(hedgeSignal));
+    };
+
+    startHedge = () => {
+      if (started) return;
+      started = true;
+      if (hedgeTimer) clearTimeout(hedgeTimer);
+      hedgeSignal.removeEventListener("abort", rejectIfAborted);
+      embedBatch(texts, ["nebius"], EMBED_TIMEOUT_MS, hedgeSignal).then(
+        (vectors) => resolve({ vectors, provider: "nebius" }),
+        reject,
+      );
+    };
+
+    hedgeSignal.addEventListener("abort", rejectIfAborted, { once: true });
+    hedgeTimer = setTimeout(startHedge, EMBED_HEDGE_DELAY_MS);
+  });
+
+  // A failed primary should not also pay the hedge delay.
+  primary.catch(() => startHedge());
+
+  try {
+    const winner = await Promise.any([primary, hedge]);
+    onProviderSelected?.(winner.provider);
+    return winner.vectors;
+  } catch (err) {
+    if (signal?.aborted) throw abortError(signal);
+    if (err instanceof AggregateError) throw err.errors[0];
+    throw err;
+  } finally {
+    if (hedgeTimer) clearTimeout(hedgeTimer);
+    // This cancels the loser (or a hedge that never needed to start).
+    primaryController.abort();
+    hedgeController.abort();
+  }
+}
+
 /** Embed texts with qwen3-embedding-8b, batching internally. Order is preserved. */
-export async function embedTexts(texts: string[]): Promise<number[][]> {
-  // Single-text embeds sit on the ask hot path, and each provider's latency has
-  // a bad congestion tail (0.5s typical, 3-16s spikes). Race the two providers
-  // that serve this model — uncorrelated backends — and take the winner.
+export async function embedTexts(
+  texts: string[],
+  signal?: AbortSignal,
+  onProviderSelected?: (provider: string) => void,
+): Promise<number[][]> {
   if (texts.length === 1) {
-    return Promise.any([
-      embedBatch(texts, ["deepinfra"], EMBED_TIMEOUT_MS),
-      embedBatch(texts, ["nebius"], EMBED_TIMEOUT_MS),
-    ]).catch((err: AggregateError) => {
-      throw err.errors[0];
-    });
+    return embedSingle(texts, signal, onProviderSelected);
   }
   const vectors: number[][] = [];
   for (let i = 0; i < texts.length; i += EMBED_BATCH_SIZE) {
-    // ingest batches are big and latency-insensitive — allow a slow provider
-    vectors.push(...(await embedBatch(texts.slice(i, i + EMBED_BATCH_SIZE), ["deepinfra"], 120_000)));
+    // Ingest batches are latency-insensitive, but still keep routing explicit.
+    vectors.push(
+      ...(await embedBatch(
+        texts.slice(i, i + EMBED_BATCH_SIZE),
+        ["deepinfra"],
+        120_000,
+        signal,
+      )),
+    );
   }
+  onProviderSelected?.("deepinfra");
   return vectors;
 }

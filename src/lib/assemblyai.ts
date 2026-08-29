@@ -23,7 +23,10 @@ function headers(): Record<string, string> {
 export async function createStreamingToken(expiresInSeconds = 60): Promise<string> {
   const res = await fetch(
     `https://streaming.assemblyai.com/v3/token?expires_in_seconds=${expiresInSeconds}`,
-    { headers: { Authorization: headers().Authorization } },
+    {
+      headers: { Authorization: headers().Authorization },
+      signal: AbortSignal.timeout(5_000),
+    },
   );
   if (!res.ok) throw new Error(`AssemblyAI token: ${res.status} ${await res.text()}`);
   const { token } = await res.json();

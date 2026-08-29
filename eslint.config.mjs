@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated from dc-runtime sources; lint the generator, not its output.
+    "design/support.js",
   ]),
 ]);
 
