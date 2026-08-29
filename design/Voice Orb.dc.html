@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#ffffff; }
+  * { box-sizing:border-box; }
+  a { color:#0A0A0A; text-decoration:none; }
+  a:hover { color:#0A0A0A; text-decoration:underline; }
+  button { font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+  input { font:inherit; }
+  ::selection { background:#0A0A0A; color:#ffffff; }
+</style>
+</helmet>
+<div style="position:relative; width:100%; height:100vh; min-height:480px; background:#ffffff; color:#0A0A0A; font-family:'Space Grotesk', system-ui, sans-serif; display:flex; flex-direction:column; overflow:hidden;">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; padding:26px 30px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase;">
+    <div style="display:flex; align-items:center; gap:9px;">
+      <span style="width:5px; height:5px; border-radius:50%; transition:opacity 320ms ease, background 420ms ease; background:{{ dotColor }}; opacity:{{ dotOpacity }};"></span>
+      <span>{{ stateLabel }}</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:9px;">
+      <button onClick="{{ pickDemo }}" style="letter-spacing:0.16em; transition:opacity 200ms ease; opacity:{{ demoOpacity }};">Demo</button>
+      <span style="opacity:0.25;">/</span>
+      <button onClick="{{ pickLive }}" style="letter-spacing:0.16em; transition:opacity 200ms ease; opacity:{{ liveOpacity }};">Live</button>
+      <span style="width:1px; height:11px; background:#E4E4E4; margin:0 6px;"></span>
+      <button onClick="{{ togglePanel }}" style="white-space:nowrap; letter-spacing:0.16em; transition:opacity 200ms ease; opacity:{{ panelBtnOpacity }};">Transcript</button>
+    </div>
+  </div>
+
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 32px; min-height:0;">
+    <canvas ref="{{ canvasRef }}" onClick="{{ toggleMic }}" style="display:block; flex:0 1 auto; width:min(52vh, 620px); height:min(52vh, 620px); min-width:170px; min-height:170px; cursor:pointer; will-change:filter;"></canvas>
+
+    <div onClick="{{ openPanel }}" style="width:100%; max-width:960px; flex:0 0 auto; padding-top:20px; text-align:center; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:18px;">
+      <div style="font-size:clamp(16px, 1.85vw, 26px); font-weight:300; line-height:1.4; letter-spacing:-0.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; min-height:1.4em; transition:opacity 460ms ease, transform 460ms ease; opacity:{{ capOpacity }}; transform:translateY({{ capShift }});">{{ caption }}</div>
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; transition:opacity 240ms ease; opacity:{{ hintOpacity }};" style-hover="opacity:0.75;">Open transcript</div>
+    </div>
+  </div>
+
+  <div style="flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:14px; padding:0 32px clamp(20px, 4vh, 38px);">
+    <div style="display:flex; align-items:center; justify-content:center; gap:16px;">
+      <button onClick="{{ toggleMic }}" title="{{ micLabel }}" style="flex:0 0 auto; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:transparent; transition:border-color 320ms ease, transform 220ms ease; border:1px solid {{ micBorder }};" style-hover="transform:scale(1.05);">
+        <sc-if value="{{ isListening }}" hint-placeholder-val="{{ false }}">
+          <span style="width:15px; height:15px; border-radius:50%; background:{{ micTint }};"></span>
+        </sc-if>
+        <sc-if value="{{ notListening }}" hint-placeholder-val="{{ true }}">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ micTint }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9.25" y="3" width="5.5" height="10.5" rx="2.75"></rect>
+            <path d="M5.5 11.2a6.5 6.5 0 0 0 13 0"></path>
+            <path d="M12 17.7v3.1"></path>
+          </svg>
+        </sc-if>
+      </button>
+      <sc-if value="{{ showInput }}" hint-placeholder-val="{{ true }}">
+        <input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="or type here" style="width:min(400px, 66vw); border:none; border-bottom:1px solid #EAEAEA; background:transparent; text-align:left; padding:11px 2px; font-size:14px; font-weight:300; color:#0A0A0A; outline:none;" />
+      </sc-if>
+    </div>
+    <sc-if value="{{ hasNotice }}" hint-placeholder-val="{{ false }}">
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:#9A9A9A; text-align:center; max-width:420px; line-height:1.7;">{{ notice }}</div>
+    </sc-if>
+  </div>
+
+  <div style="position:absolute; top:0; right:0; bottom:0; width:min(400px, 88vw); background:#ffffff; border-left:1px solid #EAEAEA; display:flex; flex-direction:column; transition:transform 520ms cubic-bezier(0.22,0.61,0.24,1); transform:translateX({{ panelX }});">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:26px 26px 18px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase;">
+      <span>Transcript</span>
+      <button onClick="{{ closePanel }}" style="font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.16em;">Close</button>
+    </div>
+    <div ref="{{ scrollRef }}" style="flex:1; overflow-y:auto; padding:0 26px 32px;">
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:14px; font-weight:300; color:#9A9A9A; line-height:1.6; padding-top:6px;">Nothing said yet.</div>
+      </sc-if>
+      <sc-for list="{{ turns }}" as="turn" hint-placeholder-count="3">
+        <div style="padding:20px 0; border-top:1px solid #F1F1F1;">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:#9A9A9A; margin-bottom:9px;">{{ turn.who }}</div>
+          <div style="font-size:15px; font-weight:300; line-height:1.58; text-wrap:pretty; color:{{ turn.ink }};">{{ turn.text }}</div>
+          <sc-if value="{{ turn.hasSources }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:13px;">
+              <sc-for list="{{ turn.sources }}" as="src" hint-placeholder-count="2">
+                <a href="{{ src.url }}" style="display:inline-flex; align-items:center; white-space:nowrap; font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; border:1px solid #E4E4E4; border-radius:2px; padding:5px 8px; color:#0A0A0A; text-decoration:none;" style-hover="border-color:#0A0A0A; text-decoration:none;">{{ src.title }}</a>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 860 },
+  &quot;startMode&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;demo&quot;, &quot;live&quot;], &quot;default&quot;: &quot;demo&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Behaviour&quot; },
+  &quot;showTypedInput&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behaviour&quot; },
+  &quot;forceOffline&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behaviour&quot; },
+  &quot;rings&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 13, &quot;min&quot;: 8, &quot;max&quot;: 22, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Orb&quot; },
+  &quot;reactivity&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.4, &quot;max&quot;: 1.8, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Orb&quot; },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#1F3BE0&quot;, &quot;options&quot;: [&quot;#1F3BE0&quot;, &quot;#2660F0&quot;, &quot;#0A0A0A&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Orb&quot; },
+  &quot;userAccent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#18A15C&quot;, &quot;options&quot;: [&quot;#18A15C&quot;, &quot;#0E8F6E&quot;, &quot;#3BB273&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Orb&quot; },
+  &quot;speakerShift&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0, &quot;max&quot;: 1.6, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Orb&quot; }
+}">
+class Component extends DCLogic {
+  docs = {
+    pipeline:  { title:'Voice pipeline',  url:'#doc-pipeline',  body:'Mic audio streams to a streaming recogniser; partial transcripts start retrieval early, so the model begins speaking before the turn is fully transcribed.' },
+    latency:   { title:'Latency budget',  url:'#doc-latency',   body:'Target is 480 milliseconds from end of user speech to first audio out: 90 for recognition, 140 for retrieval, 180 to first token, 70 for synthesis.' },
+    barge:     { title:'Barge-in',        url:'#doc-barge',     body:'Playback is cancelled within one audio frame of detected user speech, and the interrupted sentence stays in context marked as unheard.' },
+    retrieval: { title:'Retrieval index', url:'#doc-retrieval', body:'Sources are chunked at 400 tokens with 60 tokens of overlap, and every spoken answer carries the chunk ids it used so the transcript can link them.' },
+    privacy:   { title:'Privacy',         url:'#doc-privacy',   body:'Raw audio is discarded once a transcript exists. Transcripts are kept for 30 days unless the session is marked ephemeral.' },
+    prosody:   { title:'Voice & prosody', url:'#doc-prosody',   body:'Emphasis is predicted per word and drives both the synthesiser and the visual amplitude envelope, so the orb moves with meaning rather than volume alone.' }
+  };
+
+  canned = [
+    { k:['latency','fast','speed','slow','delay','lag'], a:'We hold a 480 millisecond budget from the moment you stop talking to the moment I start. Most of that is retrieval and the first token, not the voice itself.', s:['latency','pipeline'] },
+    { k:['interrupt','cut','stop','barge','talk over'], a:'You can talk straight over me. Playback stops within one audio frame, and the sentence I never finished is kept in context marked as unheard.', s:['barge'] },
+    { k:['source','cite','link','where','rag','retriev','index'], a:'Every answer carries the chunk ids it actually used. Chunks are 400 tokens with 60 tokens of overlap, so the links in the transcript point at what I read.', s:['retrieval','pipeline'] },
+    { k:['privacy','record','store','data','retention','keep'], a:'Raw audio is thrown away as soon as there is a transcript. Transcripts last 30 days, or not at all if the session is ephemeral.', s:['privacy'] },
+    { k:['orb','dots','visual','animation','move','loud'], a:'Emphasis is predicted per word before anything is spoken. It drives the synthesiser and the dots at the same time, so the ring swells on meaning rather than raw volume.', s:['prosody'] },
+    { k:['how','work','pipeline','architecture','build'], a:'Your voice goes to a streaming recogniser, partial text triggers retrieval, and synthesis starts on the first sentence. Nothing waits for the whole turn to finish.', s:['pipeline','latency'] }
+  ];
+
+  fallbacks = [
+    { a:'My notes only cover the voice pipeline, latency, barge-in, retrieval, privacy and prosody. Ask me about one of those and I can be specific.', s:[] },
+    { a:'That is outside what I have been given. Try latency, interruptions, how sources get cited, or what happens to your audio.', s:[] }
+  ];
+
+  state = {
+    mode: 'demo', phase: 'idle', caption: '', capVisible: false,
+    turns: [], panelOpen: false, draft: '', notice: '', hovered: false
+  };
+
+  amp = 0.02; micAmp = null; kickAt = -9999; wordEmph = 0.8; dots = [];
+  pos = 0; posV = 0; scl = 0.96; sclV = 0; col = [10, 10, 10]; rip = null;
+
+  hexRgb(h) {
+    const s = String(h || '#0A0A0A').replace('#', '');
+    const f = s.length === 3 ? s.split('').map(c => c + c).join('') : s;
+    return [parseInt(f.slice(0, 2), 16) || 0, parseInt(f.slice(2, 4), 16) || 0, parseInt(f.slice(4, 6), 16) || 0];
+  }
+
+  canvasRef = (el) => { if (el && el !== this.canvas) { this.canvas = el; this.setupCanvas(); } };
+  scrollRef = (el) => { this.scroller = el; };
+
+  componentDidMount() {
+    this.setState({ mode: this.props.startMode === 'live' ? 'live' : 'demo' });
+    this.buildDots();
+    this.setupCanvas();
+    this.raf = requestAnimationFrame(this.draw);
+    this.onKey = (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+      if (e.code === 'Space') { e.preventDefault(); this.toggleMic(); }
+      if (e.key === 'Escape') this.setState({ panelOpen: false });
+    };
+    window.addEventListener('keydown', this.onKey);
+    setTimeout(() => this.setCaption('Tap the orb and say something.'), 420);
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('keydown', this.onKey);
+    this.hardStop();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.rings !== this.props.rings) { this.buildDots(); }
+    if (prevState.phase !== this.state.phase) {
+      const to = this.state.phase, from = prevState.phase;
+      const outward = to === 'speaking' || to === 'thinking';
+      const inward = to === 'listening';
+      if ((outward && from === 'listening') || (inward && (from === 'speaking' || from === 'thinking' || from === 'idle')) || (outward && from === 'idle')) {
+        this.rip = { at: performance.now(), dir: outward ? 1 : -1 };
+      }
+    }
+    if (prevState.turns !== this.state.turns && this.scroller) {
+      this.scroller.scrollTop = this.scroller.scrollHeight;
+    }
+  }
+
+  buildDots() {
+    const rings = Math.max(6, Math.round(this.props.rings ?? 13));
+    const dots = [{ rf: 0, a: 0, n: 0.5 }];
+    for (let i = 1; i <= rings; i++) {
+      const rf = i / rings, n = 6 * i;
+      for (let k = 0; k < n; k++) {
+        dots.push({ rf, a: (k / n) * Math.PI * 2, n: (i * 7 + k * 13) % 97 / 97 });
+      }
+    }
+    this.dots = dots;
+  }
+
+  setupCanvas() {
+    const c = this.canvas; if (!c) return;
+    const box = c.getBoundingClientRect();
+    const size = Math.max(160, Math.round(Math.min(box.width, box.height) || 480));
+    const dpr = window.devicePixelRatio || 1;
+    if (this.size === size && this.dprUsed === dpr) return;
+    this.size = size; this.dprUsed = dpr;
+    c.width = Math.round(size * dpr); c.height = Math.round(size * dpr);
+    this.ctx = c.getContext('2d');
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!this.ro && window.ResizeObserver) {
+      this.ro = new ResizeObserver(() => this.setupCanvas());
+      this.ro.observe(c);
+    }
+  }
+
+  offline() { return this.props.forceOffline === true || this.state.phase === 'offline'; }
+
+  updateAmp(t) {
+    let target = 0.02;
+    const p = this.state.phase;
+    if (this.offline()) target = 0.0;
+    else if (p === 'listening') target = this.micAmp != null ? this.micAmp : 0.14 + 0.07 * Math.sin(t * 0.004);
+    else if (p === 'speaking') {
+      const k = Math.max(0, 1 - (t - this.kickAt) / 280);
+      const s1 = 0.5 + 0.5 * Math.sin(t * 0.019), s2 = 0.5 + 0.5 * Math.sin(t * 0.031 + 1.7);
+      target = 0.20 + 0.48 * this.wordEmph * (0.55 * s1 + 0.45 * s2) + 0.30 * k * this.wordEmph;
+    } else if (p === 'thinking') target = 0.055 + 0.03 * Math.sin(t * 0.002);
+    target = Math.max(0, Math.min(1, target));
+    this.amp += (target - this.amp) * (target > this.amp ? 0.30 : 0.10);
+  }
+
+  readMic() {
+    if (!this.analyser) return;
+    const buf = this.timeBuf || (this.timeBuf = new Uint8Array(this.analyser.fftSize));
+    this.analyser.getByteTimeDomainData(buf);
+    let sum = 0;
+    for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v; }
+    const rms = Math.sqrt(sum / buf.length);
+    this.micAmp = Math.min(1, Math.pow(Math.min(1, rms * 5.5), 0.75));
+  }
+
+  draw = (t) => {
+    this.raf = requestAnimationFrame(this.draw);
+    const ctx = this.ctx; if (!ctx) return;
+    if (this.state.phase === 'listening') this.readMic();
+    this.updateAmp(t);
+    const amp = this.amp, off = this.offline();
+    const phase = off ? 'offline' : this.state.phase;
+    const listening = phase === 'listening';
+    const size = this.size || 480, maxR = size * 0.325;
+    const unit = size / 560;
+    const gain = this.props.reactivity ?? 1;
+
+    // Vertical hand-off: small and low for you, large and high for the agent.
+    const k = this.props.speakerShift ?? 1;
+    const dt = Math.min(64, t - (this._t == null ? t - 16 : this._t));
+    this._t = t;
+
+    // Critically damped glide: no overshoot, no bounce, frame-rate independent.
+    const posTarget = listening ? k * 0.165 : (phase === 'speaking' ? k * -0.105 : 0);
+    this.pos += (posTarget - this.pos) * (1 - Math.exp(-dt / 620));
+
+    // Directional motion streak: each dot stretches along travel, no gaussian blur.
+    if (this.canvas && this._blurW !== 0) { this.canvas.style.filter = 'none'; this._blurW = 0; }
+    const velPx = (this.pos - (this._posPrev == null ? this.pos : this._posPrev)) * size * (16 / Math.max(6, dt));
+    this._posPrev = this.pos;
+    const streak = Math.min(18, Math.abs(velPx) * 3.4);
+
+    const tgt = this.hexRgb(listening ? (this.props.userAccent || '#18A15C') : (this.props.accent || '#1F3BE0'));
+    for (let i = 0; i < 3; i++) this.col[i] += (tgt[i] - this.col[i]) * 0.022;
+
+    // Energy runs inward while you speak, outward while the agent speaks.
+    const ring = listening ? (0.60 - 0.50 * amp) : (0.055 + 0.60 * amp);
+    const band = (listening ? 0.06 : 0.05) + 0.075 * amp;
+
+    let ripFr = -1, ripAmp = 0;
+    if (this.rip) {
+      const p = (t - this.rip.at) / 560;
+      if (p >= 1) this.rip = null;
+      else {
+        const e = 1 - Math.pow(1 - p, 3);
+        ripFr = this.rip.dir > 0 ? 0.05 + 0.95 * e : 1.0 - 0.95 * e;
+        ripAmp = Math.pow(1 - p, 1.4);
+      }
+    }
+
+    const c = size / 2;
+    ctx.setTransform(this.dprUsed, 0, 0, this.dprUsed, 0, 0);
+    ctx.clearRect(0, 0, size, size);
+    ctx.translate(0, this.pos * size);
+    ctx.fillStyle = 'rgb(' + Math.round(this.col[0]) + ',' + Math.round(this.col[1]) + ',' + Math.round(this.col[2]) + ')';
+    for (const d of this.dots) {
+      const spin = d.a + t * 0.000032 * (1.45 - 0.55 * d.rf);
+      const rr = d.rf * maxR * (1 + 0.010 * Math.sin(t * 0.0007 + d.rf * 9) + 0.006 * Math.sin(t * 0.0011 - d.rf * 4));
+      const x = c + Math.cos(spin) * rr, y = c + Math.sin(spin) * rr;
+      const base = unit * (1.7 + 0.6 * (1 - d.rf)) * (1 + 0.07 * Math.sin(t * 0.0009 + d.n * 12.6));
+      if (off) {
+        if (d.n > 0.62) continue;
+        ctx.globalAlpha = 0.2;
+        ctx.beginPath(); ctx.arc(x, y, Math.max(0.7, base * 0.8), 0, 6.2832); ctx.fill();
+        continue;
+      }
+      const lobe = 0.42 * Math.sin(spin * 3 + t * 0.0016) + 0.20 * Math.sin(spin * 5 - t * 0.0011);
+      const dist = Math.abs(d.rf - ring * (1 + 0.16 * lobe * amp));
+      let g = Math.exp(-Math.pow(dist / band, 2));
+      if (ripAmp > 0) {
+        const g2 = ripAmp * Math.exp(-Math.pow((d.rf - ripFr) / 0.055, 2));
+        g = Math.max(g, g2 * 0.92);
+      }
+      const breathe = 1 + 0.05 * Math.sin(t * 0.0009 + d.rf * 5);
+      const rad = base * (1 + 3.2 * g * gain * (0.30 + 0.95 * amp)) * breathe;
+      const r = Math.max(0.7, rad);
+      ctx.globalAlpha = Math.min(1, 0.86 + 0.14 * g) * (streak > 0.5 ? 1 - Math.min(0.3, streak / 60) : 1);
+      ctx.beginPath();
+      if (streak > 0.5) ctx.ellipse(x, y, r, r + streak * (0.55 + 0.45 * g), 0, 0, 6.2832);
+      else ctx.arc(x, y, r, 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  setCaption(text) {
+    clearTimeout(this._capT); clearTimeout(this._capHide);
+    this.setState({ capVisible: false });
+    this._capT = setTimeout(() => this.setState({ caption: text, capVisible: true }), 150);
+  }
+  hideCaption(delay) {
+    clearTimeout(this._capHide); clearTimeout(this._capT);
+    this._capHide = setTimeout(() => this.setState({ capVisible: false }), delay || 0);
+  }
+
+  toggleMic = () => {
+    const p = this.state.phase;
+    if (p === 'speaking' || p === 'thinking') { this.hardStop(); this.setState({ phase: 'idle' }); this.hideCaption(0); return; }
+    if (p === 'listening') this.stopVoice(); else this.startVoice();
+  };
+
+  async startMicMeter() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      this.stream = stream;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      this.ac = this.ac || new AC();
+      if (this.ac.state === 'suspended') await this.ac.resume();
+      this.analyser = this.ac.createAnalyser();
+      this.analyser.fftSize = 512;
+      this.ac.createMediaStreamSource(stream).connect(this.analyser);
+    } catch (e) {
+      this.micAmp = null;
+    }
+  }
+  stopMicMeter() {
+    this.analyser = null; this.micAmp = null;
+    if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; }
+  }
+
+  startVoice() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.finalText = '';
+    if (SR) {
+      const r = new SR();
+      r.lang = 'en-US'; r.interimResults = true; r.continuous = true;
+      r.onresult = (e) => {
+        let fin = '', mid = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const s = e.results[i];
+          if (s.isFinal) fin += s[0].transcript; else mid += s[0].transcript;
+        }
+        if (fin) { this.finalText = (this.finalText + ' ' + fin).trim(); this.setState({ caption: this.tail(this.finalText, 10), capVisible: true }); }
+        else if (mid) this.setState({ caption: this.tail(mid, 10), capVisible: true });
+      };
+      r.onerror = () => {};
+      r.onend = () => { if (this.state.phase === 'listening') this.stopVoice(); };
+      this.rec = r;
+      try { r.start(); } catch (e) {}
+      this.setState({ notice: '' });
+    }
+    this.startMicMeter();
+    this.setState({ phase: 'listening' });
+    this.setCaption('Listening.');
+  }
+
+  stopVoice() {
+    if (this.rec) { this.rec.onend = null; try { this.rec.stop(); } catch (e) {} this.rec = null; }
+    this.stopMicMeter();
+    const txt = (this.finalText || '').trim();
+    this.finalText = '';
+    if (txt) this.send(txt);
+    else { this.setState({ phase: 'idle' }); this.hideCaption(0); }
+  }
+
+  hardStop() {
+    clearTimeout(this._sayT); clearInterval(this._fakeBoundary); clearTimeout(this._watchdog);
+    this.queue = [];
+    if (this.rec) { this.rec.onend = null; try { this.rec.stop(); } catch (e) {} this.rec = null; }
+    this.stopMicMeter();
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  }
+
+  onDraft = (e) => this.setState({ draft: e.target.value });
+  onDraftKey = (e) => {
+    if (e.key !== 'Enter') return;
+    const v = this.state.draft.trim();
+    if (!v) return;
+    this.setState({ draft: '' });
+    this.hardStop();
+    this.send(v);
+  };
+
+  pushTurn(who, text, sourceIds) {
+    const srcs = (sourceIds || []).map(id => this.docs[id]).filter(Boolean);
+    this.setState(s => ({
+      turns: s.turns.concat([{ who, text, ink: who === 'You' ? '#6E6E6E' : '#0A0A0A', hasSources: srcs.length > 0, sources: srcs }])
+    }));
+  }
+
+  matchCanned(text) {
+    const q = text.toLowerCase();
+    for (const c of this.canned) if (c.k.some(k => q.includes(k))) return c;
+    return this.fallbacks[this.state.turns.length % this.fallbacks.length];
+  }
+
+  async send(text) {
+    this.pushTurn('You', text, []);
+    this.setState({ phase: 'thinking' });
+    this.hideCaption(0);
+    if (this.state.mode === 'live' && window.claude && window.claude.complete) {
+      try {
+        const kb = Object.keys(this.docs).map(id => '[' + id + '] ' + this.docs[id].title + ': ' + this.docs[id].body).join('\n');
+        const hist = this.state.turns.slice(-6).map(t => t.who + ': ' + t.text).join('\n');
+        const prompt = 'You are a voice assistant for a conversational speech model. Answer ONLY from the source notes. Speak in one to three short spoken sentences: plain words, no lists, no markdown.\n\nSOURCE NOTES:\n' + kb + '\n\nCONVERSATION SO FAR:\n' + hist + '\nUser: ' + text + '\n\nReply with JSON only: {"reply":"...","sources":["id","id"]} using the bracketed ids you actually relied on. If the notes do not cover the question, say so briefly with an empty sources array.';
+        const raw = await window.claude.complete(prompt);
+        let out = null;
+        try { out = JSON.parse(String(raw).replace(/```json|```/g, '').trim()); } catch (e) {}
+        const reply = out && out.reply ? out.reply : String(raw || '').trim();
+        if (!reply) throw new Error('empty');
+        this.respond(reply, (out && out.sources) || []);
+        return;
+      } catch (e) {
+        this.setState({ phase: 'offline', notice: 'Live connection failed — falling back to the demo script.' });
+        this.setCaption('Connection lost.');
+        setTimeout(() => { this.setState({ phase: 'thinking' }); const c = this.matchCanned(text); this.respond(c.a, c.s); }, 1700);
+        return;
+      }
+    }
+    const c = this.matchCanned(text);
+    this._sayT = setTimeout(() => this.respond(c.a, c.s), 520);
+  }
+
+  respond(reply, sources) {
+    this.pushTurn('Agent', reply, sources);
+    this.speak(reply);
+  }
+
+  speak(reply) {
+    const parts = String(reply).match(/[^.!?]+[.!?]*/g) || [reply];
+    this.queue = parts.map(s => s.trim()).filter(Boolean);
+    this.setState({ phase: 'speaking', notice: '' });
+    this.nextSentence();
+  }
+
+  // One line at a time, 6-10 words, never straddling a sentence boundary.
+  chunkSentence(sentence) {
+    const words = sentence.trim().split(/\s+/).filter(Boolean);
+    const n = words.length;
+    if (n <= 10) return [words.join(' ')];
+    const k = Math.ceil(n / 10);
+    const target = Math.max(6, Math.ceil(n / k));
+    const chunks = [];
+    let i = 0;
+    while (i < n) {
+      let take = Math.min(target, n - i);
+      if (i + take < n) {
+        for (const off of [0, -1, 1]) {
+          const idx = i + take - 1 + off;
+          if (idx > i && idx < n - 1 && /[,;:—-]$/.test(words[idx])) { take = idx - i + 1; break; }
+        }
+      }
+      const rest = n - (i + take);
+      if (rest > 0 && rest < 4 && take + rest <= 11) take += rest;
+      chunks.push(words.slice(i, i + take).join(' '));
+      i += take;
+    }
+    return chunks;
+  }
+
+  nextSentence() {
+    clearInterval(this._fakeBoundary); clearTimeout(this._watchdog); clearTimeout(this._sayT);
+    if (!this.queue || !this.queue.length) {
+      this.setState({ phase: 'idle' });
+      this.hideCaption(1900);
+      return;
+    }
+    const sentence = this.queue.shift();
+    const chunks = this.chunkSentence(sentence);
+    const starts = [];
+    let pos = 0;
+    for (const ch of chunks) {
+      const at = sentence.indexOf(ch, pos);
+      const s = at < 0 ? pos : at;
+      starts.push(s); pos = s + ch.length;
+    }
+    let ci = 0;
+    this.setCaption(chunks[0]);
+    const kick = () => { this.kickAt = performance.now(); this.wordEmph = 0.55 + Math.random() * 0.45; };
+    kick();
+    const show = (i) => { if (i !== ci) { ci = i; this.setCaption(chunks[i]); } };
+    const timed = () => {
+      clearInterval(this._fakeBoundary);
+      this._fakeBoundary = setInterval(kick, 300 + Math.random() * 160);
+      const step = (i) => {
+        show(i);
+        const ms = 340 + chunks[i].split(/\s+/).length * 300;
+        this._sayT = setTimeout(() => {
+          if (i + 1 < chunks.length) step(i + 1);
+          else { clearInterval(this._fakeBoundary); this.nextSentence(); }
+        }, ms);
+      };
+      step(ci);
+    };
+    const synth = window.speechSynthesis;
+    if (!synth) { timed(); return; }
+    try {
+      const u = new SpeechSynthesisUtterance(sentence);
+      u.rate = 1.02; u.pitch = 1;
+      let started = false;
+      u.onstart = () => { started = true; clearTimeout(this._watchdog); };
+      u.onboundary = (e) => {
+        kick();
+        let i = ci;
+        while (i + 1 < chunks.length && e.charIndex >= starts[i + 1]) i++;
+        show(i);
+      };
+      u.onend = () => { if (started) { clearInterval(this._fakeBoundary); this.nextSentence(); } };
+      u.onerror = () => { if (!started) timed(); };
+      this._fakeBoundary = setInterval(kick, 330);
+      this._watchdog = setTimeout(() => { if (!started) { try { synth.cancel(); } catch (e) {} timed(); } }, 900);
+      synth.cancel();
+      synth.speak(u);
+    } catch (e) { timed(); }
+  }
+
+  tail(text, max) {
+    const w = String(text).trim().split(/\s+/);
+    return w.slice(-(max || 10)).join(' ');
+  }
+
+  pickDemo = () => { this.hardStop(); this.setState({ mode: 'demo', phase: 'idle', notice: '' }); };
+  pickLive = () => {
+    this.hardStop();
+    const ok = !!(window.claude && window.claude.complete);
+    this.setState({ mode: 'live', phase: 'idle', notice: ok ? '' : 'Live mode needs the hosted runtime — it will fall back to the demo script here.' });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const phase = this.offline() ? 'offline' : s.phase;
+    const labels = { idle: 'Idle', listening: 'Listening', thinking: 'Processing', speaking: 'Speaking', offline: 'Connection lost' };
+    return {
+      canvasRef: this.canvasRef, scrollRef: this.scrollRef,
+      stateLabel: labels[phase] || 'Idle',
+      dotOpacity: phase === 'idle' ? 0.28 : phase === 'offline' ? 0.18 : 1,
+      dotColor: phase === 'listening' ? (this.props.userAccent || '#18A15C') : (this.props.accent || '#1F3BE0'),
+      caption: s.caption,
+      capOpacity: s.capVisible ? 1 : 0,
+      capShift: s.capVisible ? '0px' : '7px',
+      hintOpacity: s.turns.length && !s.panelOpen ? 0.3 : 0,
+      micLabel: phase === 'listening' ? 'Tap to stop' : (phase === 'speaking' || phase === 'thinking') ? 'Interrupt' : 'Tap to speak',
+      isListening: phase === 'listening',
+      notListening: phase !== 'listening',
+      micTint: phase === 'listening' ? (this.props.userAccent || '#18A15C') : '#0A0A0A',
+      micBorder: phase === 'listening' ? (this.props.userAccent || '#18A15C') : '#E4E4E4',
+      demoOpacity: s.mode === 'demo' ? 1 : 0.3,
+      liveOpacity: s.mode === 'live' ? 1 : 0.3,
+      pickDemo: this.pickDemo, pickLive: this.pickLive, toggleMic: this.toggleMic,
+      openPanel: () => this.setState({ panelOpen: true }),
+      togglePanel: () => this.setState(st => ({ panelOpen: !st.panelOpen })),
+      panelBtnOpacity: s.panelOpen ? 1 : 0.4,
+      closePanel: () => this.setState({ panelOpen: false }),
+      panelX: s.panelOpen ? '0%' : '101%',
+      turns: s.turns, isEmpty: s.turns.length === 0,
+      draft: s.draft, onDraft: this.onDraft, onDraftKey: this.onDraftKey,
+      showInput: this.props.showTypedInput !== false,
+      notice: s.notice, hasNotice: !!s.notice
+    };
+  }
+}
+</script>
+</body>
+</html>
