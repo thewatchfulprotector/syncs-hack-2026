@@ -85,13 +85,13 @@ export default function HomePage() {
             <h3 className="mt-5 text-[22px] font-light leading-tight tracking-[-0.01em]">
               {personaTitle(persona.id)}
             </h3>
-            <p className="mt-2.5 line-clamp-3 text-[13px] font-light leading-[1.6] text-[#6E6E6E]">
+            <p className="mt-2.5 text-[13px] font-light leading-[1.6] text-[#6E6E6E]">
               {persona.blurb}
             </p>
-            <p className="mt-4 line-clamp-2 border-l border-[#E4E4E4] pl-3 text-[12.5px] font-light italic leading-[1.6] text-[#9A9A9A]">
+            <p className="mt-4 border-l border-[#E4E4E4] pl-3 text-[12.5px] font-light italic leading-[1.6] text-[#9A9A9A]">
               “{persona.quotes[0]}”
             </p>
-            <div className={`mt-6 flex items-center gap-2 pt-1 text-[9px] uppercase tracking-[0.16em] text-[#9A9A9A] transition-colors duration-300 group-hover:text-[#0A0A0A] ${MONO}`}>
+            <div className={`mt-auto flex items-center gap-2 pt-7 text-[9px] uppercase tracking-[0.16em] text-[#9A9A9A] transition-colors duration-300 group-hover:text-[#0A0A0A] ${MONO}`}>
               Start a conversation
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
                 →
