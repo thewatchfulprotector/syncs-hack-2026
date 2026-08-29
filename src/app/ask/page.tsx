@@ -3,11 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AudioQueue } from "@/lib/audioQueue";
 import { chunkSentence, tailWords } from "@/lib/captions";
-import { extractSources } from "@/lib/citations";
+import { extractSources, stripStreamingSourcesTail } from "@/lib/citations";
 import { isLikelyEcho } from "@/lib/echoGuard";
 import { prefetchSttToken, startMicStream, type MicSession } from "@/lib/micStream";
 import { DEFAULT_PERSONA_ID, personaTitle } from "@/lib/personas";
 import { capConversationHistory } from "@/lib/prompt";
+import { mergeHeldTurn, shouldHoldTurn } from "@/lib/turnGate";
 import { Orb, type OrbPhase, type OrbPulse } from "./orb";
 
 type Citation = {
@@ -45,6 +46,11 @@ function personaFromUrl(): string {
   return new URLSearchParams(window.location.search).get("persona") ?? DEFAULT_PERSONA_ID;
 }
 
+/** Phones fit ~6 words on the one caption line before it ellipsizes. */
+function captionWordBudget(): number {
+  return typeof window !== "undefined" && window.innerWidth < 640 ? 6 : 10;
+}
+
 function formatTimestamp(ms: number): string {
   const s = Math.floor(ms / 1000);
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
@@ -72,6 +78,9 @@ function newCorrelationId(): string {
 }
 
 const MONO = "font-[family-name:var(--font-plex-mono)]";
+
+/** How long a held address-like fragment waits for its continuation. */
+const HOLD_FLUSH_MS = 2000;
 
 export default function Home() {
   const [turns, setTurns] = useState<Turn[]>([]);
@@ -106,6 +115,11 @@ export default function Home() {
   // phrase look recent again to the speaker-to-mic echo guard.
   const recentSpeechRef = useRef<Array<{ text: string; echoUntil: number }>>([]);
   const captionTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const audioCaptionsStartedRef = useRef(false);
+  const heldTurnRef = useRef<string | null>(null);
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // mic callbacks close over the mount-time render, when personaId is still the default
+  const personaIdRef = useRef(DEFAULT_PERSONA_ID);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const phase: OrbPhase = speaking
@@ -130,9 +144,11 @@ export default function Home() {
       setCaption("Tap the orb and say something.");
       setCapVisible(true);
     }, 420);
+    const holdTimer = holdTimerRef;
     return () => {
       clearTimeout(t);
       clearTimeout(syncUrlState);
+      if (holdTimer.current) clearTimeout(holdTimer.current);
       turnEpoch.current++;
       asking.current = false;
       activeAbort.current?.abort();
@@ -146,6 +162,10 @@ export default function Home() {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [turns, panelOpen]);
 
+  useEffect(() => {
+    personaIdRef.current = personaId;
+  }, [personaId]);
+
   function showCaption(text: string) {
     setCaption(text);
     setCapVisible(true);
@@ -157,7 +177,7 @@ export default function Home() {
   }
 
   function speakCaptions(sentence: string, durationSec: number) {
-    const chunks = chunkSentence(sentence);
+    const chunks = chunkSentence(sentence, captionWordBudget());
     const per = (durationSec * 1000) / chunks.length;
     chunks.forEach((chunk, i) => {
       captionTimers.current.push(
@@ -205,6 +225,7 @@ export default function Home() {
             echoUntil: performance.now() + durationSec * 1000 + 5000,
           });
           if (recentSpeechRef.current.length > 32) recentSpeechRef.current.shift();
+          audioCaptionsStartedRef.current = true;
           speakCaptions(sentence, durationSec);
         },
         () => recordClientMilestone("first_pcm_source_scheduled"),
@@ -221,7 +242,23 @@ export default function Home() {
     return recentSpeechRef.current.map((segment) => segment.text).join(" ").slice(-2000);
   }
 
+  function clearHeldTurn() {
+    if (holdTimerRef.current) clearTimeout(holdTimerRef.current);
+    holdTimerRef.current = null;
+    heldTurnRef.current = null;
+  }
+
+  function flushHeldTurn() {
+    const held = heldTurnRef.current;
+    clearHeldTurn();
+    if (!held || askingRef.current || !conversationModeRef.current || !micRef.current) return;
+    recordClientMilestone("held_turn_flushed");
+    micRef.current.setFrameForwarding(false);
+    askImplRef.current(held);
+  }
+
   function stopMic() {
+    clearHeldTurn();
     micRef.current?.stop();
     micRef.current = null;
     captureReadyRef.current = false;
@@ -251,7 +288,12 @@ export default function Home() {
       onPartial: (text) => {
         // don't caption the persona's own voice leaking back through the mic
         if (isLikelyEcho(text, recentEchoText())) return;
-        showCaption(tailWords(text, 10));
+        if (heldTurnRef.current && holdTimerRef.current) {
+          // the user kept talking: let the next final turn complete the merge
+          clearTimeout(holdTimerRef.current);
+          holdTimerRef.current = setTimeout(flushHeldTurn, HOLD_FLUSH_MS);
+        }
+        showCaption(tailWords(text, captionWordBudget()));
       },
       onTurnEnd: (text) => {
         // Played speech is tracked only when its source actually starts and is
@@ -260,8 +302,20 @@ export default function Home() {
           setCapVisible(false);
           return;
         }
+        const held = heldTurnRef.current;
+        if (!held && shouldHoldTurn(text, personaTitle(personaIdRef.current))) {
+          // "Steve" is an address, not the question: keep the mic open and
+          // wait briefly for the rest before submitting.
+          recordClientMilestone("turn_held");
+          heldTurnRef.current = text;
+          holdTimerRef.current = setTimeout(flushHeldTurn, HOLD_FLUSH_MS);
+          showCaption(text);
+          return;
+        }
+        const question = held ? mergeHeldTurn(held, text) : text;
+        clearHeldTurn();
         micRef.current?.setFrameForwarding(false);
-        askImplRef.current(text);
+        askImplRef.current(question);
       },
       onError: () => {
         stopMic();
@@ -361,6 +415,7 @@ export default function Home() {
     const epoch = ++turnEpochRef.current;
     micRef.current?.setFrameForwarding(false);
     clearCaptionTimers();
+    audioCaptionsStartedRef.current = false;
     const queue = ensureQueue();
     queue.beginAnswer();
     const turnDrain = queue.queueDrained;
@@ -376,9 +431,9 @@ export default function Home() {
     setTurns((t) => [...t, { who: "You", text: q, sources: [] }]);
     setStatus("asking");
     setNotice("");
-    // show the question exactly as heard while it thinks: live partials lag
-    // behind short utterances, so this is the "it heard me" receipt
-    showCaption(q);
+    // show the question as heard while it thinks: live partials lag behind
+    // short utterances, so this is the "it heard me" receipt
+    showCaption(tailWords(q, captionWordBudget()));
     setTimings("");
 
     const t0 = performance.now();
@@ -451,6 +506,13 @@ export default function Home() {
             const msg = JSON.parse(line);
             if (msg.type === "token") {
               full += msg.text;
+              // stream text into the caption until audio-synced captions take
+              // over; the epoch guard keeps a buffered line from resurrecting
+              // the caption after barge-in
+              if (epoch === turnEpochRef.current && !audioCaptionsStartedRef.current) {
+                const preview = stripStreamingSourcesTail(full).trim();
+                if (preview) showCaption(tailWords(preview, captionWordBudget()));
+              }
             } else if (msg.type === "audio_chunk") {
               if (firstAudioPacketMs === undefined) {
                 firstAudioPacketMs = Math.round(performance.now() - t0);

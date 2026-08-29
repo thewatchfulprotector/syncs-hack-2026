@@ -36,6 +36,20 @@ describe("chunkSentence", () => {
   it("handles empty input", () => {
     expect(chunkSentence("   ")).toEqual([]);
   });
+
+  it("caps every chunk at the given word budget (plus merged tiny tail)", () => {
+    const sentence =
+      "one two three four five six seven eight nine ten eleven twelve thirteen fourteen";
+    const chunks = chunkSentence(sentence, 6);
+    for (const chunk of chunks) {
+      expect(chunk.split(/\s+/).length).toBeLessThanOrEqual(7);
+    }
+    expect(chunks.join(" ")).toBe(sentence);
+  });
+
+  it("keeps a sentence within the budget as one chunk", () => {
+    expect(chunkSentence("one two three four five", 6)).toEqual(["one two three four five"]);
+  });
 });
 
 describe("tailWords", () => {

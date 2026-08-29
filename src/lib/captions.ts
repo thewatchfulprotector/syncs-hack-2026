@@ -3,13 +3,14 @@
  * after mid-sentence punctuation when one lands near the boundary and never
  * orphaning a tiny tail. Ported from the Voice Orb design.
  */
-export function chunkSentence(sentence: string): string[] {
+export function chunkSentence(sentence: string, maxWords = 10): string[] {
   const words = sentence.trim().split(/\s+/).filter(Boolean);
   const n = words.length;
+  const max = Math.max(3, Math.floor(maxWords));
   if (n === 0) return [];
-  if (n <= 10) return [words.join(" ")];
-  const k = Math.ceil(n / 10);
-  const target = Math.max(6, Math.ceil(n / k));
+  if (n <= max) return [words.join(" ")];
+  const k = Math.ceil(n / max);
+  const target = Math.ceil(n / k);
   const chunks: string[] = [];
   let i = 0;
   while (i < n) {
@@ -24,7 +25,7 @@ export function chunkSentence(sentence: string): string[] {
       }
     }
     const rest = n - (i + take);
-    if (rest > 0 && rest < 4 && take + rest <= 11) take += rest;
+    if (rest > 0 && rest < 4 && take + rest <= max + 1) take += rest;
     chunks.push(words.slice(i, i + take).join(" "));
     i += take;
   }

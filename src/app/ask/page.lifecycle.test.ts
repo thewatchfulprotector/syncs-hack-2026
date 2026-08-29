@@ -391,7 +391,7 @@ describe("Home voice lifecycle", () => {
     const queue = audioHarness.instances[0];
 
     await act(async () => {
-      options.onTurnEnd?.("First question" as never);
+      options.onTurnEnd?.("Ask something first" as never);
       await flushMicrotasks();
     });
     await act(async () => {
@@ -399,16 +399,16 @@ describe("Home voice lifecycle", () => {
       await flushMicrotasks();
     });
     await act(async () => {
-      options.onTurnEnd?.("Second question" as never);
+      options.onTurnEnd?.("Ask something second" as never);
       await flushMicrotasks();
     });
 
     expect(micHarness.calls).toHaveLength(1);
     expect(requestBodies).toHaveLength(2);
     expect(requestBodies[1]).toMatchObject({
-      question: "Second question",
+      question: "Ask something second",
       history: [
-        { role: "user", content: "First question" },
+        { role: "user", content: "Ask something first" },
         { role: "assistant", content: "Answer 1." },
       ],
     });
