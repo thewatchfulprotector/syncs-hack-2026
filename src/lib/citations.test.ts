@@ -6,6 +6,7 @@ describe("extractSources", () => {
     expect(extractSources("The smoke is from Canada.\nSOURCES: 1,3")).toEqual({
       answer: "The smoke is from Canada.",
       sources: [1, 3],
+      hasSourcesLine: true,
     });
   });
 
@@ -13,6 +14,7 @@ describe("extractSources", () => {
     expect(extractSources("The smoke is from Canada. SOURCES: 1,2")).toEqual({
       answer: "The smoke is from Canada.",
       sources: [1, 2],
+      hasSourcesLine: true,
     });
   });
 
@@ -21,16 +23,24 @@ describe("extractSources", () => {
     expect(extractSources("Answer here.\n\nSOURCES:1").sources).toEqual([1]);
   });
 
-  it("returns the whole text and no sources when the line is absent", () => {
-    expect(extractSources("Just an answer with no citations.")).toEqual({
+  it("distinguishes an explicit empty SOURCES line from a missing one", () => {
+    const explicit = extractSources("Hey, good to meet you too!\nSOURCES:");
+    expect(explicit).toEqual({
+      answer: "Hey, good to meet you too!",
+      sources: [],
+      hasSourcesLine: true,
+    });
+    const missing = extractSources("Just an answer with no citations.");
+    expect(missing).toEqual({
       answer: "Just an answer with no citations.",
       sources: [],
+      hasSourcesLine: false,
     });
   });
 
   it("only strips a SOURCES line at the end, not mid-answer", () => {
     const text = "I checked the SOURCES: they were clear.\nMore answer.";
-    expect(extractSources(text)).toEqual({ answer: text, sources: [] });
+    expect(extractSources(text)).toEqual({ answer: text, sources: [], hasSourcesLine: false });
   });
 
   it("deduplicates and drops non-positive indexes", () => {
@@ -38,6 +48,6 @@ describe("extractSources", () => {
   });
 
   it("handles an empty answer", () => {
-    expect(extractSources("")).toEqual({ answer: "", sources: [] });
+    expect(extractSources("")).toEqual({ answer: "", sources: [], hasSourcesLine: false });
   });
 });
