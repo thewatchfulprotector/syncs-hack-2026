@@ -1,9 +1,9 @@
 import { askPersona } from "@/lib/ask";
+import { parseAskRequest } from "@/lib/askRequest";
 import { extractSources } from "@/lib/citations";
 import { DEFAULT_VOICE_ID, ttsSentence } from "@/lib/elevenlabs";
 import { CHAT_MODEL } from "@/lib/openrouter";
 import { getPersona } from "@/lib/personas";
-import { capConversationHistory } from "@/lib/prompt";
 import { SentenceSplitter } from "@/lib/sentences";
 
 export const maxDuration = 60;
@@ -35,11 +35,11 @@ export async function POST(req: Request): Promise<Response> {
     requestedCorrelationId && /^[A-Za-z0-9._:-]{8,128}$/.test(requestedCorrelationId)
       ? requestedCorrelationId
       : crypto.randomUUID();
-  const { personaId, question, history } = await req.json().catch(() => ({}));
-  if (typeof personaId !== "string" || typeof question !== "string" || !question.trim()) {
+  const request = parseAskRequest(await req.json().catch(() => null));
+  if (!request) {
     return Response.json({ error: "personaId and question are required" }, { status: 400 });
   }
-  const priorTurns = capConversationHistory(history);
+  const { personaId, question, history: priorTurns } = request;
   let persona;
   try {
     persona = getPersona(personaId);
