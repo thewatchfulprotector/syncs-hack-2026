@@ -87,7 +87,7 @@ export async function POST(req: Request): Promise<Response> {
               );
               if (requestId) requestIds.push(requestId);
               firstAudioMs ??= Math.round(performance.now() - t0);
-              send({ type: "audio", seq: seq++, mp3: mp3.toString("base64") });
+              send({ type: "audio", seq: seq++, text: sentence, mp3: mp3.toString("base64") });
             } catch (err) {
               console.error("tts failed for sentence, skipping its audio:", err);
             }

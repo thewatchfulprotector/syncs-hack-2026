@@ -9,7 +9,11 @@
  * Returns synchronously so the caller can show a "connecting" state at once
  * and cancel at any phase; onReady fires when audio is actually flowing.
  */
-export type MicSession = { stop(): void };
+export type MicSession = {
+  stop(): void;
+  /** Live input level 0..1 for the visualizer, or null before capture starts. */
+  amplitude(): number | null;
+};
 
 const FRAMES_PER_SECOND = 10; // ~100ms of audio per websocket frame
 const MAX_BACKLOG_FRAMES = 150; // ~15s buffered while the socket connects
@@ -35,6 +39,8 @@ export function startMicStream(options: {
   let ctx: AudioContext | undefined;
   let worklet: AudioWorkletNode | undefined;
   let ws: WebSocket | undefined;
+  let analyser: AnalyserNode | undefined;
+  let timeBuf: Uint8Array<ArrayBuffer> | undefined;
 
   // safe to run at any setup phase and more than once: releases whatever
   // exists so far and detaches handlers so no callback fires after stop
@@ -91,6 +97,9 @@ export function startMicStream(options: {
     const source = ctx.createMediaStreamSource(media);
     worklet = new AudioWorkletNode(ctx, "pcm-capture");
     source.connect(worklet);
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 512;
+    source.connect(analyser);
     worklet.port.onmessage = (event: MessageEvent<Float32Array>) => {
       for (const sample of event.data) {
         pending.push(Math.max(-32768, Math.min(32767, Math.round(sample * 32767))));
@@ -139,5 +148,18 @@ export function startMicStream(options: {
     socket.onclose = () => fail(new Error("speech connection closed"));
   })().catch(fail);
 
-  return { stop };
+  const amplitude = () => {
+    if (stopped || !analyser) return null;
+    timeBuf ??= new Uint8Array(analyser.fftSize);
+    analyser.getByteTimeDomainData(timeBuf);
+    let sum = 0;
+    for (const v of timeBuf) {
+      const x = (v - 128) / 128;
+      sum += x * x;
+    }
+    const rms = Math.sqrt(sum / timeBuf.length);
+    return Math.min(1, Math.pow(Math.min(1, rms * 5.5), 0.75));
+  };
+
+  return { stop, amplitude };
 }
