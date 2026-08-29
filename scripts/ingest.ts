@@ -3,23 +3,37 @@
 //   npm run ingest -- --persona steve interview.mp4 talk.mp3 essay.txt
 //
 // Flags:
-//   --persona <id>     (required) persona the material belongs to
-//   --speaker <label>  override the "persona = whoever talks most" heuristic (e.g. A)
-//   --voice-sample     also clip the cleanest solo speech into out/voice-sample-<persona>.mp3
+//   --persona <id>            (required) persona the material belongs to
+//   --review-speakers         inspect cached transcripts and print speaker excerpts; do not index
+//   --transcribe-missing      with --review-speakers, explicitly allow paid missing transcriptions
+//   --speaker <label>         use one explicit speaker label for every media file
+//   --speaker-for <file=A>    repeatable per-file speaker mapping (path or basename)
+//   --auto-speaker            explicitly opt into the dominant-speaker heuristic
+//   --voice-sample            aggregate clean selected speech into one local sample
 //
 // Transcripts are cached in out/transcripts/ so re-runs don't re-transcribe.
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import { parseArgs } from "node:util";
 import { chunkUnits, textToUnits, type Chunk } from "../src/lib/chunker";
+import { filterPersonaUtterances, utterancesToUnits } from "../src/lib/diarization";
 import {
-  dominantSpeaker,
-  filterPersonaUtterances,
-  utterancesToUnits,
-} from "../src/lib/diarization";
-import { selectVoiceSampleSegments } from "../src/lib/voiceSample";
-import { transcribeAudio, uploadMedia, type Transcript } from "../src/lib/assemblyai";
+  parseSpeakerAssignments,
+  selectSpeakerForFile,
+  summarizeSpeakers,
+} from "../src/lib/ingestSpeakers";
+import {
+  selectVoiceSampleSegmentsAcrossSources,
+  type SourceVoiceSegment,
+  type VoiceSampleSource,
+} from "../src/lib/voiceSample";
+import {
+  parseTranscript,
+  transcribeAudio,
+  uploadMedia,
+  type Transcript,
+} from "../src/lib/assemblyai";
 import { embedTexts } from "../src/lib/openrouter";
 import { upsertChunks, type ChunkRecord, type MediaType } from "../src/lib/pineconeClient";
 
@@ -57,36 +71,53 @@ function extractAudio(file: string): string {
   return out;
 }
 
-async function getTranscript(file: string): Promise<Transcript> {
-  const cachePath = join(TRANSCRIPT_CACHE_DIR, `${slug(basename(file))}.json`);
+function transcriptCachePath(file: string): string {
+  return join(TRANSCRIPT_CACHE_DIR, `${slug(basename(file))}.json`);
+}
+
+async function getTranscript(file: string, allowTranscription = true): Promise<Transcript> {
+  const cachePath = transcriptCachePath(file);
   if (existsSync(cachePath)) {
     console.log(`  transcript cache hit: ${cachePath}`);
-    return JSON.parse(readFileSync(cachePath, "utf8"));
+    try {
+      return parseTranscript(JSON.parse(readFileSync(cachePath, "utf8")));
+    } catch (err) {
+      throw new Error(
+        `invalid transcript cache ${cachePath} — delete it to re-transcribe (${
+          err instanceof Error ? err.message : String(err)
+        })`,
+      );
+    }
+  }
+  if (!allowTranscription) {
+    throw new Error(`missing transcript cache for ${file}`);
   }
   const audioPath = extractAudio(file);
   console.log(`  uploading ${audioPath}...`);
   const audioUrl = await uploadMedia(readFileSync(audioPath));
   console.log(`  transcribing...`);
-  const transcript = await transcribeAudio(audioUrl);
+  // Long-form podcasts can exceed the default window during provider load.
+  // Keep polling the same submitted job instead of encouraging a costly retry.
+  const transcript = await transcribeAudio(audioUrl, { timeoutMs: 60 * 60 * 1000 });
   mkdirSync(TRANSCRIPT_CACHE_DIR, { recursive: true });
   writeFileSync(cachePath, JSON.stringify(transcript, null, 2));
   return transcript;
 }
 
-/** Concatenate the persona's cleanest segments into one clip for voice cloning. */
+/** Concatenate selected segments from any number of sources into one sample. */
 function clipVoiceSample(
-  sourceFile: string,
-  segments: { startMs: number; endMs: number }[],
+  segments: SourceVoiceSegment[],
   personaId: string,
 ): string {
-  const dir = join(OUT_DIR, "voice-segments");
+  const dir = join(OUT_DIR, "voice-segments", slug(personaId));
   mkdirSync(dir, { recursive: true });
   const paths = segments.map((seg, i) => {
-    const path = join(dir, `seg-${i}.mp3`);
+    const path = join(dir, `seg-${String(i).padStart(4, "0")}.mp3`);
+    const durationSeconds = (seg.endMs - seg.startMs) / 1000;
     ffmpeg([
       "-ss", (seg.startMs / 1000).toFixed(3),
-      "-to", (seg.endMs / 1000).toFixed(3),
-      "-i", sourceFile,
+      "-i", seg.sourceFile,
+      "-t", durationSeconds.toFixed(3),
       "-vn", "-ac", "1", "-ar", "44100", "-b:a", "128k",
       path,
     ]);
@@ -97,7 +128,37 @@ function clipVoiceSample(
   const out = join(OUT_DIR, `voice-sample-${slug(personaId)}.mp3`);
   // re-encode: stream-copying independently encoded mp3 segments yields broken timestamps
   ffmpeg(["-f", "concat", "-safe", "0", "-i", listPath, "-ac", "1", "-ar", "44100", "-b:a", "128k", out]);
+  writeFileSync(join(dir, "segments.json"), JSON.stringify(segments, null, 2));
   return out;
+}
+
+function formatTimestamp(ms: number): string {
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return [hours, minutes, seconds].map((part) => String(part).padStart(2, "0")).join(":");
+}
+
+function excerpt(text: string, maxLength = 220): string {
+  const compact = text.replace(/\s+/g, " ").trim();
+  return compact.length <= maxLength ? compact : `${compact.slice(0, maxLength - 1)}…`;
+}
+
+function printSpeakerReview(file: string, transcript: Transcript): void {
+  console.log(`  speaker review (${transcript.utterances.length} utterances):`);
+  for (const summary of summarizeSpeakers(transcript.utterances)) {
+    const seconds = Math.round(summary.durationMs / 1000);
+    console.log(
+      `    ${summary.speaker}: ${summary.utteranceCount} utterances, ${seconds}s, ${(summary.share * 100).toFixed(1)}% of speech`,
+    );
+    for (const item of summary.excerpts) {
+      console.log(
+        `      [${formatTimestamp(item.startMs)}-${formatTimestamp(item.endMs)}] ${excerpt(item.text)}`,
+      );
+    }
+  }
+  console.log(`    choose with: --speaker-for ${JSON.stringify(`${basename(file)}=<label>`)}`);
 }
 
 async function main() {
@@ -105,51 +166,134 @@ async function main() {
     options: {
       persona: { type: "string" },
       speaker: { type: "string" },
+      "speaker-for": { type: "string", multiple: true, default: [] },
+      "review-speakers": { type: "boolean", default: false },
+      "transcribe-missing": { type: "boolean", default: false },
+      "auto-speaker": { type: "boolean", default: false },
       "voice-sample": { type: "boolean", default: false },
     },
     allowPositionals: true,
   });
   const personaId = values.persona;
   if (!personaId || positionals.length === 0) {
-    console.error("usage: npm run ingest -- --persona <id> [--speaker <label>] [--voice-sample] <files...>");
+    console.error(
+      "usage: npm run ingest -- --persona <id> [--review-speakers --transcribe-missing] [--speaker <label>] [--speaker-for <file=label> ...] [--auto-speaker] [--voice-sample] <files...>",
+    );
     process.exit(1);
   }
 
+  const assignments = parseSpeakerAssignments(values["speaker-for"]);
   const allRecordsMeta: { chunk: Chunk; file: string; type: MediaType; speaker: string }[] = [];
+  const voiceSources: VoiceSampleSource[] = [];
+  const speakerReviews: Array<{
+    sourceFile: string;
+    sourceSizeBytes: number;
+    sourceMtimeMs: number;
+    transcriptId: string;
+    audioDurationSeconds: number;
+    speakers: ReturnType<typeof summarizeSpeakers>;
+  }> = [];
 
+  // Resolve every path and media type before the first upload or external API call.
   for (const file of positionals) {
     if (!existsSync(file)) throw new Error(`no such file: ${file}`);
+    mediaType(file);
+  }
+
+  if (values["review-speakers"] && !values["transcribe-missing"]) {
+    const missing = positionals.filter(
+      (file) => mediaType(file) !== "document" && !existsSync(transcriptCachePath(file)),
+    );
+    if (missing.length > 0) {
+      throw new Error(
+        `missing ${missing.length} transcript cache(s):\n${missing.map((file) => `  ${file}`).join("\n")}\nrerun with --transcribe-missing to authorize transcription`,
+      );
+    }
+  }
+
+  for (const file of positionals) {
     const type = mediaType(file);
     console.log(`${file} (${type})`);
 
     if (type === "document") {
+      if (values["review-speakers"]) {
+        console.log("  document: no speakers to review");
+        continue;
+      }
       const chunks = chunkUnits(textToUnits(readFileSync(file, "utf8")));
       console.log(`  ${chunks.length} chunks`);
       for (const chunk of chunks) allRecordsMeta.push({ chunk, file, type, speaker: "" });
       continue;
     }
 
-    const transcript = await getTranscript(file);
-    const speaker = values.speaker ?? dominantSpeaker(transcript.utterances);
+    const transcript = await getTranscript(
+      file,
+      !values["review-speakers"] || values["transcribe-missing"],
+    );
+    if (values["review-speakers"]) {
+      printSpeakerReview(file, transcript);
+      const source = statSync(file);
+      speakerReviews.push({
+        sourceFile: file,
+        sourceSizeBytes: source.size,
+        sourceMtimeMs: source.mtimeMs,
+        transcriptId: transcript.id,
+        audioDurationSeconds: transcript.audio_duration,
+        speakers: summarizeSpeakers(transcript.utterances),
+      });
+      continue;
+    }
+
+    const selection = selectSpeakerForFile(file, transcript.utterances, {
+      assignments,
+      speaker: values.speaker,
+      allowDominant: values["auto-speaker"],
+    });
+    const speaker = selection.speaker;
     const persona = filterPersonaUtterances(transcript.utterances, speaker);
     const kept = persona.reduce((s, u) => s + (u.end - u.start), 0);
     console.log(
-      `  persona speaker=${speaker}: kept ${persona.length}/${transcript.utterances.length} utterances (${Math.round(kept / 1000)}s of ${transcript.audio_duration}s)`,
+      `  persona speaker=${speaker} (${selection.source}): kept ${persona.length}/${transcript.utterances.length} utterances (${Math.round(kept / 1000)}s of ${transcript.audio_duration}s)`,
     );
 
     const chunks = chunkUnits(utterancesToUnits(persona));
     console.log(`  ${chunks.length} chunks`);
     for (const chunk of chunks) allRecordsMeta.push({ chunk, file, type, speaker });
+    voiceSources.push({ sourceFile: file, utterances: persona });
+  }
 
-    if (values["voice-sample"]) {
-      const segments = selectVoiceSampleSegments(persona);
-      if (segments.length === 0) {
-        console.log("  voice sample: no segment long enough, skipping");
-      } else {
-        const out = clipVoiceSample(file, segments, personaId);
-        const total = segments.reduce((s, x) => s + (x.endMs - x.startMs), 0);
-        console.log(`  voice sample: ${segments.length} segments, ${Math.round(total / 1000)}s -> ${out}`);
-      }
+  if (values["review-speakers"]) {
+    const reviewDir = join(OUT_DIR, "speaker-reviews");
+    const reviewPath = join(reviewDir, `${slug(personaId)}.json`);
+    mkdirSync(reviewDir, { recursive: true });
+    writeFileSync(
+      reviewPath,
+      JSON.stringify(
+        {
+          personaId,
+          generatedAt: new Date().toISOString(),
+          files: speakerReviews,
+        },
+        null,
+        2,
+      ),
+    );
+    console.log(
+      `speaker review complete: ${reviewPath}; no embeddings, Pinecone writes, or audio clips were performed`,
+    );
+    return;
+  }
+
+  if (values["voice-sample"]) {
+    const segments = selectVoiceSampleSegmentsAcrossSources(voiceSources);
+    if (segments.length === 0) {
+      console.log("voice sample: no selected-speaker segment was long enough, skipping");
+    } else {
+      const out = clipVoiceSample(segments, personaId);
+      const total = segments.reduce((sum, segment) => sum + segment.endMs - segment.startMs, 0);
+      console.log(
+        `voice sample: ${segments.length} segments from ${new Set(segments.map((segment) => segment.sourceFile)).size} source(s), ${Math.round(total / 1000)}s -> ${out}`,
+      );
     }
   }
 

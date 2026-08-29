@@ -16,7 +16,39 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+
+## Local persona ingestion
+
+Keep source recordings under `media/<persona-id>/`; `media/` and generated `out/`
+artifacts are intentionally excluded from Git.
+
+Review every diarized speaker before indexing a podcast or interview. Missing
+paid transcriptions require an explicit flag, and review mode never embeds,
+writes to Pinecone, or creates audio clips:
+
+```bash
+npm run ingest -- --persona <persona-id> \
+  --review-speakers --transcribe-missing \
+  media/<persona-id>/*.mp3
+```
+
+The review is saved to `out/speaker-reviews/<persona-id>.json`. Identify the
+persona separately in every file because labels such as `A` and `B` are local
+to one transcript. Then index with a repeatable mapping:
+
+```bash
+npm run ingest -- --persona <persona-id> \
+  --speaker-for 'first-podcast.mp3=A' \
+  --speaker-for 'second-podcast.mp3=B' \
+  media/<persona-id>/*.mp3
+```
+
+Multi-speaker sources without an explicit mapping fail rather than silently
+choosing the longest speaker. `--auto-speaker` restores the old heuristic only
+when deliberately requested. `--voice-sample` additionally creates one global,
+timestamped sample across the approved speakers and should be used only when
+the necessary voice rights and consent have been established.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
