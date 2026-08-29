@@ -81,8 +81,8 @@ Ask a question whose answer exists in the source material → their voice starts
 - [ ] Error states: API failure, empty retrieval
 
 ### Phase 6 · Voice
-- [ ] ElevenLabs Instant Voice Clone from the clipped segments
-- [ ] Wire the voice ID in; check it actually sounds like them
+- [x] ElevenLabs Instant Voice Clone from the clipped segments — `npm run clone-voice -- --name "X" out/voice-sample-<persona>.mp3` (built early for the steve-jobs test persona: cloned from a 2.5-min slice of the Stanford audio)
+- [x] Wire the voice ID in; check it actually sounds like them — `voiceId` per persona in `src/lib/personas.ts`; redo both steps for the real demo persona in Phase 7
 
 ### Phase 7 · Persona quality
 - [ ] Fully ingest the real demo persona (night before the demo)
@@ -95,7 +95,7 @@ Ask a question whose answer exists in the source material → their voice starts
 - [ ] Full test suite green
 
 ### Phase 9 · Stretch + pitch
-- [ ] Voice input (AssemblyAI Streaming realtime STT)
+- [x] Voice input (AssemblyAI Streaming realtime STT) — built early: mic button with conversation mode (auto re-arms between turns), buffered capture so first words aren't lost, browser gets a 60s token from `/api/stt-token`
 - [ ] Second persona + one short live-ingest clip for the demo
 - [ ] Avatar (only if everything else is done)
 - [ ] Record a backup demo video

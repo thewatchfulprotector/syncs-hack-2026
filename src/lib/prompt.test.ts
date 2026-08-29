@@ -64,10 +64,47 @@ describe("buildPersonaPrompt", () => {
     expect(messages[0].content).toContain("SOURCES:");
   });
 
+  it("covers the no-excerpts-drawn case in the SOURCES instruction", () => {
+    expect(messages[0].content).toContain("nothing after the colon");
+  });
+
+  it("calibrates answer length to the question instead of fixing it", () => {
+    const system = messages[0].content;
+    expect(system).toContain("Match the length");
+    expect(system).toContain("small talk");
+    expect(system).not.toContain("a few sentences unless asked");
+  });
+
+  it("scopes grounding to factual claims so small talk stays natural", () => {
+    expect(messages[0].content).toContain("factual claim");
+  });
+
   it("caps style quotes at five", () => {
     const many = { ...persona, quotes: Array.from({ length: 9 }, (_, i) => `quote-${i}`) };
     const system = buildPersonaPrompt(many, chunks, "q")[0].content;
     expect(system).toContain("quote-4");
     expect(system).not.toContain("quote-5");
+  });
+
+  it("threads conversation history between system and the latest question", () => {
+    const withHistory = buildPersonaPrompt(persona, chunks, "And after that?", [
+      { role: "user", content: "What happened in 1984?" },
+      { role: "assistant", content: "We introduced the Macintosh." },
+    ]);
+    expect(withHistory.map((m) => m.role)).toEqual(["system", "user", "assistant", "user"]);
+    expect(withHistory[1].content).toBe("What happened in 1984?");
+    expect(withHistory[2].content).toBe("We introduced the Macintosh.");
+    expect(withHistory.at(-1)).toEqual({ role: "user", content: "And after that?" });
+  });
+
+  it("keeps only the most recent six history messages and drops other roles", () => {
+    const history = Array.from({ length: 10 }, (_, i) => ({
+      role: (i % 2 === 0 ? "user" : "assistant") as "user" | "assistant",
+      content: `turn-${i}`,
+    }));
+    history.push({ role: "system" as never, content: "injected" });
+    const messages = buildPersonaPrompt(persona, chunks, "next", history);
+    const contents = messages.slice(1, -1).map((m) => m.content);
+    expect(contents).toEqual(["turn-4", "turn-5", "turn-6", "turn-7", "turn-8", "turn-9"]);
   });
 });

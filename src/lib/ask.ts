@@ -1,5 +1,5 @@
 import { getPersona } from "./personas";
-import { buildPersonaPrompt } from "./prompt";
+import { buildPersonaPrompt, type ChatMessage } from "./prompt";
 import { embedTexts, streamChat } from "./openrouter";
 import { queryChunks } from "./pineconeClient";
 import { parseMatches, type RetrievedChunk } from "./retrieval";
@@ -15,6 +15,8 @@ export type AskResult = {
 export async function askPersona(
   personaId: string,
   question: string,
+  history: ChatMessage[] = [],
+  signal?: AbortSignal,
   topK = 8,
 ): Promise<AskResult> {
   const persona = getPersona(personaId);
@@ -28,6 +30,6 @@ export async function askPersona(
   const queryMs = Math.round(performance.now() - t);
 
   const chunks = parseMatches(response);
-  const messages = buildPersonaPrompt(persona, chunks, question);
-  return { chunks, stream: streamChat(messages), timings: { embedMs, queryMs } };
+  const messages = buildPersonaPrompt(persona, chunks, question, history);
+  return { chunks, stream: streamChat(messages, signal), timings: { embedMs, queryMs } };
 }
