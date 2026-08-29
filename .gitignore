@@ -1,0 +1,14 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Dependencies & build output
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+# OS / editor noise
+.DS_Store

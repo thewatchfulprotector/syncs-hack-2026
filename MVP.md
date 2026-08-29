@@ -14,8 +14,8 @@ One persona, one conversation loop, done well. The demo is won on streaming late
    - **video → audio:** ffmpeg extracts a mono 16kHz track. Keep the original file path for citations, and clip the cleanest solo-speech segments now — they double as the voice-clone sample.
    - **audio → text:** AssemblyAI async transcription with speaker diarization and word timestamps. Keep only the persona's own speech — interviews are half interviewer, and without this filter the clone absorbs the interviewer. Plain documents/transcripts enter the flow here.
    - **text → metadata:** chunk ~300–500 tokens with overlap; each chunk carries `{persona_id, source_file, media_type, timestamp_range, speaker, text}` so citation chips can link to the exact moment in the source.
-   - **metadata → index:** embed each chunk with `voyage-4-lite` → store chunks + embeddings + metadata in one JSON file. No vector DB: at demo scale, in-memory cosine similarity over a few thousand vectors is instant.
-2. **Ask:** text box → embed query → top-k (k≈8) from the in-memory index → prompt = persona instructions + 3–5 verbatim quotes as style examples + retrieved chunks → `gpt-oss-120b` via OpenRouter (Groq/Cerebras provider for speed) → stream tokens.
+   - **metadata → index:** embed each chunk with `qwen3-embedding-8b` → upsert to Pinecone with the chunk metadata attached to each vector. Live upserts mean new material is queryable seconds after ingestion — no redeploy, which is exactly what the live-ingest demo moment needs.
+2. **Ask:** text box → embed query → Pinecone top-k (k≈8, filtered by `persona_id`) → prompt = persona instructions + 3–5 verbatim quotes as style examples + retrieved chunks → `gpt-oss-120b` via OpenRouter (Groq/Cerebras provider for speed) → stream tokens.
 3. **Speak:** ElevenLabs Instant Voice Clone (made from the same source audio) + Eleven Flash v2.5. Stream LLM output sentence-by-sentence into TTS so audio starts before the full answer exists. **This streaming chain is the heart of the MVP.**
 4. **UI:** one page. Photo of the persona (subtle pulse while speaking), text input, answer streaming as text while the voice plays, citation chips below linking to sources. Citations are visual, never spoken — spoken answers stay natural.
 
@@ -30,14 +30,14 @@ Ask a question whose answer exists in the source material → their voice starts
 - **Voice cloning:** ElevenLabs Instant Voice Cloning
 - **TTS:** Eleven Flash v2.5 (streaming)
 - **LLM:** OpenRouter `gpt-oss-120b` (Groq/Cerebras), fallback `google/gemini-3.7-flash`
-- **Embeddings:** OpenRouter `voyageai/voyage-4-lite`. The Voyage-4 family (nano/lite/standard/large) shares one embedding space, so if retrieval quality disappoints we can re-embed documents with `voyage-4-large` while keeping fast `lite` query embeddings — no migration. Verify in H0–2 that our OpenRouter key serves Voyage embeddings; fallback is a direct Voyage AI key (two-minute signup, free tier covers the hack many times over).
-- **Reranking (optional, off by default):** `voyageai/rerank-2.5` — the full model, not lite: near-leaderboard accuracy (behind only Zerank-2, which is non-commercial, and Cohere Rerank 4 Pro, which needs another account) at ~2× lower latency (~600ms). Wire it in only if retrieval visibly pulls wrong chunks; that 600ms comes straight out of the 3-second first-audio budget.
-- **Vector search:** in-memory cosine similarity over a JSON chunk store (no Pinecone for the hack)
+- **Embeddings:** OpenRouter `qwen/qwen3-embedding-8b` — near-top MTEB retrieval quality at ~$0.01/M tokens, on the OpenRouter key we already have (no extra account). Two things to verify in the Phase 1 smoke test: the dimension one real embedding returns (create the Pinecone index to match), and per-query latency, which depends on which OpenRouter provider serves it.
+- **Reranking:** cut. It was optional anyway, and the remaining good rerankers need another account (Cohere). If retrieval visibly pulls wrong chunks, raise k first — the LLM is good at ignoring weak passages.
+- **Vector search:** Pinecone (key in hand) — one serverless index, cosine metric, dimension matching `voyage-4-lite` output; chunk metadata on each vector, `persona_id` filter for scoping. Chosen over an in-memory JSON store because upserts are queryable instantly on the deployed app (no redeploy per ingest — critical for the live-ingest demo moment) and the second persona is just a filter value.
 - **Lightsail (already provisioned):** backup only — use it if Vercel function timeouts or streaming limits bite, or to run long transcription jobs. Don't build on it unless forced; every extra service is glue hours.
 
 ## Build checklist (24h)
 
-> **Workflow: test-driven development.** Every pure-logic module is built test-first with Vitest: write the failing test, make it pass, move on. That covers the chunker, the diarization filter, cosine similarity/top-k, prompt assembly, the sentence splitter, and citation mapping. Don't TDD the UI or live third-party calls — instead, capture one real API response per service as a fixture and test your parsing/filtering against it, so the suite runs fast and offline. Keep `npm test` green all night; it's what lets you refactor fearlessly at hour 20.
+> **Workflow: test-driven development.** Every pure-logic module is built test-first with Vitest: write the failing test, make it pass, move on. That covers the chunker, the diarization filter, prompt assembly, the sentence splitter, and citation mapping. (Retrieval itself is a Pinecone call now — test your handling of its response against a saved fixture, not the live service.) Don't TDD the UI or live third-party calls — instead, capture one real API response per service as a fixture and test your parsing/filtering against it, so the suite runs fast and offline. Keep `npm test` green all night; it's what lets you refactor fearlessly at hour 20.
 
 ### Phase 1 · Setup
 - [x] Vercel account
@@ -49,7 +49,8 @@ Ask a question whose answer exists in the source material → their voice starts
 - [ ] Deploy hello-world to Vercel
 - [ ] All API keys in env (local `.env.local` + Vercel project settings)
 - [ ] Smoke-test each service: OpenRouter LLM call, ElevenLabs TTS call, AssemblyAI transcription call
-- [ ] Verify OpenRouter serves `voyage-4-lite` embeddings (fallback: direct Voyage AI key)
+- [ ] Embed one test string with `qwen/qwen3-embedding-8b` via OpenRouter; note the dimension it returns and the response latency
+- [ ] Create the Pinecone serverless index (cosine metric; dimension = what that test embedding returned — check before creating, it can't be changed later); smoke-test one upsert + query
 
 ### Phase 2 · Ingestion script (local CLI)
 - [ ] Test-first: chunker (~300–500 tokens, overlap)
@@ -58,12 +59,11 @@ Ask a question whose answer exists in the source material → their voice starts
 - [ ] Clip cleanest solo-speech segments (doubles as the voice-clone sample)
 - [ ] AssemblyAI async transcription with diarization + word timestamps
 - [ ] Chunk metadata schema: `{persona_id, source_file, media_type, timestamp_range, speaker, text}`
-- [ ] Embed chunks with `voyage-4-lite`, write JSON index
+- [ ] Embed chunks with `qwen/qwen3-embedding-8b`, upsert to Pinecone with metadata
 
 ### Phase 3 · Retrieval + answer (terminal, hardcoded persona 1)
-- [ ] Test-first: cosine similarity + top-k over the JSON index
-- [ ] Test-first: prompt assembly (persona instructions + 3–5 verbatim quotes + retrieved chunks)
-- [ ] Query embedding → retrieve k≈8
+- [ ] Test-first: prompt assembly (persona instructions + 3–5 verbatim quotes + retrieved chunks), Pinecone response parsing against a fixture
+- [ ] Query embedding → Pinecone top-k (k≈8) with `persona_id` filter
 - [ ] `gpt-oss-120b` via OpenRouter (Cerebras provider)
 - [ ] End-to-end answer with citations in the terminal
 
@@ -109,8 +109,8 @@ Ask a question whose answer exists in the source material → their voice starts
 
 ## Explicitly out of scope for the hack
 
-Deliberate cuts read as maturity: live long-video ingestion, multi-persona management UI, accounts/auth, family-tree indexing, Pinecone/Supabase/S3, FastAPI backend, reranking (add `voyageai/rerank-2.5` only if retrieval visibly disappoints).
+Deliberate cuts read as maturity: live long-video ingestion, multi-persona management UI, accounts/auth, family-tree indexing, Supabase, FastAPI backend, reranking (raise k if retrieval disappoints).
 
 ## Production readiness (the slide, not the build)
 
-Durable storage (S3), real vector DB (Pinecone), relational metadata (Supabase Postgres), dedicated backend (FastAPI on Lightsail), reranking, auth + per-user personas, consent/verification workflow for voice capture.
+S3 + Pinecone hardening (lifecycle rules, namespaces per user), relational metadata (Supabase Postgres), dedicated backend (FastAPI on Lightsail), reranking, auth + per-user personas, consent/verification workflow for voice capture.
