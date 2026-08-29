@@ -45,12 +45,12 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] ElevenLabs account
 - [x] Lightsail provisioned
 - [x] AssemblyAI key
-- [ ] Scaffold Next.js + TypeScript + Tailwind, with Vitest wired in and `npm test` running
-- [ ] Deploy hello-world to Vercel
-- [ ] All API keys in env (local `.env.local` + Vercel project settings)
-- [ ] Smoke-test each service: OpenRouter LLM call, ElevenLabs TTS call, AssemblyAI transcription call
-- [ ] Embed one test string with `qwen/qwen3-embedding-8b` via OpenRouter; note the dimension it returns and the response latency
-- [ ] Create the Pinecone serverless index (cosine metric; dimension = what that test embedding returned — check before creating, it can't be changed later); smoke-test one upsert + query
+- [x] Scaffold Next.js + TypeScript + Tailwind, with Vitest wired in and `npm test` running
+- [x] Deploy hello-world to Vercel — live at https://alexandria-sepia.vercel.app
+- [x] All API keys in env (local `.env.local` + Vercel project settings) — `ELEVENLABS_VOICE_ID` stays empty until the Phase 6 voice clone returns one
+- [x] Smoke-test each service: OpenRouter LLM call ✓ (Cerebras, ~1.1s round trip), AssemblyAI transcription call ✓ (11s incl. polling, diarization returned speakers A/B), ElevenLabs TTS ✓ (Flash v2.5, 3.0s for a full non-streamed sentence, 63KB mp3)
+- [x] Embed one test string with `qwen/qwen3-embedding-8b` via OpenRouter; note the dimension it returns and the response latency — **dimension 4096; latency 1.2–4.5s warm, ~15s cold. Variable enough to threaten the 3s first-audio target — pin a fast provider for the embedding call (or drop to a smaller embedding model) when tuning Phase 8**
+- [x] Create the Pinecone serverless index (cosine metric; dimension = what that test embedding returned — check before creating, it can't be changed later); smoke-test one upsert + query — index `alexandria`, cosine, dim 4096, upsert+query round-trip verified (`persona_id` filter works)
 
 ### Phase 2 · Ingestion script (local CLI)
 - [ ] Test-first: chunker (~300–500 tokens, overlap)
