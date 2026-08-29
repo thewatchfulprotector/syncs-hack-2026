@@ -501,7 +501,9 @@ export default function Home() {
                   ? (msg.sources as number[]).map((n) => citations[n - 1]).filter(Boolean)
                   : citations;
             } else if (msg.type === "generation_complete") {
-              if (epoch === turnEpochRef.current) setStatus("idle");
+              // Stay "thinking" until playback starts: the mic is held ready
+              // across turns, so idling status before the first sentence is
+              // scheduled flashes the orb back to green "listening".
             } else if (msg.type === "audio_complete") {
               if (epoch === turnEpochRef.current) {
                 audioComplete = true;

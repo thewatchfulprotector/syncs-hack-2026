@@ -1,4 +1,5 @@
 import { Pinecone, type Index } from "@pinecone-database/pinecone";
+import { Agent, fetch as undiciFetch } from "undici";
 
 export type MediaType = "video" | "audio" | "document";
 
@@ -31,7 +32,18 @@ export function personaIndex(): Index<ChunkMetadata> {
     if (!host) throw new Error("missing env var PINECONE_HOST");
     // Supplying the data-plane host avoids a control-plane describeIndex()
     // lookup on a cold ask. Keep PINECONE_INDEX for administrative scripts.
-    index = new Pinecone({ apiKey }).index<ChunkMetadata>({ host });
+    //
+    // The SDK otherwise uses global fetch, whose agent drops idle sockets
+    // after 4s — shorter than the gap between conversational turns — so every
+    // query paid a fresh cross-region TLS handshake and slow-started the
+    // ~80KB vector upload. One long keep-alive agent lets consecutive turns
+    // reuse the connection.
+    const dataPlaneAgent = new Agent({ keepAliveTimeout: 60_000 });
+    const keepAliveFetch = ((
+      input: Parameters<typeof undiciFetch>[0],
+      init?: Parameters<typeof undiciFetch>[1],
+    ) => undiciFetch(input, { ...init, dispatcher: dataPlaneAgent })) as unknown as typeof fetch;
+    index = new Pinecone({ apiKey, fetchApi: keepAliveFetch }).index<ChunkMetadata>({ host });
   }
   return index;
 }

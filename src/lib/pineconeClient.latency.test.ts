@@ -15,6 +15,22 @@ vi.mock("@pinecone-database/pinecone", () => ({
   Pinecone: pineconeMocks.Pinecone,
 }));
 
+const undiciMocks = vi.hoisted(() => {
+  const agentInstances: Array<{ kind: string; options: unknown }> = [];
+  const Agent = vi.fn(function AgentMock(this: unknown, options: unknown) {
+    const instance = { kind: "undici-agent", options };
+    agentInstances.push(instance);
+    return instance;
+  });
+  const fetch = vi.fn(async () => ({ kind: "undici-response" }));
+  return { Agent, fetch, agentInstances };
+});
+
+vi.mock("undici", () => ({
+  Agent: undiciMocks.Agent,
+  fetch: undiciMocks.fetch,
+}));
+
 describe("Pinecone latency configuration", () => {
   beforeEach(() => {
     vi.resetModules();
@@ -33,7 +49,10 @@ describe("Pinecone latency configuration", () => {
 
     personaIndex();
 
-    expect(pineconeMocks.Pinecone).toHaveBeenCalledWith({ apiKey: "test-api-key" });
+    expect(pineconeMocks.Pinecone).toHaveBeenCalledWith({
+      apiKey: "test-api-key",
+      fetchApi: expect.any(Function),
+    });
     expect(pineconeMocks.index).toHaveBeenCalledOnce();
     expect(pineconeMocks.index).toHaveBeenCalledWith({
       host: "alexandria-test.svc.pinecone.io",
@@ -46,6 +65,27 @@ describe("Pinecone latency configuration", () => {
 
     expect(() => personaIndex()).toThrow("missing env var PINECONE_HOST");
     expect(pineconeMocks.index).not.toHaveBeenCalled();
+  });
+
+  it("routes SDK requests through one long keep-alive agent so consecutive turns reuse the connection", async () => {
+    const { personaIndex } = await import("./pineconeClient");
+
+    personaIndex();
+
+    expect(undiciMocks.Agent).toHaveBeenCalledOnce();
+    const agentOptions = undiciMocks.Agent.mock.calls[0][0] as { keepAliveTimeout: number };
+    expect(agentOptions.keepAliveTimeout).toBeGreaterThanOrEqual(30_000);
+
+    const [config] = pineconeMocks.Pinecone.mock.calls[0] as unknown as [
+      { fetchApi: (input: string, init?: object) => Promise<unknown> },
+    ];
+    const { fetchApi } = config;
+    const response = await fetchApi("https://host.example/query", { method: "POST" });
+    expect(undiciMocks.fetch).toHaveBeenCalledWith("https://host.example/query", {
+      method: "POST",
+      dispatcher: undiciMocks.agentInstances.at(-1),
+    });
+    expect(response).toEqual({ kind: "undici-response" });
   });
 
   it("rejects promptly with the caller's reason when retrieval is aborted", async () => {

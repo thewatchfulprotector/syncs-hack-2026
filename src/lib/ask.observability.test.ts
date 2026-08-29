@@ -29,7 +29,7 @@ describe("ask retrieval observability", () => {
     vi.clearAllMocks();
     dependencies.embedTexts.mockImplementation(
       async (_texts: string[], _signal?: AbortSignal, onProviderSelected?: ProviderSelected) => {
-        onProviderSelected?.("deepinfra");
+        onProviderSelected?.("azure");
         return [[0.1, 0.2]];
       },
     );
@@ -66,7 +66,7 @@ describe("ask retrieval observability", () => {
       "pinecone_complete",
     ]);
     expect(observed.find((event) => event.name === "embedding_complete")?.detail).toMatchObject({
-      provider: "deepinfra",
+      provider: "azure",
     });
   });
 });

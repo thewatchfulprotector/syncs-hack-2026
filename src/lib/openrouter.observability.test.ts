@@ -35,6 +35,6 @@ describe("embedding provider observability", () => {
     ).resolves.toEqual([[1, 2, 3]]);
 
     expect(onProviderSelected).toHaveBeenCalledOnce();
-    expect(onProviderSelected).toHaveBeenCalledWith("deepinfra");
+    expect(onProviderSelected).toHaveBeenCalledWith("azure");
   });
 });

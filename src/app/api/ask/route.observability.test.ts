@@ -83,7 +83,7 @@ describe("POST /api/ask Phase 0 observability", () => {
       // tiny injection contract that lets retrieval report into the route trace.
       const onTrace = args[5] as TraceSink | undefined;
       onTrace?.("embedding_start");
-      onTrace?.("embedding_complete", { provider: "deepinfra" });
+      onTrace?.("embedding_complete", { provider: "azure" });
       onTrace?.("pinecone_start");
       onTrace?.("pinecone_complete", { matchCount: 2, hostResolution: false });
       return {
@@ -165,7 +165,7 @@ describe("POST /api/ask Phase 0 observability", () => {
     before("tts_complete", "audio_complete");
 
     expect(milestones.find((milestone) => milestone.name === "embedding_complete")?.detail).toMatchObject({
-      provider: "deepinfra",
+      provider: "azure",
     });
     expect(milestones.find((milestone) => milestone.name === "tts_response_headers")?.detail).toMatchObject({
       requestId: "tts-request-observability",

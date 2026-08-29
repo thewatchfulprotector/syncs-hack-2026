@@ -61,14 +61,14 @@ describe("embedding tail-latency controls", () => {
     expect(fetchMock).toHaveBeenCalledOnce();
     const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     expect(requestBody(init).provider).toEqual({
-      order: ["deepinfra"],
+      order: ["azure"],
       allow_fallbacks: false,
     });
   });
 
-  it("starts a second provider only after a delay and aborts the losing request", async () => {
+  it("starts a retry request only after a delay and aborts the losing request", async () => {
     vi.useFakeTimers();
-    const pending = new Map<string, PendingEmbedding>();
+    const pending: PendingEmbedding[] = [];
     fetchMock.mockImplementation((_url: string, init: RequestInit) => {
       const body = requestBody(init);
       const provider = body.provider.order[0];
@@ -79,37 +79,37 @@ describe("embedding tail-latency controls", () => {
         () => response.reject(signal.reason ?? new DOMException("Aborted", "AbortError")),
         { once: true },
       );
-      pending.set(provider, { provider, signal, response });
+      pending.push({ provider, signal, response });
       return response.promise;
     });
 
     const resultPromise = embedTexts(["tail latency"]);
     await flushMicrotasks();
-    const providersStartedImmediately = [...pending.keys()];
+    const requestsStartedImmediately = pending.length;
 
-    if (!pending.has("nebius")) {
+    if (pending.length < 2) {
       await vi.advanceTimersToNextTimerAsync();
       await flushMicrotasks();
     }
 
-    const hedge = pending.get("nebius");
-    const primary = pending.get("deepinfra");
-    expect(hedge, "the delayed hedge should eventually start").toBeDefined();
-    expect(primary, "the primary provider should start first").toBeDefined();
+    const [primary, hedge] = pending;
+    expect(hedge, "the delayed retry should eventually start").toBeDefined();
+    expect(primary, "the primary request should start first").toBeDefined();
 
-    hedge!.response.resolve(embeddingResponse([9, 8, 7]));
+    hedge.response.resolve(embeddingResponse([9, 8, 7]));
     await expect(resultPromise).resolves.toEqual([[9, 8, 7]]);
     await flushMicrotasks();
 
-    const loserWasAborted = primary!.signal?.aborted === true;
-    if (!loserWasAborted) primary!.response.resolve(embeddingResponse([1, 2, 3]));
+    const loserWasAborted = primary.signal?.aborted === true;
+    if (!loserWasAborted) primary.response.resolve(embeddingResponse([1, 2, 3]));
 
-    expect(providersStartedImmediately).toEqual(["deepinfra"]);
+    expect(requestsStartedImmediately).toBe(1);
     expect(loserWasAborted).toBe(true);
-    for (const request of pending.values()) {
-      expect(requestBody(fetchMock.mock.calls.find(([, init]) => {
-        return requestBody(init as RequestInit).provider.order[0] === request.provider;
-      })?.[1] as RequestInit).provider.allow_fallbacks).toBe(false);
+    for (const [, init] of fetchMock.mock.calls as [string, RequestInit][]) {
+      expect(requestBody(init).provider).toEqual({
+        order: ["azure"],
+        allow_fallbacks: false,
+      });
     }
   });
 
