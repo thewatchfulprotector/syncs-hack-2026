@@ -85,21 +85,13 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] Wire the voice ID in; check it actually sounds like them — `voiceId` per persona in `src/lib/personas.ts`; redo both steps for the real demo persona in Phase 7
 
 ### Phase 7 · Persona quality
-- [ ] Fully ingest the real demo persona (night before the demo)
-- [ ] Tune persona prompt with verbatim quotes until it sounds like them
-- [ ] Spot-check ~10 questions with known answers; citations land on the right sources
+- [x] Fully ingest the real demo persona (night before the demo)
+- [x] Spot-check ~10 questions with known answers; citations land on the right sources
 
 ### Phase 8 · Hardening
-- [ ] Latency tuning
-- [ ] Production deploy, test on venue wifi
-- [ ] Full test suite green
-
-### Phase 9 · Stretch + pitch
-- [x] Voice input (AssemblyAI Streaming realtime STT) — built early: mic button with conversation mode (auto re-arms between turns), buffered capture so first words aren't lost, browser gets a 60s token from `/api/stt-token`
-- [ ] Second persona + one short live-ingest clip for the demo
-- [ ] Avatar (only if everything else is done)
-- [ ] Record a backup demo video
-- [ ] Pitch deck + rehearsal; deepfake/consent answer ready
+- [x] Latency tuning
+- [x] Production deploy, test on venue wifi
+- [x] Full test suite green
 
 ## Stretch goals (in priority order)
 
