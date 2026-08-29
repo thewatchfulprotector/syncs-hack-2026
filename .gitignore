@@ -48,3 +48,6 @@ scripts/smoke-tts.mp3
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# browser automation artifacts
+.playwright-mcp/

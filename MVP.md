@@ -68,11 +68,11 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] End-to-end answer with citations in the terminal — dev persona `wildfire-expert` (AssemblyAI sample interview); answers arrive in character, SOURCES map to the right chunks with timestamps. Warm timings: embed ~0.5–1s · Pinecone ~0.5s · LLM first token ~0.5s ≈ **~2s before TTS** (cold process adds ~2s Pinecone host resolution — warm the connection at app start in Phase 4/5)
 
 ### Phase 4 · Streaming pipeline (the hard part — protect this phase)
-- [ ] Test-first: sentence splitter over a token stream
-- [ ] API route streams LLM tokens
-- [ ] Sentence-by-sentence Eleven Flash v2.5 streaming TTS
-- [ ] Browser audio playback queue (gapless between sentences)
-- [ ] Measure first-audio latency; target < 3s
+- [x] Test-first: sentence splitter over a token stream — `src/lib/sentences.ts` (incremental, decimal/abbreviation-safe, 11 tests)
+- [x] API route streams LLM tokens — `POST /api/ask` streams NDJSON: citations first (chips render early), then tokens, per-sentence audio, cited sources, timings. TTS runs on a decoupled promise chain so text never stalls on audio. `POST /api/warmup` absorbs cold-start; the page calls it on load
+- [x] Sentence-by-sentence Eleven Flash v2.5 streaming TTS — with `previous_request_ids` stitching so prosody carries across sentences instead of resetting
+- [x] Browser audio playback queue (gapless between sentences) — `src/lib/audioQueue.ts`: Web Audio timeline scheduling, serialized decode, speaking-state callback for the photo pulse
+- [x] Measure first-audio latency; target < 3s — **measured 4.3–5.1s warm (local prod build, home wifi)**. Breakdown: embed ~1.8–2.9s + Pinecone ~1.3s + LLM first sentence ~0.6s + TTS ~0.45s. Post-retrieval is fast; retrieval is the gap. Embed already races DeepInfra vs Nebius in parallel (caps the 3–16s provider-congestion tail; single-provider spikes hit 16s). **Phase 8 levers: measure from Vercel (datacenter network, not home wifi), trim k, and re-benchmark providers — post-retrieval cost is only ~1s, so retrieval at ~1s total puts first audio at ~2s**
 
 ### Phase 5 · UI (one page)
 - [ ] Photo, text input, answer streaming as text while voice plays

@@ -53,26 +53,38 @@ export async function* streamChat(messages: ChatMessage[]): AsyncGenerator<strin
   }
 }
 
+async function embedBatch(batch: string[], providerOrder: string[]): Promise<number[][]> {
+  const res = await fetch(`${BASE}/embeddings`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({
+      model: EMBEDDING_MODEL,
+      provider: { order: providerOrder, allow_fallbacks: true },
+      input: batch,
+    }),
+  });
+  if (!res.ok) throw new Error(`OpenRouter embeddings: ${res.status} ${await res.text()}`);
+  const body = await res.json();
+  const sorted = [...body.data].sort((a, b) => a.index - b.index);
+  return sorted.map((d: { embedding: number[] }) => d.embedding);
+}
+
 /** Embed texts with qwen3-embedding-8b, batching internally. Order is preserved. */
 export async function embedTexts(texts: string[]): Promise<number[][]> {
+  // Single-text embeds sit on the ask hot path, and each provider's latency has
+  // a bad congestion tail (0.5s typical, 3-16s spikes). Race the two providers
+  // that serve this model — uncorrelated backends — and take the winner.
+  if (texts.length === 1) {
+    return Promise.any([
+      embedBatch(texts, ["deepinfra"]),
+      embedBatch(texts, ["nebius"]),
+    ]).catch((err: AggregateError) => {
+      throw err.errors[0];
+    });
+  }
   const vectors: number[][] = [];
   for (let i = 0; i < texts.length; i += EMBED_BATCH_SIZE) {
-    const batch = texts.slice(i, i + EMBED_BATCH_SIZE);
-    const res = await fetch(`${BASE}/embeddings`, {
-      method: "POST",
-      headers: headers(),
-      body: JSON.stringify({
-        model: EMBEDDING_MODEL,
-        // DeepInfra serves this model in ~0.5-1s; the alternative (Nebius) swings 1.5-6s.
-        // Fallbacks stay on so an outage degrades latency instead of breaking asks.
-        provider: { order: ["deepinfra"], allow_fallbacks: true },
-        input: batch,
-      }),
-    });
-    if (!res.ok) throw new Error(`OpenRouter embeddings: ${res.status} ${await res.text()}`);
-    const body = await res.json();
-    const sorted = [...body.data].sort((a, b) => a.index - b.index);
-    vectors.push(...sorted.map((d: { embedding: number[] }) => d.embedding));
+    vectors.push(...(await embedBatch(texts.slice(i, i + EMBED_BATCH_SIZE), ["deepinfra"])));
   }
   return vectors;
 }
