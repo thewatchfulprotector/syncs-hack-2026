@@ -119,7 +119,11 @@ export default function Home() {
     setNotice("");
     micRef.current = startMicStream({
       onReady: () => setMicState("listening"),
-      onPartial: (text) => showCaption(tailWords(text, 10)),
+      onPartial: (text) => {
+        // don't caption the persona's own voice leaking back through the mic
+        if (isLikelyEcho(text, recentSpeechRef.current)) return;
+        showCaption(tailWords(text, 10));
+      },
       onTurnEnd: (text) => {
         stopMic();
         // his own voice coming back through the speakers is not a question —
@@ -217,7 +221,9 @@ export default function Home() {
     setTurns((t) => [...t, { who: "You", text: q, sources: [] }]);
     setStatus("asking");
     setNotice("");
-    setCapVisible(false);
+    // show the question exactly as heard while it thinks: live partials lag
+    // behind short utterances, so this is the "it heard me" receipt
+    showCaption(q);
     setTimings("");
 
     const t0 = performance.now();

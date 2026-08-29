@@ -28,10 +28,10 @@ function buildDots(): Dot[] {
 }
 
 /**
- * The voice orb: rings of dots whose energy band runs inward (green) while
- * you speak and outward (blue) while the persona speaks. On a phase hand-off
- * the band glides to its new radius and the color crossfades — no ripple.
- * Ported from the design canvas artboard.
+ * The voice orb: rings of dots whose energy band blooms outward from the
+ * center with whoever is speaking — green for you, blue for the persona.
+ * On a phase hand-off the band glides to its new radius and the color
+ * crossfades — no ripple. Ported from the design canvas artboard.
  */
 export function Orb({
   phase,
@@ -129,7 +129,8 @@ export function Orb({
       const colK = 1 - Math.exp(-dt / 170);
       for (let i = 0; i < 3; i++) col[i] += (tgt[i] - col[i]) * colK;
 
-      const ringTarget = listening ? 0.6 - 0.5 * amp : 0.055 + 0.6 * amp;
+      // both voices bloom outward from the center with amplitude
+      const ringTarget = 0.055 + 0.6 * amp;
       ring += (ringTarget - ring) * (1 - Math.exp(-dt / 240));
       // while listening the band fattens and wobbles with the voice — clear
       // "it hears you" feedback rather than a thin quiet ring
