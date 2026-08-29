@@ -75,10 +75,10 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] Measure first-audio latency; target < 3s — **baseline measured 4.3–5.1s warm (local prod build, home wifi)**. Retrieval was the dominant gap. The serving path now targets Pinecone by host and uses a cancellable DeepInfra-first embedding request with a delayed Nebius hedge; production-region p50/p95 and browser-audible latency still need to be re-measured before claiming the target.
 
 ### Phase 5 · UI (one page)
-- [ ] Photo, text input, answer streaming as text while voice plays
-- [ ] Subtle speaking pulse on the photo
-- [ ] Citation chips linking to source + timestamp
-- [ ] Error states: API failure, empty retrieval
+- [x] Text input, answer streaming as text while voice plays
+- [x] Subtle speaking pulse on the photo
+- [x] Citation chips linking to source + timestamp
+- [x] Error states: API failure, empty retrieval
 
 ### Phase 6 · Voice
 - [x] ElevenLabs Instant Voice Clone from the clipped segments — `npm run clone-voice -- --name "X" out/voice-sample-<persona>.mp3` (built early for the steve-jobs test persona: cloned from a 2.5-min slice of the Stanford audio)
