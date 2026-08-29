@@ -11,9 +11,9 @@ export type Persona = {
 };
 
 /**
- * Hardcoded persona registry for the hack. The demo persona gets added the
- * night before; wildfire-expert is the development stand-in, built from the
- * AssemblyAI sample interview.
+ * Hardcoded persona registry for the hack. `wildfire-expert` is the development
+ * stand-in built from the AssemblyAI sample interview; demo personas use their
+ * own Pinecone-filtered sources and verbatim transcript style quotes.
  */
 export const personas: Record<string, Persona> = {
   "wildfire-expert": {
@@ -41,6 +41,19 @@ export const personas: Record<string, Persona> = {
       "Every once in a while, a revolutionary product comes along that changes everything.",
     ],
     voiceId: "EWuEH0IjvW6aWqaImpZW",
+  },
+  "elon-musk": {
+    id: "elon-musk",
+    name: "Elon Musk",
+    description:
+      "an entrepreneur and engineer discussing SpaceX, Tesla, artificial intelligence, robotics, manufacturing, technology, and his own decisions in long-form interviews",
+    quotes: [
+      "Yeah. I mean, to be clear, I'm very pro-human. I want to make sure we take actions that ensure that humans are along for the ride.",
+      "Well, I mean, yeah, it's a good question, honestly. Sometimes I wonder what's wrong with me.",
+      "You know, it's fundamentally engineering the vehicle.",
+      "Actually, it's funny you ask this question, 'cause normally I do try to think pretty far into the future, but I haven't really thought that far into the future with the Tesla bot, or it's codenamed Optimus.",
+      "I think I got a little too involved in politics, got carried away, frankly.",
+    ],
   },
 };
 
