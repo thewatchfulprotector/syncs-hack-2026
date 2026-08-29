@@ -1,0 +1,6306 @@
+{
+  "id": "016f33e1-495a-4aaa-b0b8-5090cf26c43e",
+  "status": "completed",
+  "audio_duration": 282,
+  "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the U.S. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why, so we called Peter DeCarlo, an associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Good morning, Professor. Good morning. So, so what is it about the conditions right now that have caused this round of wildfires to affect so many people so far away? Well, there's a couple of things. The, the season has been pretty dry already. And then the fact that we're getting hit in the US is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid-Atlantic and the Northeast and kind of just dropping the smoke there. So what is it in this haze that makes it harmful? And I'm assuming it is harmful. It is. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic, smaller than the width of your hair, that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological, your brain. What makes this particularly harmful? Is it the volume of particulate? Is it something in particular? You know, what is it exactly? Can you just drill down on that a little bit more? Yeah, so the concentration of particulate matter, I was looking at some of the monitors that we have, was reaching levels of what are in science speak 150 micrograms per meter cubed, which is more than 10 times what the annual average should be in about 4 times higher than what you're supposed to have on a 24-hour average. And so the concentrations of these particles in the air are just much, much, much higher than we typically see, and exposure to those high levels can lead to a host of health problems. And who is most vulnerable? I noticed that in New York City, for example, they're canceling outdoor activities. And so here it is in the, you know, early days of summer and they have to keep all the kids inside. So who tends to be vulnerable in a situation like this? It's the youngest, so children obviously, whose bodies are still developing. The elderly who are, you know, their bodies are more in decline and they're more susceptible to the health impacts of breathing the poor air quality. And then people who have pre-existing health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution. Could this get worse? That's a good question. I mean, I think if In some areas it's much worse than others, and it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations. I was going to ask you about that. Unless more fires start burning, I don't expect the concentrations to go up too much higher. I was going to ask you how— and you started to answer this— but how much longer could this last? And forgive me if I'm asking you to speculate, but what do you think? What do you think? Well, I think the fires are going to burn for a little bit longer, but the key for us in the U.S. is the weather system changing. And so right now it's kind of the weather systems that are pulling that air into our Mid-Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple days we're going to see a shift in that weather pattern and start to push the smoke away from where we are. And finally, with the impacts of climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide-ranging air quality consequences or circumstances? I mean, that is one of the predictions for climate change looking into the future. The fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So yeah, this is probably something that we'll be seeing More frequently. This tends to be much more of an issue in the Western US, so the Eastern US getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that's gonna happen more frequently. That's Peter DiCarlo, Associate Professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Professor DiCarlo, thanks so much for joining us and sharing this expertise with us. Thank you for having me.",
+  "utterances": [
+    {
+      "speaker": "A",
+      "text": "Smoke from hundreds of wildfires in Canada is triggering air quality alerts throughout the U.S. Skylines from Maine to Maryland to Minnesota are gray and smoggy. And in some places, the air quality warnings include the warning to stay inside. We wanted to better understand what's happening here and why, so we called Peter DeCarlo, an associate professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Good morning, Professor.",
+      "confidence": 0.99272364,
+      "start": 48,
+      "end": 26475,
+      "words": [
+        {
+          "text": "Smoke",
+          "start": 48,
+          "end": 529,
+          "confidence": 0.9996176,
+          "speaker": "A"
+        },
+        {
+          "text": "from",
+          "start": 737,
+          "end": 833,
+          "confidence": 0.99280965,
+          "speaker": "A"
+        },
+        {
+          "text": "hundreds",
+          "start": 1058,
+          "end": 1443,
+          "confidence": 0.9999037,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 1475,
+          "end": 1619,
+          "confidence": 0.99999404,
+          "speaker": "A"
+        },
+        {
+          "text": "wildfires",
+          "start": 1635,
+          "end": 2245,
+          "confidence": 0.9999876,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 2277,
+          "end": 2325,
+          "confidence": 0.9999703,
+          "speaker": "A"
+        },
+        {
+          "text": "Canada",
+          "start": 2437,
+          "end": 2982,
+          "confidence": 0.9999908,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 3319,
+          "end": 3415,
+          "confidence": 0.99901545,
+          "speaker": "A"
+        },
+        {
+          "text": "triggering",
+          "start": 3479,
+          "end": 3832,
+          "confidence": 0.999977,
+          "speaker": "A"
+        },
+        {
+          "text": "air",
+          "start": 4025,
+          "end": 4073,
+          "confidence": 0.9997154,
+          "speaker": "A"
+        },
+        {
+          "text": "quality",
+          "start": 4201,
+          "end": 4618,
+          "confidence": 0.9901237,
+          "speaker": "A"
+        },
+        {
+          "text": "alerts",
+          "start": 4682,
+          "end": 5115,
+          "confidence": 0.9999721,
+          "speaker": "A"
+        },
+        {
+          "text": "throughout",
+          "start": 5163,
+          "end": 5548,
+          "confidence": 0.99995375,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 5548,
+          "end": 5612,
+          "confidence": 0.99998915,
+          "speaker": "A"
+        },
+        {
+          "text": "U.S.",
+          "start": 5644,
+          "end": 6141,
+          "confidence": 0.94852513,
+          "speaker": "A"
+        },
+        {
+          "text": "Skylines",
+          "start": 6510,
+          "end": 7216,
+          "confidence": 0.9998823,
+          "speaker": "A"
+        },
+        {
+          "text": "from",
+          "start": 7248,
+          "end": 7376,
+          "confidence": 0.9939318,
+          "speaker": "A"
+        },
+        {
+          "text": "Maine",
+          "start": 7488,
+          "end": 7857,
+          "confidence": 0.9999875,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 8050,
+          "end": 8146,
+          "confidence": 0.94520104,
+          "speaker": "A"
+        },
+        {
+          "text": "Maryland",
+          "start": 8146,
+          "end": 8675,
+          "confidence": 0.9999771,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 8771,
+          "end": 8867,
+          "confidence": 0.99231154,
+          "speaker": "A"
+        },
+        {
+          "text": "Minnesota",
+          "start": 8867,
+          "end": 9637,
+          "confidence": 0.99999094,
+          "speaker": "A"
+        },
+        {
+          "text": "are",
+          "start": 9798,
+          "end": 9846,
+          "confidence": 0.99993515,
+          "speaker": "A"
+        },
+        {
+          "text": "gray",
+          "start": 9974,
+          "end": 10166,
+          "confidence": 0.9967901,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 10279,
+          "end": 10375,
+          "confidence": 0.9998807,
+          "speaker": "A"
+        },
+        {
+          "text": "smoggy.",
+          "start": 10375,
+          "end": 10776,
+          "confidence": 0.9068224,
+          "speaker": "A"
+        },
+        {
+          "text": "And",
+          "start": 11257,
+          "end": 11321,
+          "confidence": 0.9997906,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 11337,
+          "end": 11385,
+          "confidence": 0.99584466,
+          "speaker": "A"
+        },
+        {
+          "text": "some",
+          "start": 11481,
+          "end": 11690,
+          "confidence": 0.99999166,
+          "speaker": "A"
+        },
+        {
+          "text": "places,",
+          "start": 11802,
+          "end": 12155,
+          "confidence": 0.9995334,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 12219,
+          "end": 12363,
+          "confidence": 0.999905,
+          "speaker": "A"
+        },
+        {
+          "text": "air",
+          "start": 12379,
+          "end": 12540,
+          "confidence": 0.999959,
+          "speaker": "A"
+        },
+        {
+          "text": "quality",
+          "start": 12540,
+          "end": 12925,
+          "confidence": 0.9994087,
+          "speaker": "A"
+        },
+        {
+          "text": "warnings",
+          "start": 13005,
+          "end": 13309,
+          "confidence": 0.99995637,
+          "speaker": "A"
+        },
+        {
+          "text": "include",
+          "start": 13422,
+          "end": 13887,
+          "confidence": 0.9999404,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 13887,
+          "end": 13935,
+          "confidence": 0.99809664,
+          "speaker": "A"
+        },
+        {
+          "text": "warning",
+          "start": 13983,
+          "end": 14272,
+          "confidence": 0.99990857,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 14304,
+          "end": 14400,
+          "confidence": 0.99998045,
+          "speaker": "A"
+        },
+        {
+          "text": "stay",
+          "start": 14400,
+          "end": 14849,
+          "confidence": 0.99985504,
+          "speaker": "A"
+        },
+        {
+          "text": "inside.",
+          "start": 15009,
+          "end": 15635,
+          "confidence": 0.99979,
+          "speaker": "A"
+        },
+        {
+          "text": "We",
+          "start": 16132,
+          "end": 16212,
+          "confidence": 0.9991571,
+          "speaker": "A"
+        },
+        {
+          "text": "wanted",
+          "start": 16228,
+          "end": 16388,
+          "confidence": 0.99965525,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 16388,
+          "end": 16469,
+          "confidence": 0.9998317,
+          "speaker": "A"
+        },
+        {
+          "text": "better",
+          "start": 16469,
+          "end": 16709,
+          "confidence": 0.99990237,
+          "speaker": "A"
+        },
+        {
+          "text": "understand",
+          "start": 16709,
+          "end": 17078,
+          "confidence": 0.9999907,
+          "speaker": "A"
+        },
+        {
+          "text": "what's",
+          "start": 17190,
+          "end": 17415,
+          "confidence": 0.9999397,
+          "speaker": "A"
+        },
+        {
+          "text": "happening",
+          "start": 17415,
+          "end": 17800,
+          "confidence": 0.9999676,
+          "speaker": "A"
+        },
+        {
+          "text": "here",
+          "start": 17832,
+          "end": 17944,
+          "confidence": 0.9998423,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 18056,
+          "end": 18136,
+          "confidence": 0.9864827,
+          "speaker": "A"
+        },
+        {
+          "text": "why,",
+          "start": 18232,
+          "end": 18393,
+          "confidence": 0.96806884,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 18489,
+          "end": 18553,
+          "confidence": 0.9998735,
+          "speaker": "A"
+        },
+        {
+          "text": "we",
+          "start": 18633,
+          "end": 18778,
+          "confidence": 0.99988234,
+          "speaker": "A"
+        },
+        {
+          "text": "called",
+          "start": 18778,
+          "end": 19018,
+          "confidence": 0.99991953,
+          "speaker": "A"
+        },
+        {
+          "text": "Peter",
+          "start": 19018,
+          "end": 19275,
+          "confidence": 0.9715394,
+          "speaker": "A"
+        },
+        {
+          "text": "DeCarlo,",
+          "start": 19275,
+          "end": 19804,
+          "confidence": 0.8711758,
+          "speaker": "A"
+        },
+        {
+          "text": "an",
+          "start": 20237,
+          "end": 20301,
+          "confidence": 0.9998343,
+          "speaker": "A"
+        },
+        {
+          "text": "associate",
+          "start": 20301,
+          "end": 20718,
+          "confidence": 0.9903537,
+          "speaker": "A"
+        },
+        {
+          "text": "professor",
+          "start": 20718,
+          "end": 21183,
+          "confidence": 0.99999547,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 21279,
+          "end": 21343,
+          "confidence": 0.9998739,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 21360,
+          "end": 21424,
+          "confidence": 0.9999515,
+          "speaker": "A"
+        },
+        {
+          "text": "Department",
+          "start": 21424,
+          "end": 21905,
+          "confidence": 0.9999231,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 21985,
+          "end": 22081,
+          "confidence": 0.9999963,
+          "speaker": "A"
+        },
+        {
+          "text": "Environmental",
+          "start": 22081,
+          "end": 22674,
+          "confidence": 0.9999664,
+          "speaker": "A"
+        },
+        {
+          "text": "Health",
+          "start": 22707,
+          "end": 23027,
+          "confidence": 0.9999894,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 23107,
+          "end": 23204,
+          "confidence": 0.99990714,
+          "speaker": "A"
+        },
+        {
+          "text": "Engineering",
+          "start": 23204,
+          "end": 23733,
+          "confidence": 0.9999863,
+          "speaker": "A"
+        },
+        {
+          "text": "at",
+          "start": 23829,
+          "end": 23989,
+          "confidence": 0.9997638,
+          "speaker": "A"
+        },
+        {
+          "text": "Johns",
+          "start": 24005,
+          "end": 24310,
+          "confidence": 0.9999945,
+          "speaker": "A"
+        },
+        {
+          "text": "Hopkins",
+          "start": 24310,
+          "end": 24775,
+          "confidence": 0.99999595,
+          "speaker": "A"
+        },
+        {
+          "text": "University.",
+          "start": 24807,
+          "end": 25385,
+          "confidence": 0.9999358,
+          "speaker": "A"
+        },
+        {
+          "text": "Good",
+          "start": 25769,
+          "end": 25866,
+          "confidence": 0.9843136,
+          "speaker": "A"
+        },
+        {
+          "text": "morning,",
+          "start": 25866,
+          "end": 26058,
+          "confidence": 0.99997485,
+          "speaker": "A"
+        },
+        {
+          "text": "Professor.",
+          "start": 26074,
+          "end": 26475,
+          "confidence": 0.95254105,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Good morning.",
+      "confidence": 0.9955856,
+      "start": 26475,
+      "end": 28543,
+      "words": [
+        {
+          "text": "Good",
+          "start": 28014,
+          "end": 28206,
+          "confidence": 0.99024534,
+          "speaker": "B"
+        },
+        {
+          "text": "morning.",
+          "start": 28254,
+          "end": 28543,
+          "confidence": 0.9977036,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "So, so what is it about the conditions right now that have caused this round of wildfires to affect so many people so far away?",
+      "confidence": 0.9976235,
+      "start": 28543,
+      "end": 37149,
+      "words": [
+        {
+          "text": "So,",
+          "start": 29072,
+          "end": 29344,
+          "confidence": 0.98701096,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 29472,
+          "end": 29584,
+          "confidence": 0.99702364,
+          "speaker": "A"
+        },
+        {
+          "text": "what",
+          "start": 29761,
+          "end": 29889,
+          "confidence": 0.98912245,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 30001,
+          "end": 30065,
+          "confidence": 0.9999646,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 30161,
+          "end": 30258,
+          "confidence": 0.9999653,
+          "speaker": "A"
+        },
+        {
+          "text": "about",
+          "start": 30258,
+          "end": 30562,
+          "confidence": 0.9999925,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 30562,
+          "end": 30626,
+          "confidence": 0.9999366,
+          "speaker": "A"
+        },
+        {
+          "text": "conditions",
+          "start": 30658,
+          "end": 31267,
+          "confidence": 0.9999672,
+          "speaker": "A"
+        },
+        {
+          "text": "right",
+          "start": 31299,
+          "end": 31492,
+          "confidence": 0.99990916,
+          "speaker": "A"
+        },
+        {
+          "text": "now",
+          "start": 31620,
+          "end": 31796,
+          "confidence": 0.99999607,
+          "speaker": "A"
+        },
+        {
+          "text": "that",
+          "start": 32325,
+          "end": 32421,
+          "confidence": 0.9993917,
+          "speaker": "A"
+        },
+        {
+          "text": "have",
+          "start": 32421,
+          "end": 32550,
+          "confidence": 0.99987614,
+          "speaker": "A"
+        },
+        {
+          "text": "caused",
+          "start": 32582,
+          "end": 33030,
+          "confidence": 0.99998856,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 33062,
+          "end": 33191,
+          "confidence": 0.99998283,
+          "speaker": "A"
+        },
+        {
+          "text": "round",
+          "start": 33303,
+          "end": 33559,
+          "confidence": 0.9999846,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 33559,
+          "end": 33671,
+          "confidence": 0.99999774,
+          "speaker": "A"
+        },
+        {
+          "text": "wildfires",
+          "start": 33784,
+          "end": 34553,
+          "confidence": 0.9999865,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 34585,
+          "end": 34681,
+          "confidence": 0.9999877,
+          "speaker": "A"
+        },
+        {
+          "text": "affect",
+          "start": 34729,
+          "end": 35002,
+          "confidence": 0.9999895,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 35002,
+          "end": 35322,
+          "confidence": 0.9999914,
+          "speaker": "A"
+        },
+        {
+          "text": "many",
+          "start": 35322,
+          "end": 35547,
+          "confidence": 0.9999938,
+          "speaker": "A"
+        },
+        {
+          "text": "people",
+          "start": 35547,
+          "end": 35931,
+          "confidence": 0.9999931,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 36252,
+          "end": 36460,
+          "confidence": 0.9738999,
+          "speaker": "A"
+        },
+        {
+          "text": "far",
+          "start": 36572,
+          "end": 36765,
+          "confidence": 0.99998844,
+          "speaker": "A"
+        },
+        {
+          "text": "away?",
+          "start": 36829,
+          "end": 37149,
+          "confidence": 0.9999885,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Well, there's a couple of things. The, the season has been pretty dry already. And then the fact that we're getting hit in the US is because there's a couple of weather systems that are essentially channeling the smoke from those Canadian wildfires through Pennsylvania into the Mid-Atlantic and the Northeast and kind of just dropping the smoke there.",
+      "confidence": 0.9769682,
+      "start": 37149,
+      "end": 55741,
+      "words": [
+        {
+          "text": "Well,",
+          "start": 38255,
+          "end": 39393,
+          "confidence": 0.99983174,
+          "speaker": "B"
+        },
+        {
+          "text": "there's",
+          "start": 39409,
+          "end": 39602,
+          "confidence": 0.999932,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 39602,
+          "end": 39618,
+          "confidence": 0.9999814,
+          "speaker": "B"
+        },
+        {
+          "text": "couple",
+          "start": 39618,
+          "end": 39810,
+          "confidence": 0.9999882,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 39810,
+          "end": 39890,
+          "confidence": 0.9997867,
+          "speaker": "B"
+        },
+        {
+          "text": "things.",
+          "start": 39938,
+          "end": 40243,
+          "confidence": 0.9987972,
+          "speaker": "B"
+        },
+        {
+          "text": "The,",
+          "start": 40515,
+          "end": 40595,
+          "confidence": 0.758974,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 41156,
+          "end": 41236,
+          "confidence": 0.9999652,
+          "speaker": "B"
+        },
+        {
+          "text": "season",
+          "start": 41333,
+          "end": 41701,
+          "confidence": 0.9998548,
+          "speaker": "B"
+        },
+        {
+          "text": "has",
+          "start": 41701,
+          "end": 41797,
+          "confidence": 0.9998272,
+          "speaker": "B"
+        },
+        {
+          "text": "been",
+          "start": 41797,
+          "end": 41926,
+          "confidence": 0.99997854,
+          "speaker": "B"
+        },
+        {
+          "text": "pretty",
+          "start": 41942,
+          "end": 42086,
+          "confidence": 0.9999759,
+          "speaker": "B"
+        },
+        {
+          "text": "dry",
+          "start": 42118,
+          "end": 42342,
+          "confidence": 0.9999964,
+          "speaker": "B"
+        },
+        {
+          "text": "already.",
+          "start": 42342,
+          "end": 42679,
+          "confidence": 0.92620903,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 43160,
+          "end": 43288,
+          "confidence": 0.9999038,
+          "speaker": "B"
+        },
+        {
+          "text": "then",
+          "start": 43384,
+          "end": 43608,
+          "confidence": 0.9998665,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 43865,
+          "end": 43961,
+          "confidence": 0.99306315,
+          "speaker": "B"
+        },
+        {
+          "text": "fact",
+          "start": 43961,
+          "end": 44201,
+          "confidence": 0.9999534,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 44201,
+          "end": 44298,
+          "confidence": 0.99997497,
+          "speaker": "B"
+        },
+        {
+          "text": "we're",
+          "start": 44346,
+          "end": 44506,
+          "confidence": 0.9999732,
+          "speaker": "B"
+        },
+        {
+          "text": "getting",
+          "start": 44506,
+          "end": 44698,
+          "confidence": 0.99998593,
+          "speaker": "B"
+        },
+        {
+          "text": "hit",
+          "start": 44826,
+          "end": 45083,
+          "confidence": 0.9999856,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 45083,
+          "end": 45131,
+          "confidence": 0.9999647,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 45163,
+          "end": 45227,
+          "confidence": 0.99999,
+          "speaker": "B"
+        },
+        {
+          "text": "US",
+          "start": 45243,
+          "end": 45596,
+          "confidence": 0.62825954,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 46429,
+          "end": 46493,
+          "confidence": 0.9997454,
+          "speaker": "B"
+        },
+        {
+          "text": "because",
+          "start": 46525,
+          "end": 46814,
+          "confidence": 0.9999393,
+          "speaker": "B"
+        },
+        {
+          "text": "there's",
+          "start": 46846,
+          "end": 47022,
+          "confidence": 0.99996513,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 47022,
+          "end": 47086,
+          "confidence": 0.9999876,
+          "speaker": "B"
+        },
+        {
+          "text": "couple",
+          "start": 47086,
+          "end": 47343,
+          "confidence": 0.99998856,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 47343,
+          "end": 47391,
+          "confidence": 0.6766249,
+          "speaker": "B"
+        },
+        {
+          "text": "weather",
+          "start": 47391,
+          "end": 47631,
+          "confidence": 0.999984,
+          "speaker": "B"
+        },
+        {
+          "text": "systems",
+          "start": 47631,
+          "end": 48032,
+          "confidence": 0.99999785,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 48032,
+          "end": 48128,
+          "confidence": 0.9999846,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 48128,
+          "end": 48192,
+          "confidence": 0.9999813,
+          "speaker": "B"
+        },
+        {
+          "text": "essentially",
+          "start": 48192,
+          "end": 48609,
+          "confidence": 0.99996877,
+          "speaker": "B"
+        },
+        {
+          "text": "channeling",
+          "start": 48609,
+          "end": 48978,
+          "confidence": 0.9997243,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 49010,
+          "end": 49090,
+          "confidence": 0.99946207,
+          "speaker": "B"
+        },
+        {
+          "text": "smoke",
+          "start": 49090,
+          "end": 49474,
+          "confidence": 0.9999924,
+          "speaker": "B"
+        },
+        {
+          "text": "from",
+          "start": 49474,
+          "end": 49587,
+          "confidence": 0.999992,
+          "speaker": "B"
+        },
+        {
+          "text": "those",
+          "start": 49635,
+          "end": 49699,
+          "confidence": 0.9999051,
+          "speaker": "B"
+        },
+        {
+          "text": "Canadian",
+          "start": 49795,
+          "end": 50116,
+          "confidence": 0.9999933,
+          "speaker": "B"
+        },
+        {
+          "text": "wildfires",
+          "start": 50116,
+          "end": 50580,
+          "confidence": 0.9999918,
+          "speaker": "B"
+        },
+        {
+          "text": "through",
+          "start": 51253,
+          "end": 51622,
+          "confidence": 0.99485165,
+          "speaker": "B"
+        },
+        {
+          "text": "Pennsylvania",
+          "start": 51734,
+          "end": 52359,
+          "confidence": 0.99999726,
+          "speaker": "B"
+        },
+        {
+          "text": "into",
+          "start": 52375,
+          "end": 52584,
+          "confidence": 0.9651196,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 52600,
+          "end": 52680,
+          "confidence": 0.9999883,
+          "speaker": "B"
+        },
+        {
+          "text": "Mid-Atlantic",
+          "start": 52680,
+          "end": 53193,
+          "confidence": 0.9937095,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 53193,
+          "end": 53257,
+          "confidence": 0.99471325,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 53257,
+          "end": 53321,
+          "confidence": 0.9998548,
+          "speaker": "B"
+        },
+        {
+          "text": "Northeast",
+          "start": 53321,
+          "end": 53978,
+          "confidence": 0.99995303,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 53978,
+          "end": 54203,
+          "confidence": 0.90110564,
+          "speaker": "B"
+        },
+        {
+          "text": "kind",
+          "start": 54299,
+          "end": 54443,
+          "confidence": 0.858942,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 54443,
+          "end": 54587,
+          "confidence": 0.9999832,
+          "speaker": "B"
+        },
+        {
+          "text": "just",
+          "start": 54603,
+          "end": 54780,
+          "confidence": 0.9999509,
+          "speaker": "B"
+        },
+        {
+          "text": "dropping",
+          "start": 54780,
+          "end": 55148,
+          "confidence": 0.99994874,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 55180,
+          "end": 55260,
+          "confidence": 0.9992347,
+          "speaker": "B"
+        },
+        {
+          "text": "smoke",
+          "start": 55260,
+          "end": 55581,
+          "confidence": 0.9996711,
+          "speaker": "B"
+        },
+        {
+          "text": "there.",
+          "start": 55581,
+          "end": 55741,
+          "confidence": 0.9956226,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "So what is it in this haze that makes it harmful? And I'm assuming it is harmful.",
+      "confidence": 0.9917523,
+      "start": 56456,
+      "end": 60474,
+      "words": [
+        {
+          "text": "So",
+          "start": 56456,
+          "end": 56620,
+          "confidence": 0.9919452,
+          "speaker": "A"
+        },
+        {
+          "text": "what",
+          "start": 56702,
+          "end": 56817,
+          "confidence": 0.9498482,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 56817,
+          "end": 56931,
+          "confidence": 0.99974495,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 56981,
+          "end": 57128,
+          "confidence": 0.9988507,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 57128,
+          "end": 57210,
+          "confidence": 0.9995029,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 57210,
+          "end": 57341,
+          "confidence": 0.9993993,
+          "speaker": "A"
+        },
+        {
+          "text": "haze",
+          "start": 57440,
+          "end": 57915,
+          "confidence": 0.99979955,
+          "speaker": "A"
+        },
+        {
+          "text": "that",
+          "start": 57948,
+          "end": 58063,
+          "confidence": 0.9999608,
+          "speaker": "A"
+        },
+        {
+          "text": "makes",
+          "start": 58129,
+          "end": 58522,
+          "confidence": 0.99988055,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 58752,
+          "end": 58850,
+          "confidence": 0.99992466,
+          "speaker": "A"
+        },
+        {
+          "text": "harmful?",
+          "start": 58850,
+          "end": 59391,
+          "confidence": 0.98327386,
+          "speaker": "A"
+        },
+        {
+          "text": "And",
+          "start": 59441,
+          "end": 59523,
+          "confidence": 0.9816607,
+          "speaker": "A"
+        },
+        {
+          "text": "I'm",
+          "start": 59523,
+          "end": 59654,
+          "confidence": 0.9995494,
+          "speaker": "A"
+        },
+        {
+          "text": "assuming",
+          "start": 59654,
+          "end": 59965,
+          "confidence": 0.9998272,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 60064,
+          "end": 60146,
+          "confidence": 0.9979113,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 60146,
+          "end": 60261,
+          "confidence": 0.9991732,
+          "speaker": "A"
+        },
+        {
+          "text": "harmful.",
+          "start": 60310,
+          "end": 60474,
+          "confidence": 0.95839995,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "It is. It is. The levels outside right now in Baltimore are considered unhealthy. And most of that is due to what's called particulate matter, which are tiny particles, microscopic, smaller than the width of your hair, that can get into your lungs and impact your respiratory system, your cardiovascular system, and even your neurological, your brain.",
+      "confidence": 0.9962082,
+      "start": 60474,
+      "end": 82362,
+      "words": [
+        {
+          "text": "It",
+          "start": 62524,
+          "end": 62604,
+          "confidence": 0.9995441,
+          "speaker": "B"
+        },
+        {
+          "text": "is.",
+          "start": 62604,
+          "end": 62813,
+          "confidence": 0.8903999,
+          "speaker": "B"
+        },
+        {
+          "text": "It",
+          "start": 63006,
+          "end": 63086,
+          "confidence": 0.9939977,
+          "speaker": "B"
+        },
+        {
+          "text": "is.",
+          "start": 63086,
+          "end": 63215,
+          "confidence": 0.99884427,
+          "speaker": "B"
+        },
+        {
+          "text": "The",
+          "start": 63472,
+          "end": 63568,
+          "confidence": 0.9995309,
+          "speaker": "B"
+        },
+        {
+          "text": "levels",
+          "start": 63568,
+          "end": 63858,
+          "confidence": 0.99661535,
+          "speaker": "B"
+        },
+        {
+          "text": "outside",
+          "start": 64131,
+          "end": 64677,
+          "confidence": 0.9996214,
+          "speaker": "B"
+        },
+        {
+          "text": "right",
+          "start": 64677,
+          "end": 64774,
+          "confidence": 0.99937767,
+          "speaker": "B"
+        },
+        {
+          "text": "now",
+          "start": 64774,
+          "end": 64934,
+          "confidence": 0.9999924,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 64934,
+          "end": 64983,
+          "confidence": 0.999532,
+          "speaker": "B"
+        },
+        {
+          "text": "Baltimore",
+          "start": 65015,
+          "end": 65417,
+          "confidence": 0.9999995,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 65417,
+          "end": 65609,
+          "confidence": 0.9999188,
+          "speaker": "B"
+        },
+        {
+          "text": "considered",
+          "start": 65658,
+          "end": 66043,
+          "confidence": 0.9999354,
+          "speaker": "B"
+        },
+        {
+          "text": "unhealthy.",
+          "start": 66043,
+          "end": 66509,
+          "confidence": 0.970958,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 67972,
+          "end": 68036,
+          "confidence": 0.9901288,
+          "speaker": "B"
+        },
+        {
+          "text": "most",
+          "start": 68132,
+          "end": 68406,
+          "confidence": 0.99103796,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 68406,
+          "end": 68470,
+          "confidence": 0.9999943,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 68470,
+          "end": 68631,
+          "confidence": 0.9999558,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 68631,
+          "end": 68727,
+          "confidence": 0.9998877,
+          "speaker": "B"
+        },
+        {
+          "text": "due",
+          "start": 68791,
+          "end": 68968,
+          "confidence": 0.9999676,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 69032,
+          "end": 69209,
+          "confidence": 0.9999962,
+          "speaker": "B"
+        },
+        {
+          "text": "what's",
+          "start": 69434,
+          "end": 69595,
+          "confidence": 0.99985474,
+          "speaker": "B"
+        },
+        {
+          "text": "called",
+          "start": 69595,
+          "end": 69756,
+          "confidence": 0.9999907,
+          "speaker": "B"
+        },
+        {
+          "text": "particulate",
+          "start": 69756,
+          "end": 70238,
+          "confidence": 0.9999986,
+          "speaker": "B"
+        },
+        {
+          "text": "matter,",
+          "start": 70238,
+          "end": 70479,
+          "confidence": 0.9999607,
+          "speaker": "B"
+        },
+        {
+          "text": "which",
+          "start": 70543,
+          "end": 70656,
+          "confidence": 0.9998072,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 70656,
+          "end": 70800,
+          "confidence": 0.9998524,
+          "speaker": "B"
+        },
+        {
+          "text": "tiny",
+          "start": 70800,
+          "end": 71090,
+          "confidence": 0.99996316,
+          "speaker": "B"
+        },
+        {
+          "text": "particles,",
+          "start": 71106,
+          "end": 71572,
+          "confidence": 0.99603415,
+          "speaker": "B"
+        },
+        {
+          "text": "microscopic,",
+          "start": 72230,
+          "end": 72889,
+          "confidence": 0.9992813,
+          "speaker": "B"
+        },
+        {
+          "text": "smaller",
+          "start": 72905,
+          "end": 73226,
+          "confidence": 0.9999207,
+          "speaker": "B"
+        },
+        {
+          "text": "than",
+          "start": 73226,
+          "end": 73339,
+          "confidence": 0.99999166,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 73371,
+          "end": 73435,
+          "confidence": 0.9999715,
+          "speaker": "B"
+        },
+        {
+          "text": "width",
+          "start": 73451,
+          "end": 73660,
+          "confidence": 0.99997103,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 73933,
+          "end": 74030,
+          "confidence": 0.9999949,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 74030,
+          "end": 74142,
+          "confidence": 0.9982766,
+          "speaker": "B"
+        },
+        {
+          "text": "hair,",
+          "start": 74239,
+          "end": 74528,
+          "confidence": 0.9993787,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 75379,
+          "end": 75492,
+          "confidence": 0.9995221,
+          "speaker": "B"
+        },
+        {
+          "text": "can",
+          "start": 75685,
+          "end": 75765,
+          "confidence": 0.999918,
+          "speaker": "B"
+        },
+        {
+          "text": "get",
+          "start": 75781,
+          "end": 75926,
+          "confidence": 0.9999771,
+          "speaker": "B"
+        },
+        {
+          "text": "into",
+          "start": 75926,
+          "end": 76086,
+          "confidence": 0.9999695,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 76086,
+          "end": 76199,
+          "confidence": 0.9999931,
+          "speaker": "B"
+        },
+        {
+          "text": "lungs",
+          "start": 76247,
+          "end": 76552,
+          "confidence": 0.99999666,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 76584,
+          "end": 76649,
+          "confidence": 0.9994449,
+          "speaker": "B"
+        },
+        {
+          "text": "impact",
+          "start": 76986,
+          "end": 77372,
+          "confidence": 0.9989779,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 77372,
+          "end": 77500,
+          "confidence": 0.9999908,
+          "speaker": "B"
+        },
+        {
+          "text": "respiratory",
+          "start": 77773,
+          "end": 78127,
+          "confidence": 0.99999225,
+          "speaker": "B"
+        },
+        {
+          "text": "system,",
+          "start": 78127,
+          "end": 78480,
+          "confidence": 0.9997473,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 78577,
+          "end": 78673,
+          "confidence": 0.9998658,
+          "speaker": "B"
+        },
+        {
+          "text": "cardiovascular",
+          "start": 78673,
+          "end": 79444,
+          "confidence": 0.9999832,
+          "speaker": "B"
+        },
+        {
+          "text": "system,",
+          "start": 79460,
+          "end": 79910,
+          "confidence": 0.99989307,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 80424,
+          "end": 80747,
+          "confidence": 0.9990445,
+          "speaker": "B"
+        },
+        {
+          "text": "even",
+          "start": 80747,
+          "end": 80900,
+          "confidence": 0.9999634,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 81257,
+          "end": 81478,
+          "confidence": 0.9997279,
+          "speaker": "B"
+        },
+        {
+          "text": "neurological,",
+          "start": 81546,
+          "end": 82073,
+          "confidence": 0.9681714,
+          "speaker": "B"
+        },
+        {
+          "text": "your",
+          "start": 82124,
+          "end": 82243,
+          "confidence": 0.99798954,
+          "speaker": "B"
+        },
+        {
+          "text": "brain.",
+          "start": 82277,
+          "end": 82362,
+          "confidence": 0.99658066,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "What makes this particularly harmful? Is it the volume of particulate? Is it something in particular? You know, what is it exactly? Can you just drill down on that a little bit more?",
+      "confidence": 0.99045795,
+      "start": 83185,
+      "end": 92006,
+      "words": [
+        {
+          "text": "What",
+          "start": 83185,
+          "end": 83508,
+          "confidence": 0.9660908,
+          "speaker": "A"
+        },
+        {
+          "text": "makes",
+          "start": 83815,
+          "end": 83977,
+          "confidence": 0.91519344,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 83977,
+          "end": 84073,
+          "confidence": 0.99409074,
+          "speaker": "A"
+        },
+        {
+          "text": "particularly",
+          "start": 84073,
+          "end": 84930,
+          "confidence": 0.99988985,
+          "speaker": "A"
+        },
+        {
+          "text": "harmful?",
+          "start": 85188,
+          "end": 85495,
+          "confidence": 0.9993017,
+          "speaker": "A"
+        },
+        {
+          "text": "Is",
+          "start": 85592,
+          "end": 85689,
+          "confidence": 0.99990404,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 85705,
+          "end": 85851,
+          "confidence": 0.9998907,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 86561,
+          "end": 86658,
+          "confidence": 0.99981946,
+          "speaker": "A"
+        },
+        {
+          "text": "volume",
+          "start": 86658,
+          "end": 87224,
+          "confidence": 0.9735212,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 87240,
+          "end": 87353,
+          "confidence": 0.9999784,
+          "speaker": "A"
+        },
+        {
+          "text": "particulate?",
+          "start": 87385,
+          "end": 88064,
+          "confidence": 0.9888855,
+          "speaker": "A"
+        },
+        {
+          "text": "Is",
+          "start": 88112,
+          "end": 88161,
+          "confidence": 0.99897254,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 88258,
+          "end": 88306,
+          "confidence": 0.99975353,
+          "speaker": "A"
+        },
+        {
+          "text": "something",
+          "start": 88338,
+          "end": 88645,
+          "confidence": 0.99982506,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 88742,
+          "end": 88791,
+          "confidence": 0.9968906,
+          "speaker": "A"
+        },
+        {
+          "text": "particular?",
+          "start": 88823,
+          "end": 89227,
+          "confidence": 0.9940967,
+          "speaker": "A"
+        },
+        {
+          "text": "You",
+          "start": 89308,
+          "end": 89340,
+          "confidence": 0.8729049,
+          "speaker": "A"
+        },
+        {
+          "text": "know,",
+          "start": 89340,
+          "end": 89421,
+          "confidence": 0.9999055,
+          "speaker": "A"
+        },
+        {
+          "text": "what",
+          "start": 89550,
+          "end": 89728,
+          "confidence": 0.9999788,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 89728,
+          "end": 89776,
+          "confidence": 0.99956375,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 89889,
+          "end": 89970,
+          "confidence": 0.99981815,
+          "speaker": "A"
+        },
+        {
+          "text": "exactly?",
+          "start": 89970,
+          "end": 90390,
+          "confidence": 0.99865955,
+          "speaker": "A"
+        },
+        {
+          "text": "Can",
+          "start": 90439,
+          "end": 90552,
+          "confidence": 0.99936396,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 90552,
+          "end": 90616,
+          "confidence": 0.999979,
+          "speaker": "A"
+        },
+        {
+          "text": "just",
+          "start": 90616,
+          "end": 90810,
+          "confidence": 0.99926835,
+          "speaker": "A"
+        },
+        {
+          "text": "drill",
+          "start": 90842,
+          "end": 91085,
+          "confidence": 0.99998045,
+          "speaker": "A"
+        },
+        {
+          "text": "down",
+          "start": 91085,
+          "end": 91327,
+          "confidence": 0.9999833,
+          "speaker": "A"
+        },
+        {
+          "text": "on",
+          "start": 91327,
+          "end": 91408,
+          "confidence": 0.99900454,
+          "speaker": "A"
+        },
+        {
+          "text": "that",
+          "start": 91408,
+          "end": 91521,
+          "confidence": 0.9999372,
+          "speaker": "A"
+        },
+        {
+          "text": "a",
+          "start": 91521,
+          "end": 91569,
+          "confidence": 0.9999174,
+          "speaker": "A"
+        },
+        {
+          "text": "little",
+          "start": 91569,
+          "end": 91747,
+          "confidence": 0.99993074,
+          "speaker": "A"
+        },
+        {
+          "text": "bit",
+          "start": 91747,
+          "end": 91876,
+          "confidence": 0.99991715,
+          "speaker": "A"
+        },
+        {
+          "text": "more?",
+          "start": 91909,
+          "end": 92006,
+          "confidence": 0.9999879,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Yeah, so the concentration of particulate matter, I was looking at some of the monitors that we have, was reaching levels of what are in science speak 150 micrograms per meter cubed, which is more than 10 times what the annual average should be in about 4 times higher than what you're supposed to have on a 24-hour average. And so the concentrations of these particles in the air are just much, much, much higher than we typically see, and exposure to those high levels can lead to a host of health problems.",
+      "confidence": 0.98785883,
+      "start": 92006,
+      "end": 123322,
+      "words": [
+        {
+          "text": "Yeah,",
+          "start": 93667,
+          "end": 93908,
+          "confidence": 0.90557957,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 93924,
+          "end": 94037,
+          "confidence": 0.99968004,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 94085,
+          "end": 94166,
+          "confidence": 0.99578214,
+          "speaker": "B"
+        },
+        {
+          "text": "concentration",
+          "start": 94166,
+          "end": 94922,
+          "confidence": 0.9999615,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 94955,
+          "end": 95003,
+          "confidence": 0.9999902,
+          "speaker": "B"
+        },
+        {
+          "text": "particulate",
+          "start": 95051,
+          "end": 95534,
+          "confidence": 0.9999914,
+          "speaker": "B"
+        },
+        {
+          "text": "matter,",
+          "start": 95534,
+          "end": 95937,
+          "confidence": 0.88139886,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 96500,
+          "end": 96581,
+          "confidence": 0.981087,
+          "speaker": "B"
+        },
+        {
+          "text": "was",
+          "start": 96581,
+          "end": 96677,
+          "confidence": 0.9999759,
+          "speaker": "B"
+        },
+        {
+          "text": "looking",
+          "start": 96677,
+          "end": 96903,
+          "confidence": 0.9999478,
+          "speaker": "B"
+        },
+        {
+          "text": "at",
+          "start": 96903,
+          "end": 96983,
+          "confidence": 0.99998057,
+          "speaker": "B"
+        },
+        {
+          "text": "some",
+          "start": 96983,
+          "end": 97080,
+          "confidence": 0.999376,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 97080,
+          "end": 97112,
+          "confidence": 0.99997365,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 97144,
+          "end": 97209,
+          "confidence": 0.99997115,
+          "speaker": "B"
+        },
+        {
+          "text": "monitors",
+          "start": 97209,
+          "end": 97595,
+          "confidence": 0.9999864,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 97627,
+          "end": 97708,
+          "confidence": 0.9989409,
+          "speaker": "B"
+        },
+        {
+          "text": "we",
+          "start": 97708,
+          "end": 97869,
+          "confidence": 0.9999831,
+          "speaker": "B"
+        },
+        {
+          "text": "have,",
+          "start": 97933,
+          "end": 98207,
+          "confidence": 0.99260336,
+          "speaker": "B"
+        },
+        {
+          "text": "was",
+          "start": 98432,
+          "end": 98561,
+          "confidence": 0.996914,
+          "speaker": "B"
+        },
+        {
+          "text": "reaching",
+          "start": 98577,
+          "end": 98883,
+          "confidence": 0.9922875,
+          "speaker": "B"
+        },
+        {
+          "text": "levels",
+          "start": 98899,
+          "end": 99125,
+          "confidence": 0.99977547,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 99157,
+          "end": 99238,
+          "confidence": 0.9984156,
+          "speaker": "B"
+        },
+        {
+          "text": "what",
+          "start": 99238,
+          "end": 99495,
+          "confidence": 0.989307,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 100187,
+          "end": 100461,
+          "confidence": 0.9978002,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 101105,
+          "end": 101234,
+          "confidence": 0.5376384,
+          "speaker": "B"
+        },
+        {
+          "text": "science",
+          "start": 101234,
+          "end": 101476,
+          "confidence": 0.9885111,
+          "speaker": "B"
+        },
+        {
+          "text": "speak",
+          "start": 101476,
+          "end": 101620,
+          "confidence": 0.9973918,
+          "speaker": "B"
+        },
+        {
+          "text": "150",
+          "start": 101620,
+          "end": 102425,
+          "confidence": 0.99990916,
+          "speaker": "B"
+        },
+        {
+          "text": "micrograms",
+          "start": 102458,
+          "end": 102989,
+          "confidence": 0.9999471,
+          "speaker": "B"
+        },
+        {
+          "text": "per",
+          "start": 103021,
+          "end": 103070,
+          "confidence": 0.99993813,
+          "speaker": "B"
+        },
+        {
+          "text": "meter",
+          "start": 103070,
+          "end": 103263,
+          "confidence": 0.9994295,
+          "speaker": "B"
+        },
+        {
+          "text": "cubed,",
+          "start": 103263,
+          "end": 103473,
+          "confidence": 0.9996118,
+          "speaker": "B"
+        },
+        {
+          "text": "which",
+          "start": 103505,
+          "end": 103747,
+          "confidence": 0.9997002,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 103811,
+          "end": 103876,
+          "confidence": 0.9999541,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 104392,
+          "end": 104505,
+          "confidence": 0.9997002,
+          "speaker": "B"
+        },
+        {
+          "text": "than",
+          "start": 104618,
+          "end": 104682,
+          "confidence": 0.9999225,
+          "speaker": "B"
+        },
+        {
+          "text": "10",
+          "start": 104795,
+          "end": 105037,
+          "confidence": 0.99998915,
+          "speaker": "B"
+        },
+        {
+          "text": "times",
+          "start": 105037,
+          "end": 105408,
+          "confidence": 0.9998733,
+          "speaker": "B"
+        },
+        {
+          "text": "what",
+          "start": 105440,
+          "end": 105602,
+          "confidence": 0.9993198,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 105602,
+          "end": 105715,
+          "confidence": 0.9997156,
+          "speaker": "B"
+        },
+        {
+          "text": "annual",
+          "start": 105844,
+          "end": 106166,
+          "confidence": 0.99976975,
+          "speaker": "B"
+        },
+        {
+          "text": "average",
+          "start": 106166,
+          "end": 106537,
+          "confidence": 0.99966383,
+          "speaker": "B"
+        },
+        {
+          "text": "should",
+          "start": 106570,
+          "end": 106747,
+          "confidence": 0.9990252,
+          "speaker": "B"
+        },
+        {
+          "text": "be",
+          "start": 106811,
+          "end": 107053,
+          "confidence": 0.9995759,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 107602,
+          "end": 107650,
+          "confidence": 0.8252307,
+          "speaker": "B"
+        },
+        {
+          "text": "about",
+          "start": 107682,
+          "end": 108376,
+          "confidence": 0.977995,
+          "speaker": "B"
+        },
+        {
+          "text": "4",
+          "start": 108902,
+          "end": 109175,
+          "confidence": 0.99973506,
+          "speaker": "B"
+        },
+        {
+          "text": "times",
+          "start": 109223,
+          "end": 109544,
+          "confidence": 0.999966,
+          "speaker": "B"
+        },
+        {
+          "text": "higher",
+          "start": 109544,
+          "end": 109833,
+          "confidence": 0.99956614,
+          "speaker": "B"
+        },
+        {
+          "text": "than",
+          "start": 109849,
+          "end": 109929,
+          "confidence": 0.9999356,
+          "speaker": "B"
+        },
+        {
+          "text": "what",
+          "start": 109929,
+          "end": 110026,
+          "confidence": 0.99960643,
+          "speaker": "B"
+        },
+        {
+          "text": "you're",
+          "start": 110026,
+          "end": 110138,
+          "confidence": 0.99977636,
+          "speaker": "B"
+        },
+        {
+          "text": "supposed",
+          "start": 110138,
+          "end": 110427,
+          "confidence": 0.99996126,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 110427,
+          "end": 110556,
+          "confidence": 0.9999914,
+          "speaker": "B"
+        },
+        {
+          "text": "have",
+          "start": 110572,
+          "end": 111439,
+          "confidence": 0.9999708,
+          "speaker": "B"
+        },
+        {
+          "text": "on",
+          "start": 111616,
+          "end": 111696,
+          "confidence": 0.9655025,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 111696,
+          "end": 111856,
+          "confidence": 0.9999367,
+          "speaker": "B"
+        },
+        {
+          "text": "24-hour",
+          "start": 111856,
+          "end": 112579,
+          "confidence": 0.9998284,
+          "speaker": "B"
+        },
+        {
+          "text": "average.",
+          "start": 112659,
+          "end": 113013,
+          "confidence": 0.9983092,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 113543,
+          "end": 113623,
+          "confidence": 0.9965089,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 113639,
+          "end": 113832,
+          "confidence": 0.9996388,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 114024,
+          "end": 114281,
+          "confidence": 0.94789517,
+          "speaker": "B"
+        },
+        {
+          "text": "concentrations",
+          "start": 114346,
+          "end": 115165,
+          "confidence": 0.97619677,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 115165,
+          "end": 115245,
+          "confidence": 0.99991846,
+          "speaker": "B"
+        },
+        {
+          "text": "these",
+          "start": 115245,
+          "end": 115373,
+          "confidence": 0.9995813,
+          "speaker": "B"
+        },
+        {
+          "text": "particles",
+          "start": 115405,
+          "end": 115743,
+          "confidence": 0.9999666,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 115743,
+          "end": 115823,
+          "confidence": 0.99996364,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 115823,
+          "end": 115951,
+          "confidence": 0.9999896,
+          "speaker": "B"
+        },
+        {
+          "text": "air",
+          "start": 115968,
+          "end": 116160,
+          "confidence": 0.9999912,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 116754,
+          "end": 116803,
+          "confidence": 0.9999398,
+          "speaker": "B"
+        },
+        {
+          "text": "just",
+          "start": 116851,
+          "end": 117027,
+          "confidence": 0.9995365,
+          "speaker": "B"
+        },
+        {
+          "text": "much,",
+          "start": 117557,
+          "end": 117702,
+          "confidence": 0.99987394,
+          "speaker": "B"
+        },
+        {
+          "text": "much,",
+          "start": 117798,
+          "end": 117943,
+          "confidence": 0.99986976,
+          "speaker": "B"
+        },
+        {
+          "text": "much",
+          "start": 117975,
+          "end": 118135,
+          "confidence": 0.9999918,
+          "speaker": "B"
+        },
+        {
+          "text": "higher",
+          "start": 118200,
+          "end": 118457,
+          "confidence": 0.99889284,
+          "speaker": "B"
+        },
+        {
+          "text": "than",
+          "start": 118457,
+          "end": 118714,
+          "confidence": 0.99998486,
+          "speaker": "B"
+        },
+        {
+          "text": "we",
+          "start": 118762,
+          "end": 118842,
+          "confidence": 0.97975403,
+          "speaker": "B"
+        },
+        {
+          "text": "typically",
+          "start": 118842,
+          "end": 119195,
+          "confidence": 0.9988206,
+          "speaker": "B"
+        },
+        {
+          "text": "see,",
+          "start": 119195,
+          "end": 119581,
+          "confidence": 0.97314996,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 119886,
+          "end": 120207,
+          "confidence": 0.9999908,
+          "speaker": "B"
+        },
+        {
+          "text": "exposure",
+          "start": 120223,
+          "end": 120705,
+          "confidence": 0.999801,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 120705,
+          "end": 120994,
+          "confidence": 0.9999733,
+          "speaker": "B"
+        },
+        {
+          "text": "those",
+          "start": 121010,
+          "end": 121138,
+          "confidence": 0.99960643,
+          "speaker": "B"
+        },
+        {
+          "text": "high",
+          "start": 121187,
+          "end": 121347,
+          "confidence": 0.9994456,
+          "speaker": "B"
+        },
+        {
+          "text": "levels",
+          "start": 121347,
+          "end": 121636,
+          "confidence": 0.9999815,
+          "speaker": "B"
+        },
+        {
+          "text": "can",
+          "start": 121733,
+          "end": 121909,
+          "confidence": 0.9998729,
+          "speaker": "B"
+        },
+        {
+          "text": "lead",
+          "start": 121909,
+          "end": 122070,
+          "confidence": 0.9999403,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 122070,
+          "end": 122150,
+          "confidence": 0.9999931,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 122150,
+          "end": 122182,
+          "confidence": 0.9999716,
+          "speaker": "B"
+        },
+        {
+          "text": "host",
+          "start": 122230,
+          "end": 122487,
+          "confidence": 0.99976057,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 122487,
+          "end": 122632,
+          "confidence": 0.9999937,
+          "speaker": "B"
+        },
+        {
+          "text": "health",
+          "start": 122696,
+          "end": 122873,
+          "confidence": 0.9998834,
+          "speaker": "B"
+        },
+        {
+          "text": "problems.",
+          "start": 122873,
+          "end": 123322,
+          "confidence": 0.9999704,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "And who is most vulnerable? I noticed that in New York City, for example, they're canceling outdoor activities. And so here it is in the, you know, early days of summer and they have to keep all the kids inside. So who tends to be vulnerable in a situation like this?",
+      "confidence": 0.98676205,
+      "start": 123322,
+      "end": 136057,
+      "words": [
+        {
+          "text": "And",
+          "start": 123595,
+          "end": 123660,
+          "confidence": 0.9950943,
+          "speaker": "A"
+        },
+        {
+          "text": "who",
+          "start": 123660,
+          "end": 123788,
+          "confidence": 0.99943453,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 123917,
+          "end": 124045,
+          "confidence": 0.9939911,
+          "speaker": "A"
+        },
+        {
+          "text": "most",
+          "start": 124077,
+          "end": 124463,
+          "confidence": 0.9995702,
+          "speaker": "A"
+        },
+        {
+          "text": "vulnerable?",
+          "start": 124463,
+          "end": 124977,
+          "confidence": 0.9998374,
+          "speaker": "A"
+        },
+        {
+          "text": "I",
+          "start": 125105,
+          "end": 125153,
+          "confidence": 0.99875665,
+          "speaker": "A"
+        },
+        {
+          "text": "noticed",
+          "start": 125282,
+          "end": 125587,
+          "confidence": 0.98909587,
+          "speaker": "A"
+        },
+        {
+          "text": "that",
+          "start": 125587,
+          "end": 125683,
+          "confidence": 0.9979048,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 125683,
+          "end": 125731,
+          "confidence": 0.997897,
+          "speaker": "A"
+        },
+        {
+          "text": "New",
+          "start": 125828,
+          "end": 125908,
+          "confidence": 0.9999906,
+          "speaker": "A"
+        },
+        {
+          "text": "York",
+          "start": 125908,
+          "end": 126020,
+          "confidence": 0.99999833,
+          "speaker": "A"
+        },
+        {
+          "text": "City,",
+          "start": 126020,
+          "end": 126229,
+          "confidence": 0.99997884,
+          "speaker": "A"
+        },
+        {
+          "text": "for",
+          "start": 126245,
+          "end": 126390,
+          "confidence": 0.9999261,
+          "speaker": "A"
+        },
+        {
+          "text": "example,",
+          "start": 126390,
+          "end": 126807,
+          "confidence": 0.99999243,
+          "speaker": "A"
+        },
+        {
+          "text": "they're",
+          "start": 126823,
+          "end": 127337,
+          "confidence": 0.99985516,
+          "speaker": "A"
+        },
+        {
+          "text": "canceling",
+          "start": 127369,
+          "end": 127787,
+          "confidence": 0.9942131,
+          "speaker": "A"
+        },
+        {
+          "text": "outdoor",
+          "start": 127915,
+          "end": 128172,
+          "confidence": 0.999926,
+          "speaker": "A"
+        },
+        {
+          "text": "activities.",
+          "start": 128236,
+          "end": 128750,
+          "confidence": 0.7805806,
+          "speaker": "A"
+        },
+        {
+          "text": "And",
+          "start": 128815,
+          "end": 128911,
+          "confidence": 0.99836725,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 128911,
+          "end": 129264,
+          "confidence": 0.99984014,
+          "speaker": "A"
+        },
+        {
+          "text": "here",
+          "start": 129280,
+          "end": 129409,
+          "confidence": 0.9935747,
+          "speaker": "A"
+        },
+        {
+          "text": "it",
+          "start": 129457,
+          "end": 129537,
+          "confidence": 0.9997774,
+          "speaker": "A"
+        },
+        {
+          "text": "is",
+          "start": 129537,
+          "end": 129666,
+          "confidence": 0.9999752,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 129698,
+          "end": 129762,
+          "confidence": 0.98734736,
+          "speaker": "A"
+        },
+        {
+          "text": "the,",
+          "start": 130340,
+          "end": 130549,
+          "confidence": 0.8637138,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 130565,
+          "end": 130597,
+          "confidence": 0.9991062,
+          "speaker": "A"
+        },
+        {
+          "text": "know,",
+          "start": 130597,
+          "end": 130645,
+          "confidence": 0.9999943,
+          "speaker": "A"
+        },
+        {
+          "text": "early",
+          "start": 130806,
+          "end": 130902,
+          "confidence": 0.9971311,
+          "speaker": "A"
+        },
+        {
+          "text": "days",
+          "start": 130902,
+          "end": 131127,
+          "confidence": 0.99999285,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 131127,
+          "end": 131159,
+          "confidence": 0.99998033,
+          "speaker": "A"
+        },
+        {
+          "text": "summer",
+          "start": 131159,
+          "end": 131448,
+          "confidence": 0.9997522,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 131448,
+          "end": 131529,
+          "confidence": 0.7614894,
+          "speaker": "A"
+        },
+        {
+          "text": "they",
+          "start": 131529,
+          "end": 131609,
+          "confidence": 0.99125844,
+          "speaker": "A"
+        },
+        {
+          "text": "have",
+          "start": 131609,
+          "end": 131721,
+          "confidence": 0.99989974,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 131721,
+          "end": 131850,
+          "confidence": 0.9999864,
+          "speaker": "A"
+        },
+        {
+          "text": "keep",
+          "start": 131850,
+          "end": 132091,
+          "confidence": 0.99998534,
+          "speaker": "A"
+        },
+        {
+          "text": "all",
+          "start": 132091,
+          "end": 132155,
+          "confidence": 0.99993706,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 132187,
+          "end": 132267,
+          "confidence": 0.9989925,
+          "speaker": "A"
+        },
+        {
+          "text": "kids",
+          "start": 132267,
+          "end": 132476,
+          "confidence": 0.9999914,
+          "speaker": "A"
+        },
+        {
+          "text": "inside.",
+          "start": 132508,
+          "end": 132894,
+          "confidence": 0.99994195,
+          "speaker": "A"
+        },
+        {
+          "text": "So",
+          "start": 133006,
+          "end": 133118,
+          "confidence": 0.99881566,
+          "speaker": "A"
+        },
+        {
+          "text": "who",
+          "start": 133536,
+          "end": 133648,
+          "confidence": 0.97879034,
+          "speaker": "A"
+        },
+        {
+          "text": "tends",
+          "start": 133793,
+          "end": 134034,
+          "confidence": 0.9999778,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 134034,
+          "end": 134130,
+          "confidence": 0.9999783,
+          "speaker": "A"
+        },
+        {
+          "text": "be",
+          "start": 134130,
+          "end": 134275,
+          "confidence": 0.99998176,
+          "speaker": "A"
+        },
+        {
+          "text": "vulnerable",
+          "start": 134275,
+          "end": 134821,
+          "confidence": 0.99990034,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 134821,
+          "end": 134869,
+          "confidence": 0.99974746,
+          "speaker": "A"
+        },
+        {
+          "text": "a",
+          "start": 134917,
+          "end": 134933,
+          "confidence": 0.99985254,
+          "speaker": "A"
+        },
+        {
+          "text": "situation",
+          "start": 134933,
+          "end": 135591,
+          "confidence": 0.9998869,
+          "speaker": "A"
+        },
+        {
+          "text": "like",
+          "start": 135640,
+          "end": 135880,
+          "confidence": 0.99964345,
+          "speaker": "A"
+        },
+        {
+          "text": "this?",
+          "start": 135880,
+          "end": 136057,
+          "confidence": 0.99957526,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "It's the youngest, so children obviously, whose bodies are still developing. The elderly who are, you know, their bodies are more in decline and they're more susceptible to the health impacts of breathing the poor air quality. And then people who have pre-existing health conditions, people with respiratory conditions or heart conditions can be triggered by high levels of air pollution.",
+      "confidence": 0.9740166,
+      "start": 137555,
+      "end": 156526,
+      "words": [
+        {
+          "text": "It's",
+          "start": 137555,
+          "end": 137903,
+          "confidence": 0.9361073,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 138268,
+          "end": 138367,
+          "confidence": 0.99423355,
+          "speaker": "B"
+        },
+        {
+          "text": "youngest,",
+          "start": 138367,
+          "end": 138732,
+          "confidence": 0.8387187,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 138848,
+          "end": 139031,
+          "confidence": 0.99831945,
+          "speaker": "B"
+        },
+        {
+          "text": "children",
+          "start": 139031,
+          "end": 139429,
+          "confidence": 0.9962262,
+          "speaker": "B"
+        },
+        {
+          "text": "obviously,",
+          "start": 139429,
+          "end": 139876,
+          "confidence": 0.72995055,
+          "speaker": "B"
+        },
+        {
+          "text": "whose",
+          "start": 141210,
+          "end": 141403,
+          "confidence": 0.9854306,
+          "speaker": "B"
+        },
+        {
+          "text": "bodies",
+          "start": 141403,
+          "end": 141661,
+          "confidence": 0.99997544,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 141661,
+          "end": 141725,
+          "confidence": 0.9999809,
+          "speaker": "B"
+        },
+        {
+          "text": "still",
+          "start": 141725,
+          "end": 141902,
+          "confidence": 0.9999497,
+          "speaker": "B"
+        },
+        {
+          "text": "developing.",
+          "start": 141902,
+          "end": 142337,
+          "confidence": 0.8210988,
+          "speaker": "B"
+        },
+        {
+          "text": "The",
+          "start": 142531,
+          "end": 142660,
+          "confidence": 0.9987947,
+          "speaker": "B"
+        },
+        {
+          "text": "elderly",
+          "start": 142756,
+          "end": 143143,
+          "confidence": 0.99999,
+          "speaker": "B"
+        },
+        {
+          "text": "who",
+          "start": 143401,
+          "end": 143449,
+          "confidence": 0.67233723,
+          "speaker": "B"
+        },
+        {
+          "text": "are,",
+          "start": 143498,
+          "end": 143691,
+          "confidence": 0.9889007,
+          "speaker": "B"
+        },
+        {
+          "text": "you",
+          "start": 144045,
+          "end": 144078,
+          "confidence": 0.9998543,
+          "speaker": "B"
+        },
+        {
+          "text": "know,",
+          "start": 144078,
+          "end": 144142,
+          "confidence": 0.9993214,
+          "speaker": "B"
+        },
+        {
+          "text": "their",
+          "start": 144158,
+          "end": 144303,
+          "confidence": 0.9998487,
+          "speaker": "B"
+        },
+        {
+          "text": "bodies",
+          "start": 144303,
+          "end": 144561,
+          "confidence": 0.9999881,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 144561,
+          "end": 144642,
+          "confidence": 0.99995315,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 144642,
+          "end": 144803,
+          "confidence": 0.99948275,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 144803,
+          "end": 144883,
+          "confidence": 0.9995059,
+          "speaker": "B"
+        },
+        {
+          "text": "decline",
+          "start": 144883,
+          "end": 145351,
+          "confidence": 0.999962,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 145351,
+          "end": 145431,
+          "confidence": 0.9449866,
+          "speaker": "B"
+        },
+        {
+          "text": "they're",
+          "start": 145431,
+          "end": 145512,
+          "confidence": 0.99900496,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 145512,
+          "end": 145673,
+          "confidence": 0.99988997,
+          "speaker": "B"
+        },
+        {
+          "text": "susceptible",
+          "start": 145673,
+          "end": 146382,
+          "confidence": 0.9999825,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 146382,
+          "end": 146478,
+          "confidence": 0.9999808,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 146478,
+          "end": 146559,
+          "confidence": 0.9997607,
+          "speaker": "B"
+        },
+        {
+          "text": "health",
+          "start": 146559,
+          "end": 146801,
+          "confidence": 0.9996792,
+          "speaker": "B"
+        },
+        {
+          "text": "impacts",
+          "start": 146801,
+          "end": 147284,
+          "confidence": 0.99992037,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 147284,
+          "end": 147494,
+          "confidence": 0.9999151,
+          "speaker": "B"
+        },
+        {
+          "text": "breathing",
+          "start": 147929,
+          "end": 148138,
+          "confidence": 0.99727553,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 148509,
+          "end": 148638,
+          "confidence": 0.9913884,
+          "speaker": "B"
+        },
+        {
+          "text": "poor",
+          "start": 148638,
+          "end": 148815,
+          "confidence": 0.99136907,
+          "speaker": "B"
+        },
+        {
+          "text": "air",
+          "start": 148815,
+          "end": 148976,
+          "confidence": 0.9999865,
+          "speaker": "B"
+        },
+        {
+          "text": "quality.",
+          "start": 148976,
+          "end": 149347,
+          "confidence": 0.999262,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 150775,
+          "end": 150839,
+          "confidence": 0.99759835,
+          "speaker": "B"
+        },
+        {
+          "text": "then",
+          "start": 150856,
+          "end": 150984,
+          "confidence": 0.99991,
+          "speaker": "B"
+        },
+        {
+          "text": "people",
+          "start": 151081,
+          "end": 151339,
+          "confidence": 0.99789846,
+          "speaker": "B"
+        },
+        {
+          "text": "who",
+          "start": 151339,
+          "end": 151468,
+          "confidence": 0.9993092,
+          "speaker": "B"
+        },
+        {
+          "text": "have",
+          "start": 151484,
+          "end": 151645,
+          "confidence": 0.99998224,
+          "speaker": "B"
+        },
+        {
+          "text": "pre-existing",
+          "start": 151645,
+          "end": 152080,
+          "confidence": 0.897268,
+          "speaker": "B"
+        },
+        {
+          "text": "health",
+          "start": 152128,
+          "end": 152273,
+          "confidence": 0.99984264,
+          "speaker": "B"
+        },
+        {
+          "text": "conditions,",
+          "start": 152305,
+          "end": 152628,
+          "confidence": 0.93432087,
+          "speaker": "B"
+        },
+        {
+          "text": "people",
+          "start": 152692,
+          "end": 152789,
+          "confidence": 0.99681854,
+          "speaker": "B"
+        },
+        {
+          "text": "with",
+          "start": 152789,
+          "end": 152934,
+          "confidence": 0.99921715,
+          "speaker": "B"
+        },
+        {
+          "text": "respiratory",
+          "start": 152950,
+          "end": 153401,
+          "confidence": 0.9999764,
+          "speaker": "B"
+        },
+        {
+          "text": "conditions",
+          "start": 153433,
+          "end": 153836,
+          "confidence": 0.99976045,
+          "speaker": "B"
+        },
+        {
+          "text": "or",
+          "start": 153836,
+          "end": 153916,
+          "confidence": 0.9976398,
+          "speaker": "B"
+        },
+        {
+          "text": "heart",
+          "start": 153916,
+          "end": 154077,
+          "confidence": 0.9999428,
+          "speaker": "B"
+        },
+        {
+          "text": "conditions",
+          "start": 154077,
+          "end": 154512,
+          "confidence": 0.99997425,
+          "speaker": "B"
+        },
+        {
+          "text": "can",
+          "start": 154561,
+          "end": 154641,
+          "confidence": 0.71283466,
+          "speaker": "B"
+        },
+        {
+          "text": "be",
+          "start": 154641,
+          "end": 154786,
+          "confidence": 0.99997485,
+          "speaker": "B"
+        },
+        {
+          "text": "triggered",
+          "start": 154786,
+          "end": 155141,
+          "confidence": 0.9999895,
+          "speaker": "B"
+        },
+        {
+          "text": "by",
+          "start": 155189,
+          "end": 155398,
+          "confidence": 0.99997795,
+          "speaker": "B"
+        },
+        {
+          "text": "high",
+          "start": 155447,
+          "end": 155672,
+          "confidence": 0.9991315,
+          "speaker": "B"
+        },
+        {
+          "text": "levels",
+          "start": 155672,
+          "end": 155930,
+          "confidence": 0.9999391,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 155930,
+          "end": 156010,
+          "confidence": 0.99998164,
+          "speaker": "B"
+        },
+        {
+          "text": "air",
+          "start": 156010,
+          "end": 156107,
+          "confidence": 0.9999658,
+          "speaker": "B"
+        },
+        {
+          "text": "pollution.",
+          "start": 156172,
+          "end": 156526,
+          "confidence": 0.9999732,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "Could this get worse?",
+      "confidence": 0.999642,
+      "start": 156526,
+      "end": 158572,
+      "words": [
+        {
+          "text": "Could",
+          "start": 157541,
+          "end": 157782,
+          "confidence": 0.9994777,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 157782,
+          "end": 157911,
+          "confidence": 0.9998627,
+          "speaker": "A"
+        },
+        {
+          "text": "get",
+          "start": 158024,
+          "end": 158234,
+          "confidence": 0.999943,
+          "speaker": "A"
+        },
+        {
+          "text": "worse?",
+          "start": 158266,
+          "end": 158572,
+          "confidence": 0.99995005,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "That's a good question. I mean, I think if In some areas it's much worse than others, and it just depends on kind of where the smoke is concentrated. I think New York has some of the higher concentrations right now, but that's going to change as that air moves away from the New York area. But over the course of the next few days, we will see different areas being hit at different times with the highest concentrations.",
+      "confidence": 0.9785808,
+      "start": 158572,
+      "end": 183280,
+      "words": [
+        {
+          "text": "That's",
+          "start": 161830,
+          "end": 162516,
+          "confidence": 0.9812925,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 162516,
+          "end": 162581,
+          "confidence": 0.9999312,
+          "speaker": "B"
+        },
+        {
+          "text": "good",
+          "start": 162581,
+          "end": 162679,
+          "confidence": 0.9997296,
+          "speaker": "B"
+        },
+        {
+          "text": "question.",
+          "start": 162679,
+          "end": 163136,
+          "confidence": 0.9994458,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 163332,
+          "end": 163349,
+          "confidence": 0.7462993,
+          "speaker": "B"
+        },
+        {
+          "text": "mean,",
+          "start": 163349,
+          "end": 163479,
+          "confidence": 0.99951565,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 163561,
+          "end": 163659,
+          "confidence": 0.9863208,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 163659,
+          "end": 163839,
+          "confidence": 0.99656844,
+          "speaker": "B"
+        },
+        {
+          "text": "if",
+          "start": 164051,
+          "end": 164214,
+          "confidence": 0.9559933,
+          "speaker": "B"
+        },
+        {
+          "text": "In",
+          "start": 164730,
+          "end": 165180,
+          "confidence": 0.37057835,
+          "speaker": "B"
+        },
+        {
+          "text": "some",
+          "start": 165180,
+          "end": 165500,
+          "confidence": 0.985059,
+          "speaker": "B"
+        },
+        {
+          "text": "areas",
+          "start": 165500,
+          "end": 165800,
+          "confidence": 0.9998925,
+          "speaker": "B"
+        },
+        {
+          "text": "it's",
+          "start": 165800,
+          "end": 166140,
+          "confidence": 0.75345355,
+          "speaker": "B"
+        },
+        {
+          "text": "much",
+          "start": 166140,
+          "end": 166300,
+          "confidence": 0.99484235,
+          "speaker": "B"
+        },
+        {
+          "text": "worse",
+          "start": 166300,
+          "end": 166520,
+          "confidence": 0.99995434,
+          "speaker": "B"
+        },
+        {
+          "text": "than",
+          "start": 166520,
+          "end": 166680,
+          "confidence": 0.9999577,
+          "speaker": "B"
+        },
+        {
+          "text": "others,",
+          "start": 166680,
+          "end": 166940,
+          "confidence": 0.9516547,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 166940,
+          "end": 167100,
+          "confidence": 0.9994672,
+          "speaker": "B"
+        },
+        {
+          "text": "it",
+          "start": 167100,
+          "end": 167400,
+          "confidence": 0.9995427,
+          "speaker": "B"
+        },
+        {
+          "text": "just",
+          "start": 167400,
+          "end": 167560,
+          "confidence": 0.9524331,
+          "speaker": "B"
+        },
+        {
+          "text": "depends",
+          "start": 167560,
+          "end": 167940,
+          "confidence": 0.9986457,
+          "speaker": "B"
+        },
+        {
+          "text": "on",
+          "start": 167940,
+          "end": 168200,
+          "confidence": 0.9978397,
+          "speaker": "B"
+        },
+        {
+          "text": "kind",
+          "start": 168200,
+          "end": 168380,
+          "confidence": 0.99020267,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 168380,
+          "end": 168519,
+          "confidence": 0.99999475,
+          "speaker": "B"
+        },
+        {
+          "text": "where",
+          "start": 168519,
+          "end": 168720,
+          "confidence": 0.9999529,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 168720,
+          "end": 168860,
+          "confidence": 0.9998301,
+          "speaker": "B"
+        },
+        {
+          "text": "smoke",
+          "start": 168860,
+          "end": 169100,
+          "confidence": 0.9999856,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 169100,
+          "end": 169320,
+          "confidence": 0.99987376,
+          "speaker": "B"
+        },
+        {
+          "text": "concentrated.",
+          "start": 169320,
+          "end": 169870,
+          "confidence": 0.9998565,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 171280,
+          "end": 171320,
+          "confidence": 0.9816165,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 171320,
+          "end": 171440,
+          "confidence": 0.9999627,
+          "speaker": "B"
+        },
+        {
+          "text": "New",
+          "start": 171440,
+          "end": 171660,
+          "confidence": 0.9995617,
+          "speaker": "B"
+        },
+        {
+          "text": "York",
+          "start": 171660,
+          "end": 171820,
+          "confidence": 0.99999726,
+          "speaker": "B"
+        },
+        {
+          "text": "has",
+          "start": 171820,
+          "end": 172280,
+          "confidence": 0.999796,
+          "speaker": "B"
+        },
+        {
+          "text": "some",
+          "start": 172280,
+          "end": 172480,
+          "confidence": 0.9998486,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 172480,
+          "end": 172600,
+          "confidence": 0.999905,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 172600,
+          "end": 172600,
+          "confidence": 0.99998474,
+          "speaker": "B"
+        },
+        {
+          "text": "higher",
+          "start": 172600,
+          "end": 172800,
+          "confidence": 0.9998424,
+          "speaker": "B"
+        },
+        {
+          "text": "concentrations",
+          "start": 172800,
+          "end": 173380,
+          "confidence": 0.99998844,
+          "speaker": "B"
+        },
+        {
+          "text": "right",
+          "start": 173380,
+          "end": 173700,
+          "confidence": 0.9997675,
+          "speaker": "B"
+        },
+        {
+          "text": "now,",
+          "start": 173700,
+          "end": 173860,
+          "confidence": 0.99983615,
+          "speaker": "B"
+        },
+        {
+          "text": "but",
+          "start": 173860,
+          "end": 173980,
+          "confidence": 0.99997246,
+          "speaker": "B"
+        },
+        {
+          "text": "that's",
+          "start": 173980,
+          "end": 174160,
+          "confidence": 0.9998769,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 174160,
+          "end": 174300,
+          "confidence": 0.8504342,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 174300,
+          "end": 174400,
+          "confidence": 0.99998343,
+          "speaker": "B"
+        },
+        {
+          "text": "change",
+          "start": 174400,
+          "end": 174680,
+          "confidence": 0.9999926,
+          "speaker": "B"
+        },
+        {
+          "text": "as",
+          "start": 174680,
+          "end": 174820,
+          "confidence": 0.9998091,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 174820,
+          "end": 174980,
+          "confidence": 0.9929027,
+          "speaker": "B"
+        },
+        {
+          "text": "air",
+          "start": 174980,
+          "end": 175160,
+          "confidence": 0.9999459,
+          "speaker": "B"
+        },
+        {
+          "text": "moves",
+          "start": 175160,
+          "end": 175400,
+          "confidence": 0.99997103,
+          "speaker": "B"
+        },
+        {
+          "text": "away",
+          "start": 175400,
+          "end": 175700,
+          "confidence": 0.99998546,
+          "speaker": "B"
+        },
+        {
+          "text": "from",
+          "start": 175700,
+          "end": 175860,
+          "confidence": 0.9999924,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 175860,
+          "end": 176000,
+          "confidence": 0.9996087,
+          "speaker": "B"
+        },
+        {
+          "text": "New",
+          "start": 176000,
+          "end": 176140,
+          "confidence": 0.99998534,
+          "speaker": "B"
+        },
+        {
+          "text": "York",
+          "start": 176140,
+          "end": 176280,
+          "confidence": 0.9999982,
+          "speaker": "B"
+        },
+        {
+          "text": "area.",
+          "start": 176280,
+          "end": 176730,
+          "confidence": 0.99895346,
+          "speaker": "B"
+        },
+        {
+          "text": "But",
+          "start": 177200,
+          "end": 177440,
+          "confidence": 0.9957027,
+          "speaker": "B"
+        },
+        {
+          "text": "over",
+          "start": 177440,
+          "end": 177500,
+          "confidence": 0.9980579,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 177500,
+          "end": 177620,
+          "confidence": 0.999992,
+          "speaker": "B"
+        },
+        {
+          "text": "course",
+          "start": 177620,
+          "end": 177760,
+          "confidence": 0.99983466,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 177760,
+          "end": 177880,
+          "confidence": 0.9999441,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 177880,
+          "end": 177900,
+          "confidence": 0.9999753,
+          "speaker": "B"
+        },
+        {
+          "text": "next",
+          "start": 177900,
+          "end": 178060,
+          "confidence": 0.99998343,
+          "speaker": "B"
+        },
+        {
+          "text": "few",
+          "start": 178060,
+          "end": 178260,
+          "confidence": 0.99995804,
+          "speaker": "B"
+        },
+        {
+          "text": "days,",
+          "start": 178260,
+          "end": 178500,
+          "confidence": 0.9989963,
+          "speaker": "B"
+        },
+        {
+          "text": "we",
+          "start": 178500,
+          "end": 178620,
+          "confidence": 0.9999,
+          "speaker": "B"
+        },
+        {
+          "text": "will",
+          "start": 178620,
+          "end": 178840,
+          "confidence": 0.99641883,
+          "speaker": "B"
+        },
+        {
+          "text": "see",
+          "start": 178840,
+          "end": 179620,
+          "confidence": 0.9999578,
+          "speaker": "B"
+        },
+        {
+          "text": "different",
+          "start": 179620,
+          "end": 180000,
+          "confidence": 0.9998971,
+          "speaker": "B"
+        },
+        {
+          "text": "areas",
+          "start": 180000,
+          "end": 180280,
+          "confidence": 0.99998367,
+          "speaker": "B"
+        },
+        {
+          "text": "being",
+          "start": 180280,
+          "end": 180519,
+          "confidence": 0.9993777,
+          "speaker": "B"
+        },
+        {
+          "text": "hit",
+          "start": 180519,
+          "end": 180880,
+          "confidence": 0.99999416,
+          "speaker": "B"
+        },
+        {
+          "text": "at",
+          "start": 180880,
+          "end": 181160,
+          "confidence": 0.9997452,
+          "speaker": "B"
+        },
+        {
+          "text": "different",
+          "start": 181160,
+          "end": 181440,
+          "confidence": 0.999283,
+          "speaker": "B"
+        },
+        {
+          "text": "times",
+          "start": 181440,
+          "end": 181860,
+          "confidence": 0.99999106,
+          "speaker": "B"
+        },
+        {
+          "text": "with",
+          "start": 181860,
+          "end": 182100,
+          "confidence": 0.9965642,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 182100,
+          "end": 182320,
+          "confidence": 0.86940473,
+          "speaker": "B"
+        },
+        {
+          "text": "highest",
+          "start": 182320,
+          "end": 182580,
+          "confidence": 0.999879,
+          "speaker": "B"
+        },
+        {
+          "text": "concentrations.",
+          "start": 182580,
+          "end": 183280,
+          "confidence": 0.98230946,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "I was going to ask you about that.",
+      "confidence": 0.94798326,
+      "start": 183280,
+      "end": 184820,
+      "words": [
+        {
+          "text": "I",
+          "start": 183680,
+          "end": 184000,
+          "confidence": 0.9680779,
+          "speaker": "A"
+        },
+        {
+          "text": "was",
+          "start": 184000,
+          "end": 184060,
+          "confidence": 0.9987748,
+          "speaker": "A"
+        },
+        {
+          "text": "going",
+          "start": 184060,
+          "end": 184220,
+          "confidence": 0.925972,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 184220,
+          "end": 184260,
+          "confidence": 0.99940634,
+          "speaker": "A"
+        },
+        {
+          "text": "ask",
+          "start": 184260,
+          "end": 184460,
+          "confidence": 0.998632,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 184460,
+          "end": 184580,
+          "confidence": 0.9777453,
+          "speaker": "A"
+        },
+        {
+          "text": "about",
+          "start": 184580,
+          "end": 184800,
+          "confidence": 0.87857485,
+          "speaker": "A"
+        },
+        {
+          "text": "that.",
+          "start": 184800,
+          "end": 184820,
+          "confidence": 0.8851497,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Unless more fires start burning, I don't expect the concentrations to go up too much higher.",
+      "confidence": 0.98915994,
+      "start": 184820,
+      "end": 189220,
+      "words": [
+        {
+          "text": "Unless",
+          "start": 184820,
+          "end": 184820,
+          "confidence": 0.9305512,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 184820,
+          "end": 184860,
+          "confidence": 0.9049138,
+          "speaker": "B"
+        },
+        {
+          "text": "fires",
+          "start": 184860,
+          "end": 185100,
+          "confidence": 0.99983835,
+          "speaker": "B"
+        },
+        {
+          "text": "start",
+          "start": 185100,
+          "end": 185320,
+          "confidence": 0.9990582,
+          "speaker": "B"
+        },
+        {
+          "text": "burning,",
+          "start": 185320,
+          "end": 185580,
+          "confidence": 0.99163914,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 185580,
+          "end": 185760,
+          "confidence": 0.9998592,
+          "speaker": "B"
+        },
+        {
+          "text": "don't",
+          "start": 185760,
+          "end": 185940,
+          "confidence": 0.99996215,
+          "speaker": "B"
+        },
+        {
+          "text": "expect",
+          "start": 185940,
+          "end": 186460,
+          "confidence": 0.99972147,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 186460,
+          "end": 187240,
+          "confidence": 0.9994486,
+          "speaker": "B"
+        },
+        {
+          "text": "concentrations",
+          "start": 187240,
+          "end": 187660,
+          "confidence": 0.99958986,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 187660,
+          "end": 187880,
+          "confidence": 0.9998747,
+          "speaker": "B"
+        },
+        {
+          "text": "go",
+          "start": 187880,
+          "end": 187980,
+          "confidence": 0.9997776,
+          "speaker": "B"
+        },
+        {
+          "text": "up",
+          "start": 187980,
+          "end": 188420,
+          "confidence": 0.9991366,
+          "speaker": "B"
+        },
+        {
+          "text": "too",
+          "start": 188420,
+          "end": 188600,
+          "confidence": 0.99964106,
+          "speaker": "B"
+        },
+        {
+          "text": "much",
+          "start": 188600,
+          "end": 188740,
+          "confidence": 0.9999633,
+          "speaker": "B"
+        },
+        {
+          "text": "higher.",
+          "start": 188740,
+          "end": 189220,
+          "confidence": 0.9998482,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "I was going to ask you how— and you started to answer this— but how much longer could this last? And forgive me if I'm asking you to speculate, but what do you think? What do you think?",
+      "confidence": 0.92367256,
+      "start": 189220,
+      "end": 197658,
+      "words": [
+        {
+          "text": "I",
+          "start": 189220,
+          "end": 189280,
+          "confidence": 0.99674064,
+          "speaker": "A"
+        },
+        {
+          "text": "was",
+          "start": 189280,
+          "end": 189380,
+          "confidence": 0.99986875,
+          "speaker": "A"
+        },
+        {
+          "text": "going",
+          "start": 189380,
+          "end": 189500,
+          "confidence": 0.98697543,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 189500,
+          "end": 189680,
+          "confidence": 0.9999552,
+          "speaker": "A"
+        },
+        {
+          "text": "ask",
+          "start": 189680,
+          "end": 189760,
+          "confidence": 0.9999207,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 189760,
+          "end": 189960,
+          "confidence": 0.9973545,
+          "speaker": "A"
+        },
+        {
+          "text": "how—",
+          "start": 189960,
+          "end": 190220,
+          "confidence": 0.89733154,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 190220,
+          "end": 190240,
+          "confidence": 0.9973917,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 190240,
+          "end": 190360,
+          "confidence": 0.9999237,
+          "speaker": "A"
+        },
+        {
+          "text": "started",
+          "start": 190360,
+          "end": 190640,
+          "confidence": 0.99678373,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 190640,
+          "end": 190840,
+          "confidence": 0.99874425,
+          "speaker": "A"
+        },
+        {
+          "text": "answer",
+          "start": 190840,
+          "end": 190940,
+          "confidence": 0.999889,
+          "speaker": "A"
+        },
+        {
+          "text": "this—",
+          "start": 190940,
+          "end": 191400,
+          "confidence": 0.94767636,
+          "speaker": "A"
+        },
+        {
+          "text": "but",
+          "start": 191400,
+          "end": 191480,
+          "confidence": 0.9620687,
+          "speaker": "A"
+        },
+        {
+          "text": "how",
+          "start": 191480,
+          "end": 191640,
+          "confidence": 0.99982136,
+          "speaker": "A"
+        },
+        {
+          "text": "much",
+          "start": 191640,
+          "end": 191920,
+          "confidence": 0.99980825,
+          "speaker": "A"
+        },
+        {
+          "text": "longer",
+          "start": 191920,
+          "end": 192400,
+          "confidence": 0.9999839,
+          "speaker": "A"
+        },
+        {
+          "text": "could",
+          "start": 192400,
+          "end": 192660,
+          "confidence": 0.99990237,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 192660,
+          "end": 192980,
+          "confidence": 0.9999571,
+          "speaker": "A"
+        },
+        {
+          "text": "last?",
+          "start": 192980,
+          "end": 193460,
+          "confidence": 0.99903804,
+          "speaker": "A"
+        },
+        {
+          "text": "And",
+          "start": 193460,
+          "end": 193620,
+          "confidence": 0.49166602,
+          "speaker": "A"
+        },
+        {
+          "text": "forgive",
+          "start": 193620,
+          "end": 193740,
+          "confidence": 0.9988341,
+          "speaker": "A"
+        },
+        {
+          "text": "me",
+          "start": 193740,
+          "end": 193880,
+          "confidence": 0.9999572,
+          "speaker": "A"
+        },
+        {
+          "text": "if",
+          "start": 193880,
+          "end": 193980,
+          "confidence": 0.9972766,
+          "speaker": "A"
+        },
+        {
+          "text": "I'm",
+          "start": 193980,
+          "end": 194060,
+          "confidence": 0.9998209,
+          "speaker": "A"
+        },
+        {
+          "text": "asking",
+          "start": 194060,
+          "end": 194220,
+          "confidence": 0.9998061,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 194220,
+          "end": 194360,
+          "confidence": 0.9994954,
+          "speaker": "A"
+        },
+        {
+          "text": "to",
+          "start": 194360,
+          "end": 194440,
+          "confidence": 0.9995701,
+          "speaker": "A"
+        },
+        {
+          "text": "speculate,",
+          "start": 194440,
+          "end": 194460,
+          "confidence": 0.99965733,
+          "speaker": "A"
+        },
+        {
+          "text": "but",
+          "start": 194460,
+          "end": 194480,
+          "confidence": 0.99864584,
+          "speaker": "A"
+        },
+        {
+          "text": "what",
+          "start": 194480,
+          "end": 194500,
+          "confidence": 0.9987042,
+          "speaker": "A"
+        },
+        {
+          "text": "do",
+          "start": 194500,
+          "end": 194520,
+          "confidence": 0.98951894,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 194520,
+          "end": 194540,
+          "confidence": 0.99892753,
+          "speaker": "A"
+        },
+        {
+          "text": "think?",
+          "start": 194540,
+          "end": 194560,
+          "confidence": 0.9988357,
+          "speaker": "A"
+        },
+        {
+          "text": "What",
+          "start": 196632,
+          "end": 196904,
+          "confidence": 0.17177917,
+          "speaker": "A"
+        },
+        {
+          "text": "do",
+          "start": 196904,
+          "end": 197001,
+          "confidence": 0.28638208,
+          "speaker": "A"
+        },
+        {
+          "text": "you",
+          "start": 197113,
+          "end": 197161,
+          "confidence": 0.9559026,
+          "speaker": "A"
+        },
+        {
+          "text": "think?",
+          "start": 197465,
+          "end": 197658,
+          "confidence": 0.40060514,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Well, I think the fires are going to burn for a little bit longer, but the key for us in the U.S. is the weather system changing. And so right now it's kind of the weather systems that are pulling that air into our Mid-Atlantic and Northeast region. As those weather systems change and shift, we'll see that smoke going elsewhere and not impact us in this region as much. And so I think that's going to be the defining factor. And I think the next couple days we're going to see a shift in that weather pattern and start to push the smoke away from where we are.",
+      "confidence": 0.9882888,
+      "start": 197658,
+      "end": 227321,
+      "words": [
+        {
+          "text": "Well,",
+          "start": 198379,
+          "end": 198443,
+          "confidence": 0.9743761,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 198459,
+          "end": 198475,
+          "confidence": 0.99949276,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 198475,
+          "end": 198635,
+          "confidence": 0.99994147,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 198635,
+          "end": 198715,
+          "confidence": 0.9969965,
+          "speaker": "B"
+        },
+        {
+          "text": "fires",
+          "start": 198715,
+          "end": 199100,
+          "confidence": 0.99997413,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 199100,
+          "end": 199132,
+          "confidence": 0.999821,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 199132,
+          "end": 199212,
+          "confidence": 0.90519375,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 199212,
+          "end": 199276,
+          "confidence": 0.9999871,
+          "speaker": "B"
+        },
+        {
+          "text": "burn",
+          "start": 199276,
+          "end": 199404,
+          "confidence": 0.99997413,
+          "speaker": "B"
+        },
+        {
+          "text": "for",
+          "start": 199501,
+          "end": 199597,
+          "confidence": 0.9980794,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 199597,
+          "end": 199661,
+          "confidence": 0.9999324,
+          "speaker": "B"
+        },
+        {
+          "text": "little",
+          "start": 199661,
+          "end": 199837,
+          "confidence": 0.9997322,
+          "speaker": "B"
+        },
+        {
+          "text": "bit",
+          "start": 199837,
+          "end": 199933,
+          "confidence": 0.99993193,
+          "speaker": "B"
+        },
+        {
+          "text": "longer,",
+          "start": 200061,
+          "end": 200382,
+          "confidence": 0.99026126,
+          "speaker": "B"
+        },
+        {
+          "text": "but",
+          "start": 200478,
+          "end": 200638,
+          "confidence": 0.99998724,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 200638,
+          "end": 200799,
+          "confidence": 0.9994962,
+          "speaker": "B"
+        },
+        {
+          "text": "key",
+          "start": 200799,
+          "end": 201119,
+          "confidence": 0.99991083,
+          "speaker": "B"
+        },
+        {
+          "text": "for",
+          "start": 201119,
+          "end": 201472,
+          "confidence": 0.99980325,
+          "speaker": "B"
+        },
+        {
+          "text": "us",
+          "start": 201504,
+          "end": 201680,
+          "confidence": 0.9999833,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 201680,
+          "end": 201728,
+          "confidence": 0.99939406,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 201760,
+          "end": 201904,
+          "confidence": 0.9999833,
+          "speaker": "B"
+        },
+        {
+          "text": "U.S.",
+          "start": 201904,
+          "end": 202257,
+          "confidence": 0.80223566,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 202321,
+          "end": 202369,
+          "confidence": 0.9999696,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 202497,
+          "end": 202706,
+          "confidence": 0.999047,
+          "speaker": "B"
+        },
+        {
+          "text": "weather",
+          "start": 202706,
+          "end": 202962,
+          "confidence": 0.99991584,
+          "speaker": "B"
+        },
+        {
+          "text": "system",
+          "start": 202962,
+          "end": 203299,
+          "confidence": 0.9989405,
+          "speaker": "B"
+        },
+        {
+          "text": "changing.",
+          "start": 203347,
+          "end": 203731,
+          "confidence": 0.9988937,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 203827,
+          "end": 203892,
+          "confidence": 0.9794151,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 203908,
+          "end": 204020,
+          "confidence": 0.99974734,
+          "speaker": "B"
+        },
+        {
+          "text": "right",
+          "start": 204084,
+          "end": 204308,
+          "confidence": 0.99231744,
+          "speaker": "B"
+        },
+        {
+          "text": "now",
+          "start": 204308,
+          "end": 204436,
+          "confidence": 0.9999939,
+          "speaker": "B"
+        },
+        {
+          "text": "it's",
+          "start": 204485,
+          "end": 204949,
+          "confidence": 0.9147856,
+          "speaker": "B"
+        },
+        {
+          "text": "kind",
+          "start": 204949,
+          "end": 205061,
+          "confidence": 0.9467052,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 205061,
+          "end": 205126,
+          "confidence": 0.9999852,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 205126,
+          "end": 205206,
+          "confidence": 0.99978167,
+          "speaker": "B"
+        },
+        {
+          "text": "weather",
+          "start": 205206,
+          "end": 205430,
+          "confidence": 0.9999434,
+          "speaker": "B"
+        },
+        {
+          "text": "systems",
+          "start": 205446,
+          "end": 205783,
+          "confidence": 0.9993573,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 205783,
+          "end": 205911,
+          "confidence": 0.99933773,
+          "speaker": "B"
+        },
+        {
+          "text": "are",
+          "start": 205911,
+          "end": 206007,
+          "confidence": 0.999967,
+          "speaker": "B"
+        },
+        {
+          "text": "pulling",
+          "start": 206007,
+          "end": 206215,
+          "confidence": 0.9988859,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 206311,
+          "end": 206488,
+          "confidence": 0.99894124,
+          "speaker": "B"
+        },
+        {
+          "text": "air",
+          "start": 206552,
+          "end": 206600,
+          "confidence": 0.99993813,
+          "speaker": "B"
+        },
+        {
+          "text": "into",
+          "start": 206808,
+          "end": 207017,
+          "confidence": 0.99986243,
+          "speaker": "B"
+        },
+        {
+          "text": "our",
+          "start": 207065,
+          "end": 207850,
+          "confidence": 0.9992256,
+          "speaker": "B"
+        },
+        {
+          "text": "Mid-Atlantic",
+          "start": 209292,
+          "end": 209997,
+          "confidence": 0.88480896,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 209997,
+          "end": 210061,
+          "confidence": 0.9998066,
+          "speaker": "B"
+        },
+        {
+          "text": "Northeast",
+          "start": 210174,
+          "end": 210638,
+          "confidence": 0.9982591,
+          "speaker": "B"
+        },
+        {
+          "text": "region.",
+          "start": 210638,
+          "end": 210943,
+          "confidence": 0.99932975,
+          "speaker": "B"
+        },
+        {
+          "text": "As",
+          "start": 211279,
+          "end": 211424,
+          "confidence": 0.9983316,
+          "speaker": "B"
+        },
+        {
+          "text": "those",
+          "start": 211440,
+          "end": 211584,
+          "confidence": 0.9991246,
+          "speaker": "B"
+        },
+        {
+          "text": "weather",
+          "start": 211616,
+          "end": 211840,
+          "confidence": 0.99908197,
+          "speaker": "B"
+        },
+        {
+          "text": "systems",
+          "start": 211840,
+          "end": 213347,
+          "confidence": 0.9977585,
+          "speaker": "B"
+        },
+        {
+          "text": "change",
+          "start": 213443,
+          "end": 213779,
+          "confidence": 0.9989791,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 213779,
+          "end": 213892,
+          "confidence": 0.9961545,
+          "speaker": "B"
+        },
+        {
+          "text": "shift,",
+          "start": 213924,
+          "end": 214436,
+          "confidence": 0.9999778,
+          "speaker": "B"
+        },
+        {
+          "text": "we'll",
+          "start": 214485,
+          "end": 214773,
+          "confidence": 0.99794835,
+          "speaker": "B"
+        },
+        {
+          "text": "see",
+          "start": 214773,
+          "end": 214917,
+          "confidence": 0.9991303,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 214917,
+          "end": 215062,
+          "confidence": 0.9996106,
+          "speaker": "B"
+        },
+        {
+          "text": "smoke",
+          "start": 215062,
+          "end": 215366,
+          "confidence": 0.99998224,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 215366,
+          "end": 215510,
+          "confidence": 0.99964905,
+          "speaker": "B"
+        },
+        {
+          "text": "elsewhere",
+          "start": 215687,
+          "end": 216135,
+          "confidence": 0.9999827,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 216808,
+          "end": 216872,
+          "confidence": 0.9920237,
+          "speaker": "B"
+        },
+        {
+          "text": "not",
+          "start": 216904,
+          "end": 217081,
+          "confidence": 0.99937207,
+          "speaker": "B"
+        },
+        {
+          "text": "impact",
+          "start": 217081,
+          "end": 217465,
+          "confidence": 0.99716187,
+          "speaker": "B"
+        },
+        {
+          "text": "us",
+          "start": 217529,
+          "end": 217738,
+          "confidence": 0.999982,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 218106,
+          "end": 218154,
+          "confidence": 0.9993944,
+          "speaker": "B"
+        },
+        {
+          "text": "this",
+          "start": 218251,
+          "end": 218315,
+          "confidence": 0.99991894,
+          "speaker": "B"
+        },
+        {
+          "text": "region",
+          "start": 218411,
+          "end": 218635,
+          "confidence": 0.99997807,
+          "speaker": "B"
+        },
+        {
+          "text": "as",
+          "start": 218683,
+          "end": 218763,
+          "confidence": 0.9999094,
+          "speaker": "B"
+        },
+        {
+          "text": "much.",
+          "start": 218812,
+          "end": 218956,
+          "confidence": 0.9998874,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 219228,
+          "end": 219292,
+          "confidence": 0.9952453,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 219324,
+          "end": 219437,
+          "confidence": 0.9997607,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 219453,
+          "end": 219549,
+          "confidence": 0.99897623,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 219549,
+          "end": 219709,
+          "confidence": 0.99998045,
+          "speaker": "B"
+        },
+        {
+          "text": "that's",
+          "start": 219709,
+          "end": 220013,
+          "confidence": 0.99983454,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 220013,
+          "end": 220094,
+          "confidence": 0.993548,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 220094,
+          "end": 220158,
+          "confidence": 0.9999858,
+          "speaker": "B"
+        },
+        {
+          "text": "be",
+          "start": 220174,
+          "end": 220270,
+          "confidence": 0.9999875,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 220270,
+          "end": 220350,
+          "confidence": 0.9997919,
+          "speaker": "B"
+        },
+        {
+          "text": "defining",
+          "start": 220350,
+          "end": 220751,
+          "confidence": 0.9999324,
+          "speaker": "B"
+        },
+        {
+          "text": "factor.",
+          "start": 220767,
+          "end": 221007,
+          "confidence": 0.98083764,
+          "speaker": "B"
+        },
+        {
+          "text": "And",
+          "start": 221055,
+          "end": 221135,
+          "confidence": 0.99721754,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 221135,
+          "end": 221151,
+          "confidence": 0.99975365,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 221151,
+          "end": 221376,
+          "confidence": 0.9999571,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 221376,
+          "end": 221408,
+          "confidence": 0.96680385,
+          "speaker": "B"
+        },
+        {
+          "text": "next",
+          "start": 221408,
+          "end": 221616,
+          "confidence": 0.9998895,
+          "speaker": "B"
+        },
+        {
+          "text": "couple",
+          "start": 221616,
+          "end": 221872,
+          "confidence": 0.99950945,
+          "speaker": "B"
+        },
+        {
+          "text": "days",
+          "start": 221872,
+          "end": 222065,
+          "confidence": 0.7208172,
+          "speaker": "B"
+        },
+        {
+          "text": "we're",
+          "start": 222113,
+          "end": 222193,
+          "confidence": 0.99075836,
+          "speaker": "B"
+        },
+        {
+          "text": "going",
+          "start": 222193,
+          "end": 222305,
+          "confidence": 0.9942068,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 222305,
+          "end": 222578,
+          "confidence": 0.9989808,
+          "speaker": "B"
+        },
+        {
+          "text": "see",
+          "start": 222738,
+          "end": 222978,
+          "confidence": 0.99848676,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 222978,
+          "end": 222994,
+          "confidence": 0.99112177,
+          "speaker": "B"
+        },
+        {
+          "text": "shift",
+          "start": 222994,
+          "end": 223603,
+          "confidence": 0.99920565,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 224340,
+          "end": 224421,
+          "confidence": 0.996765,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 224421,
+          "end": 224581,
+          "confidence": 0.996914,
+          "speaker": "B"
+        },
+        {
+          "text": "weather",
+          "start": 224581,
+          "end": 224837,
+          "confidence": 0.9825791,
+          "speaker": "B"
+        },
+        {
+          "text": "pattern",
+          "start": 224837,
+          "end": 225190,
+          "confidence": 0.98099613,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 225254,
+          "end": 225382,
+          "confidence": 0.96909744,
+          "speaker": "B"
+        },
+        {
+          "text": "start",
+          "start": 225382,
+          "end": 225542,
+          "confidence": 0.9363042,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 225542,
+          "end": 225638,
+          "confidence": 0.96696913,
+          "speaker": "B"
+        },
+        {
+          "text": "push",
+          "start": 225638,
+          "end": 225815,
+          "confidence": 0.9863192,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 225863,
+          "end": 225943,
+          "confidence": 0.9817436,
+          "speaker": "B"
+        },
+        {
+          "text": "smoke",
+          "start": 225943,
+          "end": 226215,
+          "confidence": 0.9940671,
+          "speaker": "B"
+        },
+        {
+          "text": "away",
+          "start": 226215,
+          "end": 226376,
+          "confidence": 0.99257725,
+          "speaker": "B"
+        },
+        {
+          "text": "from",
+          "start": 226376,
+          "end": 226953,
+          "confidence": 0.98940724,
+          "speaker": "B"
+        },
+        {
+          "text": "where",
+          "start": 226985,
+          "end": 227097,
+          "confidence": 0.9875393,
+          "speaker": "B"
+        },
+        {
+          "text": "we",
+          "start": 227145,
+          "end": 227241,
+          "confidence": 0.99480313,
+          "speaker": "B"
+        },
+        {
+          "text": "are.",
+          "start": 227241,
+          "end": 227321,
+          "confidence": 0.9969794,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "And finally, with the impacts of climate change, we are seeing more wildfires. Will we be seeing more of these kinds of wide-ranging air quality consequences or circumstances?",
+      "confidence": 0.99627984,
+      "start": 227887,
+      "end": 239939,
+      "words": [
+        {
+          "text": "And",
+          "start": 227887,
+          "end": 227952,
+          "confidence": 0.9893388,
+          "speaker": "A"
+        },
+        {
+          "text": "finally,",
+          "start": 227968,
+          "end": 228277,
+          "confidence": 0.9985692,
+          "speaker": "A"
+        },
+        {
+          "text": "with",
+          "start": 228455,
+          "end": 228666,
+          "confidence": 0.9999118,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 228780,
+          "end": 229008,
+          "confidence": 0.9998982,
+          "speaker": "A"
+        },
+        {
+          "text": "impacts",
+          "start": 229008,
+          "end": 229365,
+          "confidence": 0.9989237,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 229414,
+          "end": 229479,
+          "confidence": 0.99996936,
+          "speaker": "A"
+        },
+        {
+          "text": "climate",
+          "start": 229511,
+          "end": 229982,
+          "confidence": 0.9999901,
+          "speaker": "A"
+        },
+        {
+          "text": "change,",
+          "start": 229982,
+          "end": 230242,
+          "confidence": 0.9999526,
+          "speaker": "A"
+        },
+        {
+          "text": "we",
+          "start": 230323,
+          "end": 230421,
+          "confidence": 0.99996793,
+          "speaker": "A"
+        },
+        {
+          "text": "are",
+          "start": 230486,
+          "end": 230599,
+          "confidence": 0.99787664,
+          "speaker": "A"
+        },
+        {
+          "text": "seeing",
+          "start": 230648,
+          "end": 230940,
+          "confidence": 0.9999627,
+          "speaker": "A"
+        },
+        {
+          "text": "more",
+          "start": 231054,
+          "end": 231314,
+          "confidence": 0.99995685,
+          "speaker": "A"
+        },
+        {
+          "text": "wildfires.",
+          "start": 231444,
+          "end": 231996,
+          "confidence": 0.9998332,
+          "speaker": "A"
+        },
+        {
+          "text": "Will",
+          "start": 232662,
+          "end": 232776,
+          "confidence": 0.99989426,
+          "speaker": "A"
+        },
+        {
+          "text": "we",
+          "start": 232841,
+          "end": 233003,
+          "confidence": 0.9999809,
+          "speaker": "A"
+        },
+        {
+          "text": "be",
+          "start": 233003,
+          "end": 233117,
+          "confidence": 0.9999529,
+          "speaker": "A"
+        },
+        {
+          "text": "seeing",
+          "start": 233166,
+          "end": 233539,
+          "confidence": 0.99999213,
+          "speaker": "A"
+        },
+        {
+          "text": "more",
+          "start": 233734,
+          "end": 234173,
+          "confidence": 0.9999856,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 234286,
+          "end": 234335,
+          "confidence": 0.9999311,
+          "speaker": "A"
+        },
+        {
+          "text": "these",
+          "start": 234384,
+          "end": 234595,
+          "confidence": 0.99997425,
+          "speaker": "A"
+        },
+        {
+          "text": "kinds",
+          "start": 234627,
+          "end": 234952,
+          "confidence": 0.9998117,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 234952,
+          "end": 235082,
+          "confidence": 0.99999714,
+          "speaker": "A"
+        },
+        {
+          "text": "wide-ranging",
+          "start": 235569,
+          "end": 236216,
+          "confidence": 0.99994653,
+          "speaker": "A"
+        },
+        {
+          "text": "air",
+          "start": 237446,
+          "end": 237495,
+          "confidence": 0.9992624,
+          "speaker": "A"
+        },
+        {
+          "text": "quality",
+          "start": 237608,
+          "end": 237997,
+          "confidence": 0.9531113,
+          "speaker": "A"
+        },
+        {
+          "text": "consequences",
+          "start": 238029,
+          "end": 238806,
+          "confidence": 0.99988794,
+          "speaker": "A"
+        },
+        {
+          "text": "or",
+          "start": 238838,
+          "end": 239033,
+          "confidence": 0.9978655,
+          "speaker": "A"
+        },
+        {
+          "text": "circumstances?",
+          "start": 239097,
+          "end": 239939,
+          "confidence": 0.9988632,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "I mean, that is one of the predictions for climate change looking into the future. The fire season is starting earlier and lasting longer, and we're seeing more frequent fires. So yeah, this is probably something that we'll be seeing More frequently. This tends to be much more of an issue in the Western US, so the Eastern US getting hit right now is a little bit new. But yeah, I think with climate change moving forward, this is something that's gonna happen more frequently.",
+      "confidence": 0.96584994,
+      "start": 239939,
+      "end": 267439,
+      "words": [
+        {
+          "text": "I",
+          "start": 241606,
+          "end": 241623,
+          "confidence": 0.99951327,
+          "speaker": "B"
+        },
+        {
+          "text": "mean,",
+          "start": 241671,
+          "end": 241801,
+          "confidence": 0.9999799,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 241817,
+          "end": 241995,
+          "confidence": 0.99995685,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 241995,
+          "end": 242092,
+          "confidence": 0.9996146,
+          "speaker": "B"
+        },
+        {
+          "text": "one",
+          "start": 242157,
+          "end": 242319,
+          "confidence": 0.9999634,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 242319,
+          "end": 242400,
+          "confidence": 0.99999547,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 242400,
+          "end": 242481,
+          "confidence": 0.9999809,
+          "speaker": "B"
+        },
+        {
+          "text": "predictions",
+          "start": 242481,
+          "end": 243096,
+          "confidence": 0.99994147,
+          "speaker": "B"
+        },
+        {
+          "text": "for",
+          "start": 243128,
+          "end": 243387,
+          "confidence": 0.99914384,
+          "speaker": "B"
+        },
+        {
+          "text": "climate",
+          "start": 244640,
+          "end": 244834,
+          "confidence": 0.7708825,
+          "speaker": "B"
+        },
+        {
+          "text": "change",
+          "start": 244834,
+          "end": 245109,
+          "confidence": 0.9999896,
+          "speaker": "B"
+        },
+        {
+          "text": "looking",
+          "start": 245142,
+          "end": 245352,
+          "confidence": 0.9573183,
+          "speaker": "B"
+        },
+        {
+          "text": "into",
+          "start": 245384,
+          "end": 245546,
+          "confidence": 0.99995744,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 245546,
+          "end": 245627,
+          "confidence": 0.9999974,
+          "speaker": "B"
+        },
+        {
+          "text": "future.",
+          "start": 245627,
+          "end": 246129,
+          "confidence": 0.99962765,
+          "speaker": "B"
+        },
+        {
+          "text": "The",
+          "start": 246614,
+          "end": 246760,
+          "confidence": 0.9959489,
+          "speaker": "B"
+        },
+        {
+          "text": "fire",
+          "start": 246760,
+          "end": 246954,
+          "confidence": 0.99998856,
+          "speaker": "B"
+        },
+        {
+          "text": "season",
+          "start": 247019,
+          "end": 247326,
+          "confidence": 0.9999925,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 247326,
+          "end": 247358,
+          "confidence": 0.99974555,
+          "speaker": "B"
+        },
+        {
+          "text": "starting",
+          "start": 247358,
+          "end": 247617,
+          "confidence": 0.9999658,
+          "speaker": "B"
+        },
+        {
+          "text": "earlier",
+          "start": 247731,
+          "end": 248054,
+          "confidence": 0.9999833,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 248054,
+          "end": 248200,
+          "confidence": 0.9996513,
+          "speaker": "B"
+        },
+        {
+          "text": "lasting",
+          "start": 248200,
+          "end": 248507,
+          "confidence": 0.9997514,
+          "speaker": "B"
+        },
+        {
+          "text": "longer,",
+          "start": 248540,
+          "end": 248912,
+          "confidence": 0.99007565,
+          "speaker": "B"
+        },
+        {
+          "text": "and",
+          "start": 249899,
+          "end": 249996,
+          "confidence": 0.9986291,
+          "speaker": "B"
+        },
+        {
+          "text": "we're",
+          "start": 249996,
+          "end": 250093,
+          "confidence": 0.9999197,
+          "speaker": "B"
+        },
+        {
+          "text": "seeing",
+          "start": 250093,
+          "end": 250287,
+          "confidence": 0.99997437,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 250319,
+          "end": 250481,
+          "confidence": 0.9999801,
+          "speaker": "B"
+        },
+        {
+          "text": "frequent",
+          "start": 250481,
+          "end": 250870,
+          "confidence": 0.99999213,
+          "speaker": "B"
+        },
+        {
+          "text": "fires.",
+          "start": 250870,
+          "end": 251177,
+          "confidence": 0.99778783,
+          "speaker": "B"
+        },
+        {
+          "text": "So",
+          "start": 251226,
+          "end": 251501,
+          "confidence": 0.9995547,
+          "speaker": "B"
+        },
+        {
+          "text": "yeah,",
+          "start": 252245,
+          "end": 252407,
+          "confidence": 0.9645671,
+          "speaker": "B"
+        },
+        {
+          "text": "this",
+          "start": 252423,
+          "end": 252601,
+          "confidence": 0.9998031,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 252601,
+          "end": 252714,
+          "confidence": 0.9999497,
+          "speaker": "B"
+        },
+        {
+          "text": "probably",
+          "start": 252747,
+          "end": 253005,
+          "confidence": 0.9999416,
+          "speaker": "B"
+        },
+        {
+          "text": "something",
+          "start": 253005,
+          "end": 253361,
+          "confidence": 0.9998661,
+          "speaker": "B"
+        },
+        {
+          "text": "that",
+          "start": 253539,
+          "end": 253734,
+          "confidence": 0.99894506,
+          "speaker": "B"
+        },
+        {
+          "text": "we'll",
+          "start": 253734,
+          "end": 254090,
+          "confidence": 0.998883,
+          "speaker": "B"
+        },
+        {
+          "text": "be",
+          "start": 254090,
+          "end": 254142,
+          "confidence": 0.9993261,
+          "speaker": "B"
+        },
+        {
+          "text": "seeing",
+          "start": 254142,
+          "end": 254442,
+          "confidence": 0.9992705,
+          "speaker": "B"
+        },
+        {
+          "text": "More",
+          "start": 254802,
+          "end": 254899,
+          "confidence": 0.4425492,
+          "speaker": "B"
+        },
+        {
+          "text": "frequently.",
+          "start": 254947,
+          "end": 255415,
+          "confidence": 0.90572983,
+          "speaker": "B"
+        },
+        {
+          "text": "This",
+          "start": 255770,
+          "end": 255899,
+          "confidence": 0.9667753,
+          "speaker": "B"
+        },
+        {
+          "text": "tends",
+          "start": 255932,
+          "end": 256190,
+          "confidence": 0.999992,
+          "speaker": "B"
+        },
+        {
+          "text": "to",
+          "start": 256190,
+          "end": 256254,
+          "confidence": 0.99999464,
+          "speaker": "B"
+        },
+        {
+          "text": "be",
+          "start": 256254,
+          "end": 256351,
+          "confidence": 0.99999166,
+          "speaker": "B"
+        },
+        {
+          "text": "much",
+          "start": 256351,
+          "end": 256545,
+          "confidence": 0.99932003,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 256577,
+          "end": 256723,
+          "confidence": 0.9999902,
+          "speaker": "B"
+        },
+        {
+          "text": "of",
+          "start": 256723,
+          "end": 256755,
+          "confidence": 0.99998,
+          "speaker": "B"
+        },
+        {
+          "text": "an",
+          "start": 256755,
+          "end": 256836,
+          "confidence": 0.999992,
+          "speaker": "B"
+        },
+        {
+          "text": "issue",
+          "start": 256884,
+          "end": 257142,
+          "confidence": 0.99999857,
+          "speaker": "B"
+        },
+        {
+          "text": "in",
+          "start": 257142,
+          "end": 257191,
+          "confidence": 0.99998784,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 257223,
+          "end": 257288,
+          "confidence": 0.9999782,
+          "speaker": "B"
+        },
+        {
+          "text": "Western",
+          "start": 257304,
+          "end": 257626,
+          "confidence": 0.5095809,
+          "speaker": "B"
+        },
+        {
+          "text": "US,",
+          "start": 257626,
+          "end": 257901,
+          "confidence": 0.71140474,
+          "speaker": "B"
+        },
+        {
+          "text": "so",
+          "start": 258288,
+          "end": 258434,
+          "confidence": 0.999721,
+          "speaker": "B"
+        },
+        {
+          "text": "the",
+          "start": 258434,
+          "end": 258514,
+          "confidence": 0.78496444,
+          "speaker": "B"
+        },
+        {
+          "text": "Eastern",
+          "start": 258595,
+          "end": 258837,
+          "confidence": 0.9998832,
+          "speaker": "B"
+        },
+        {
+          "text": "US",
+          "start": 258837,
+          "end": 259079,
+          "confidence": 0.99999607,
+          "speaker": "B"
+        },
+        {
+          "text": "getting",
+          "start": 259079,
+          "end": 259289,
+          "confidence": 0.9995598,
+          "speaker": "B"
+        },
+        {
+          "text": "hit",
+          "start": 259305,
+          "end": 259418,
+          "confidence": 0.9999862,
+          "speaker": "B"
+        },
+        {
+          "text": "right",
+          "start": 259418,
+          "end": 259628,
+          "confidence": 0.9999695,
+          "speaker": "B"
+        },
+        {
+          "text": "now",
+          "start": 259628,
+          "end": 259725,
+          "confidence": 0.99999523,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 260613,
+          "end": 260709,
+          "confidence": 0.99971575,
+          "speaker": "B"
+        },
+        {
+          "text": "a",
+          "start": 260709,
+          "end": 260726,
+          "confidence": 0.8329631,
+          "speaker": "B"
+        },
+        {
+          "text": "little",
+          "start": 260839,
+          "end": 261000,
+          "confidence": 0.9998927,
+          "speaker": "B"
+        },
+        {
+          "text": "bit",
+          "start": 261000,
+          "end": 261178,
+          "confidence": 0.99998987,
+          "speaker": "B"
+        },
+        {
+          "text": "new.",
+          "start": 261178,
+          "end": 261291,
+          "confidence": 0.9953766,
+          "speaker": "B"
+        },
+        {
+          "text": "But",
+          "start": 262350,
+          "end": 262611,
+          "confidence": 0.9901065,
+          "speaker": "B"
+        },
+        {
+          "text": "yeah,",
+          "start": 262611,
+          "end": 262872,
+          "confidence": 0.99372464,
+          "speaker": "B"
+        },
+        {
+          "text": "I",
+          "start": 262888,
+          "end": 262937,
+          "confidence": 0.99996793,
+          "speaker": "B"
+        },
+        {
+          "text": "think",
+          "start": 262937,
+          "end": 263198,
+          "confidence": 0.99998116,
+          "speaker": "B"
+        },
+        {
+          "text": "with",
+          "start": 263198,
+          "end": 263345,
+          "confidence": 0.99090976,
+          "speaker": "B"
+        },
+        {
+          "text": "climate",
+          "start": 263361,
+          "end": 263638,
+          "confidence": 0.9999862,
+          "speaker": "B"
+        },
+        {
+          "text": "change",
+          "start": 263671,
+          "end": 264013,
+          "confidence": 0.9999809,
+          "speaker": "B"
+        },
+        {
+          "text": "moving",
+          "start": 264013,
+          "end": 264225,
+          "confidence": 0.98335314,
+          "speaker": "B"
+        },
+        {
+          "text": "forward,",
+          "start": 264323,
+          "end": 264764,
+          "confidence": 0.9999866,
+          "speaker": "B"
+        },
+        {
+          "text": "this",
+          "start": 264829,
+          "end": 264992,
+          "confidence": 0.99992776,
+          "speaker": "B"
+        },
+        {
+          "text": "is",
+          "start": 264992,
+          "end": 265139,
+          "confidence": 0.99998605,
+          "speaker": "B"
+        },
+        {
+          "text": "something",
+          "start": 265139,
+          "end": 265384,
+          "confidence": 0.99994564,
+          "speaker": "B"
+        },
+        {
+          "text": "that's",
+          "start": 265465,
+          "end": 266526,
+          "confidence": 0.72766995,
+          "speaker": "B"
+        },
+        {
+          "text": "gonna",
+          "start": 266526,
+          "end": 266640,
+          "confidence": 0.5608245,
+          "speaker": "B"
+        },
+        {
+          "text": "happen",
+          "start": 266640,
+          "end": 266884,
+          "confidence": 0.9999522,
+          "speaker": "B"
+        },
+        {
+          "text": "more",
+          "start": 266884,
+          "end": 267031,
+          "confidence": 0.9997105,
+          "speaker": "B"
+        },
+        {
+          "text": "frequently.",
+          "start": 267031,
+          "end": 267439,
+          "confidence": 0.9999712,
+          "speaker": "B"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "text": "That's Peter DiCarlo, Associate Professor in the Department of Environmental Health and Engineering at Johns Hopkins University. Professor DiCarlo, thanks so much for joining us and sharing this expertise with us.",
+      "confidence": 0.98760074,
+      "start": 267439,
+      "end": 278097,
+      "words": [
+        {
+          "text": "That's",
+          "start": 268130,
+          "end": 268323,
+          "confidence": 0.9998562,
+          "speaker": "A"
+        },
+        {
+          "text": "Peter",
+          "start": 268323,
+          "end": 268662,
+          "confidence": 0.98467153,
+          "speaker": "A"
+        },
+        {
+          "text": "DiCarlo,",
+          "start": 268662,
+          "end": 269194,
+          "confidence": 0.84225494,
+          "speaker": "A"
+        },
+        {
+          "text": "Associate",
+          "start": 269227,
+          "end": 269695,
+          "confidence": 0.78212386,
+          "speaker": "A"
+        },
+        {
+          "text": "Professor",
+          "start": 269695,
+          "end": 270179,
+          "confidence": 0.9999871,
+          "speaker": "A"
+        },
+        {
+          "text": "in",
+          "start": 270243,
+          "end": 270292,
+          "confidence": 0.99977714,
+          "speaker": "A"
+        },
+        {
+          "text": "the",
+          "start": 270324,
+          "end": 270356,
+          "confidence": 0.99998057,
+          "speaker": "A"
+        },
+        {
+          "text": "Department",
+          "start": 270356,
+          "end": 270808,
+          "confidence": 0.9999888,
+          "speaker": "A"
+        },
+        {
+          "text": "of",
+          "start": 270824,
+          "end": 270921,
+          "confidence": 0.99999774,
+          "speaker": "A"
+        },
+        {
+          "text": "Environmental",
+          "start": 270921,
+          "end": 271599,
+          "confidence": 0.99996746,
+          "speaker": "A"
+        },
+        {
+          "text": "Health",
+          "start": 271615,
+          "end": 271841,
+          "confidence": 0.9999912,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 271954,
+          "end": 272018,
+          "confidence": 0.9999527,
+          "speaker": "A"
+        },
+        {
+          "text": "Engineering",
+          "start": 272115,
+          "end": 272567,
+          "confidence": 0.9999906,
+          "speaker": "A"
+        },
+        {
+          "text": "at",
+          "start": 273002,
+          "end": 273228,
+          "confidence": 0.9994012,
+          "speaker": "A"
+        },
+        {
+          "text": "Johns",
+          "start": 273228,
+          "end": 273454,
+          "confidence": 0.9999988,
+          "speaker": "A"
+        },
+        {
+          "text": "Hopkins",
+          "start": 273470,
+          "end": 273938,
+          "confidence": 0.99999964,
+          "speaker": "A"
+        },
+        {
+          "text": "University.",
+          "start": 274277,
+          "end": 274794,
+          "confidence": 0.9999919,
+          "speaker": "A"
+        },
+        {
+          "text": "Professor",
+          "start": 274842,
+          "end": 275181,
+          "confidence": 0.9995704,
+          "speaker": "A"
+        },
+        {
+          "text": "DiCarlo,",
+          "start": 275181,
+          "end": 275568,
+          "confidence": 0.9999898,
+          "speaker": "A"
+        },
+        {
+          "text": "thanks",
+          "start": 275584,
+          "end": 275891,
+          "confidence": 0.99973744,
+          "speaker": "A"
+        },
+        {
+          "text": "so",
+          "start": 275891,
+          "end": 275923,
+          "confidence": 0.9999813,
+          "speaker": "A"
+        },
+        {
+          "text": "much",
+          "start": 275923,
+          "end": 276133,
+          "confidence": 0.99999535,
+          "speaker": "A"
+        },
+        {
+          "text": "for",
+          "start": 276149,
+          "end": 276294,
+          "confidence": 0.99999094,
+          "speaker": "A"
+        },
+        {
+          "text": "joining",
+          "start": 276294,
+          "end": 276601,
+          "confidence": 0.99999034,
+          "speaker": "A"
+        },
+        {
+          "text": "us",
+          "start": 276617,
+          "end": 276794,
+          "confidence": 0.99999547,
+          "speaker": "A"
+        },
+        {
+          "text": "and",
+          "start": 276794,
+          "end": 276859,
+          "confidence": 0.99921143,
+          "speaker": "A"
+        },
+        {
+          "text": "sharing",
+          "start": 276859,
+          "end": 277085,
+          "confidence": 0.99984527,
+          "speaker": "A"
+        },
+        {
+          "text": "this",
+          "start": 277117,
+          "end": 277246,
+          "confidence": 0.99896467,
+          "speaker": "A"
+        },
+        {
+          "text": "expertise",
+          "start": 277278,
+          "end": 277749,
+          "confidence": 0.9999765,
+          "speaker": "A"
+        },
+        {
+          "text": "with",
+          "start": 277749,
+          "end": 277865,
+          "confidence": 0.9998876,
+          "speaker": "A"
+        },
+        {
+          "text": "us.",
+          "start": 277915,
+          "end": 278097,
+          "confidence": 0.9998907,
+          "speaker": "A"
+        }
+      ]
+    },
+    {
+      "speaker": "B",
+      "text": "Thank you for having me.",
+      "confidence": 0.99497056,
+      "start": 278097,
+      "end": 280403,
+      "words": [
+        {
+          "text": "Thank",
+          "start": 279657,
+          "end": 279906,
+          "confidence": 0.9999492,
+          "speaker": "B"
+        },
+        {
+          "text": "you",
+          "start": 279906,
+          "end": 279988,
+          "confidence": 0.9999893,
+          "speaker": "B"
+        },
+        {
+          "text": "for",
+          "start": 279988,
+          "end": 280055,
+          "confidence": 0.9999263,
+          "speaker": "B"
+        },
+        {
+          "text": "having",
+          "start": 280055,
+          "end": 280270,
+          "confidence": 0.9999801,
+          "speaker": "B"
+        },
+        {
+          "text": "me.",
+          "start": 280270,
+          "end": 280403,
+          "confidence": 0.99986404,
+          "speaker": "B"
+        }
+      ]
+    }
+  ]
+}

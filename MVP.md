@@ -52,14 +52,14 @@ Ask a question whose answer exists in the source material → their voice starts
 - [x] Embed one test string with `qwen/qwen3-embedding-8b` via OpenRouter; note the dimension it returns and the response latency — **dimension 4096; latency 1.2–4.5s warm, ~15s cold. Variable enough to threaten the 3s first-audio target — pin a fast provider for the embedding call (or drop to a smaller embedding model) when tuning Phase 8**
 - [x] Create the Pinecone serverless index (cosine metric; dimension = what that test embedding returned — check before creating, it can't be changed later); smoke-test one upsert + query — index `alexandria`, cosine, dim 4096, upsert+query round-trip verified (`persona_id` filter works)
 
-### Phase 2 · Ingestion script (local CLI)
-- [ ] Test-first: chunker (~300–500 tokens, overlap)
-- [ ] Test-first: diarization filter (keep only persona's speech) against a saved real AssemblyAI response fixture
-- [ ] ffmpeg: video → mono 16kHz audio
-- [ ] Clip cleanest solo-speech segments (doubles as the voice-clone sample)
-- [ ] AssemblyAI async transcription with diarization + word timestamps
-- [ ] Chunk metadata schema: `{persona_id, source_file, media_type, timestamp_range, speaker, text}`
-- [ ] Embed chunks with `qwen/qwen3-embedding-8b`, upsert to Pinecone with metadata
+### Phase 2 · Ingestion script (local CLI) — `npm run ingest -- --persona <id> [--speaker <label>] [--voice-sample] <files...>`
+- [x] Test-first: chunker (~300–500 tokens, overlap) — `src/lib/chunker.ts`, 400-token budget, 60-token overlap, hard-splits oversized units
+- [x] Test-first: diarization filter (keep only persona's speech) against a saved real AssemblyAI response fixture — `src/lib/diarization.ts`; persona = whoever talks most, `--speaker` overrides; fixture at `src/lib/fixtures/assemblyai-transcript.json`
+- [x] ffmpeg: video → mono 16kHz audio
+- [x] Clip cleanest solo-speech segments (doubles as the voice-clone sample) — `--voice-sample` picks highest-confidence utterances ≥5s up to ~90s, concatenates to `out/voice-sample-<persona>.mp3`
+- [x] AssemblyAI async transcription with diarization + word timestamps — transcripts cached in `out/transcripts/` so re-runs are free
+- [x] Chunk metadata schema — `{persona_id, source_file, media_type, speaker, start_ms, end_ms, text}` (timestamp_range stored as numeric start/end ms for direct citation links)
+- [x] Embed chunks with `qwen/qwen3-embedding-8b`, upsert to Pinecone with metadata — verified end-to-end: interview mp3 (diarized to speaker B), synthetic mp4 (video path), .txt doc; retrieval query returned the right chunk with correct citation metadata; test vectors then deleted
 
 ### Phase 3 · Retrieval + answer (terminal, hardcoded persona 1)
 - [ ] Test-first: prompt assembly (persona instructions + 3–5 verbatim quotes + retrieved chunks), Pinecone response parsing against a fixture

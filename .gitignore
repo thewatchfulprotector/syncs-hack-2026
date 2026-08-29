@@ -39,6 +39,9 @@ CLAUDE.md
 AGENTS.md
 scripts/smoke-tts.mp3
 
+# ingestion output (extracted audio, transcript cache, voice samples)
+/out/
+
 # vercel
 .vercel
 
