@@ -19,6 +19,7 @@ export class AudioQueue {
   private speaking = false;
   private pcmRemainder: number | undefined;
   private pcmPendingText = "";
+  private pcmSentenceProgress: { scheduledSec: number } | undefined;
   private activeSources = new Set<AudioBufferSourceNode>();
   private sentenceTimers = new Set<ReturnType<typeof setTimeout>>();
   private resolveDrained: (() => void) | undefined;
@@ -134,15 +135,21 @@ export class AudioQueue {
       const buffer = ctx.createBuffer(1, samples.length, sampleRate);
       buffer.copyToChannel(samples, 0);
       if (epoch !== this.epoch) return;
-      const estimatedSentenceDuration = sentenceText
-        ? Math.max(buffer.duration, sentenceText.trim().split(/\s+/).length / 2.7)
-        : buffer.duration;
+      // A sentence's packets keep arriving while earlier audio plays, so its
+      // real duration is read when its caption starts, not when packet 0 is
+      // scheduled. The word-rate floor only covers audio still in flight.
+      if (sentenceText) this.pcmSentenceProgress = { scheduledSec: 0 };
+      const progress = this.pcmSentenceProgress;
+      if (progress) progress.scheduledSec += buffer.duration;
+      const wordFloorSec = sentenceText
+        ? sentenceText.trim().split(/\s+/).length / 3.2
+        : 0;
       this.scheduleBuffer(
         ctx,
         buffer,
         sentenceText,
         epoch,
-        estimatedSentenceDuration,
+        progress ? () => Math.max(progress.scheduledSec, wordFloorSec) : buffer.duration,
         true,
       );
     });
@@ -211,6 +218,7 @@ export class AudioQueue {
     this.nextStartTime = 0;
     this.pcmRemainder = undefined;
     this.pcmPendingText = "";
+    this.pcmSentenceProgress = undefined;
     this.setSpeaking(false);
   }
 
@@ -219,7 +227,7 @@ export class AudioQueue {
     buffer: AudioBuffer,
     text: string,
     epoch: number,
-    captionDuration = buffer.duration,
+    captionDuration: number | (() => number) = buffer.duration,
     progressivePcm = false,
   ): void {
     const source = ctx.createBufferSource();
@@ -244,7 +252,10 @@ export class AudioQueue {
       const timer = setTimeout(
         () => {
           this.sentenceTimers.delete(timer);
-          if (epoch === this.epoch) this.onSentenceStart?.(text, captionDuration);
+          if (epoch !== this.epoch) return;
+          const duration =
+            typeof captionDuration === "function" ? captionDuration() : captionDuration;
+          this.onSentenceStart?.(text, duration);
         },
         Math.max(0, (at - ctx.currentTime) * 1000),
       );

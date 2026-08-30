@@ -112,6 +112,34 @@ describe("AudioQueue progressive PCM playback", () => {
     expect(context.sources[0].start).toHaveBeenCalledWith(2.5);
   });
 
+  it("reports each sentence's actual scheduled audio duration, not a word estimate", async () => {
+    vi.useFakeTimers();
+    const context = new FakeAudioContext();
+    installAudioContext(context);
+    const onSentenceStart = vi.fn();
+    const queue = new AudioQueue(undefined, onSentenceStart) as ProgressivePcmQueue;
+    queue.beginAnswer();
+    const silence = (seconds: number) => new Uint8Array(Math.round(seconds * 24_000) * 2);
+
+    // first sentence: 0.5s + 2s + 1.5s of audio arrives before playback starts
+    await queue.enqueuePcm16(silence(0.5), "one two three four five six seven eight nine ten", 24_000);
+    await queue.enqueuePcm16(silence(2), "", 24_000);
+    await queue.enqueuePcm16(silence(1.5), "", 24_000);
+    // second sentence must not inherit the first sentence's audio
+    await queue.enqueuePcm16(silence(0.5), "Then a second one.", 24_000);
+    await queue.enqueuePcm16(silence(1.5), "", 24_000);
+    await vi.runAllTimersAsync();
+    vi.useRealTimers();
+
+    expect(onSentenceStart).toHaveBeenCalledTimes(2);
+    expect(onSentenceStart.mock.calls[0][0]).toBe(
+      "one two three four five six seven eight nine ten",
+    );
+    expect(onSentenceStart.mock.calls[0][1]).toBeCloseTo(4, 5);
+    expect(onSentenceStart.mock.calls[1][0]).toBe("Then a second one.");
+    expect(onSentenceStart.mock.calls[1][1]).toBeCloseTo(2, 5);
+  });
+
   it("resolves queueDrained only after exact audio_complete and the final PCM source end", async () => {
     const context = new FakeAudioContext();
     installAudioContext(context);

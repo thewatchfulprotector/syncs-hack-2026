@@ -8,6 +8,7 @@ import { isLikelyEcho } from "@/lib/echoGuard";
 import { prefetchSttToken, startMicStream, type MicSession } from "@/lib/micStream";
 import { DEFAULT_PERSONA_ID, personaTitle } from "@/lib/personas";
 import { capConversationHistory } from "@/lib/prompt";
+import { SentenceSplitter } from "@/lib/sentences";
 import { mergeHeldTurn, shouldHoldTurn } from "@/lib/turnGate";
 import { Orb, type OrbPhase, type OrbPulse } from "./orb";
 
@@ -177,6 +178,9 @@ export default function Home() {
   }
 
   function speakCaptions(sentence: string, durationSec: number) {
+    // a sentence that runs past its duration must not flash stale chunks over
+    // the next one — every sentence start resyncs the caption clock
+    clearCaptionTimers();
     const chunks = chunkSentence(sentence, captionWordBudget());
     const per = (durationSec * 1000) / chunks.length;
     chunks.forEach((chunk, i) => {
@@ -447,6 +451,11 @@ export default function Home() {
     const correlationId = clientTrace.correlationId;
     recordClientMilestone("ask_request_start");
     let full = "";
+    // the streamed preview stops at the first sentence boundary: playback
+    // captions pick up from that sentence, so running further ahead of the
+    // voice would only jump backwards at the handoff
+    let previewFrozen = false;
+    const previewSplitter = new SentenceSplitter();
     let citations: Citation[] = [];
     let answerSources: Citation[] = [];
     let audioComplete = false;
@@ -509,9 +518,17 @@ export default function Home() {
               // stream text into the caption until audio-synced captions take
               // over; the epoch guard keeps a buffered line from resurrecting
               // the caption after barge-in
-              if (epoch === turnEpochRef.current && !audioCaptionsStartedRef.current) {
-                const preview = stripStreamingSourcesTail(full).trim();
-                if (preview) showCaption(tailWords(preview, captionWordBudget()));
+              if (
+                epoch === turnEpochRef.current &&
+                !audioCaptionsStartedRef.current &&
+                !previewFrozen
+              ) {
+                if (previewSplitter.push(msg.text).length > 0) {
+                  previewFrozen = true;
+                } else {
+                  const preview = stripStreamingSourcesTail(full).trim();
+                  if (preview) showCaption(tailWords(preview, captionWordBudget()));
+                }
               }
             } else if (msg.type === "audio_chunk") {
               if (firstAudioPacketMs === undefined) {
@@ -625,6 +642,9 @@ export default function Home() {
   });
 
   const sampleAmp = useCallback((): number | null => {
+    // While the persona speaks, the mic is echo-cancelled to near-silence, so
+    // it must not shadow the actual playback level driving the orb.
+    if (speakingRef.current && queueRef.current) return queueRef.current.amplitude();
     if (micRef.current) return micRef.current.amplitude();
     if (queueRef.current) return queueRef.current.amplitude();
     return null;
